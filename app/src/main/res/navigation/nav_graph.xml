@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/registrationFragment">
+
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.mudryakov.collectivenote.historyFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_historyFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.mudryakov.collectivenote.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_questFragment"
+            app:destination="@id/questFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_newPaymentFragment"
+            app:destination="@id/newPaymentFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_roomChooseFragment"
+            app:destination="@id/roomChooseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/questFragment"
+        android:name="com.mudryakov.collectivenote.QuestFragment"
+        android:label="fragment_quest"
+        tools:layout="@layout/fragment_quest" >
+        <action
+            android:id="@+id/action_questFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.mudryakov.collectivenote.registration.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment_to_roomChooseFragment"
+            app:destination="@id/roomChooseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newPaymentFragment"
+        android:name="com.mudryakov.collectivenote.newPaymentFragment"
+        android:label="fragment_new_payment"
+        tools:layout="@layout/fragment_new_payment" >
+        <action
+            android:id="@+id/action_newPaymentFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/roomChooseFragment"
+        android:name="com.mudryakov.collectivenote.roomChooseFragment"
+        android:label="fragment_room_choose"
+        tools:layout="@layout/fragment_room_choose" >
+        <action
+            android:id="@+id/action_roomChooseFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+</navigation>

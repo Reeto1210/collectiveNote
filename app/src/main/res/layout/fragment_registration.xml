@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".registration.RegistrationFragment">
+
+    <TextView
+
+
+        android:id="@+id/registration_email_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/app_margin"
+        android:text="@string/title_email_registration"
+        android:textColor="@color/design_default_color_secondary_variant"
+        android:textSize="@dimen/Large_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/registration_input_email"
+        style="@style/input_text_style"
+        android:hint="@string/e_mail"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registration_email_title" />
+
+
+    <EditText
+
+        android:id="@+id/registration_input_password"
+        style="@style/input_text_style"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registration_input_email" />
+
+    <TextView
+        android:id="@+id/registration_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/app_margin"
+        android:gravity="center"
+        android:text="@string/Use_your_Gogle_account"
+        android:textColor="@color/design_default_color_secondary_variant"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registration_input_password" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/registration_btn_signInGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/app_margin"
+        android:layout_marginEnd="@dimen/app_margin"
+        android:background="@drawable/background_for_custom_buttons"
+        android:elevation="5dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registration_tip">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/Enter"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/app_margin"
+            android:layout_marginTop="@dimen/verySmallMargin"
+            android:layout_marginEnd="@dimen/app_margin"
+            android:layout_marginBottom="@dimen/verySmallMargin"
+            android:src="@drawable/google_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView2"
+
+
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/registration_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/app_margin"
+
+        android:src="@drawable/ic_arrow_forward"
+        app:tint="@color/white"
+        app:backgroundTint="@color/design_default_color_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
