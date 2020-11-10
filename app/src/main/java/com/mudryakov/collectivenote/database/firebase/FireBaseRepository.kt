@@ -3,10 +3,7 @@ package com.mudryakov.collectivenote.database.firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
-import com.mudryakov.collectivenote.utilits.AUTH
-import com.mudryakov.collectivenote.utilits.CURRENT_UID
-import com.mudryakov.collectivenote.utilits.DATABASE_REF
-import com.mudryakov.collectivenote.utilits.logIn
+import com.mudryakov.collectivenote.utilits.*
 
 class FireBaseRepository : AppDatabaseRepository {
 
@@ -16,14 +13,14 @@ class FireBaseRepository : AppDatabaseRepository {
     }
 
 
-
-
     override fun addNewPayment(onSucces:()->Unit) {
         TODO("Not yet implemented")
     }
 
-    override fun changeName(onSucces:()->Unit) {
-        TODO("Not yet implemented")
+    override fun changeName(name:String, onSucces:()->Unit) {
+        DATABASE_REF.child(CURRENT_UID).child(CHILD_NAME).setValue(name)
+            .addOnSuccessListener { onSucces() }
+            .addOnFailureListener { showToast(it.message.toString()) }
     }
 
     override fun addnewQuest(onSucces:()->Unit) {

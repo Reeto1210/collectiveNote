@@ -29,15 +29,13 @@ fun logIn(type: String, onCompelete: () -> Unit) {
         TYPE_GOOGLE_ACCOUNT -> logInGogle()
         TYPE_EMAIL -> registerEmail()
     }
-
-
-
 }
 fun registerEmail() {
 
     AUTH.createUserWithEmailAndPassword(EMAIL, PASSWORD).addOnSuccessListener {
-            val currentId = AUTH.currentUser?.uid.toString()
-            pushUserToFirebase(id = currentId, name = "Unknown")
+            CURRENT_UID = AUTH.currentUser?.uid.toString()
+
+        pushUserToFirebase(  )
                }
             .addOnFailureListener { showToast(it.message.toString()) }
     }
@@ -46,44 +44,33 @@ fun logInGogle() {
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestEmail()
         .build()
-
         val mGogoglemSignClient = GoogleSignIn.getClient(APP_ACTIVITY, gso)
         val intent: Intent = mGogoglemSignClient.signInIntent
         APP_ACTIVITY.startActivityForResult(intent, SIGN_CODE_REQUEST)
 
 }
 
-fun initUser(onCompelete: () -> Unit) {
-    val listener = AppValueEventListener {
-        USER = it.getUserFromFirebase()
-        onCompelete()
-    }
-    DATABASE_REF.child(CURRENT_UID).addListenerForSingleValueEvent(listener)
-}
 
 fun handleSignInresult(task: Task<GoogleSignInAccount>) {
     try {
         val account: GoogleSignInAccount = task.getResult(ApiException::class.java)!!
         val name = account.displayName.toString()
-        val id = account.id.toString()
-        pushUserToFirebase(name, id)
-
+       CURRENT_UID  = account.id.toString()
+        pushUserToFirebase(name)
     } catch (e: ApiException) {
         showToast(e.message.toString())
-
     }
 }
 
-fun pushUserToFirebase(name: String, id: String) {
-    USER = User(id, name)
-    DATABASE_REF.child(id).setValue(USER)
+fun pushUserToFirebase(name: String="") {
+    USER = User(CURRENT_UID, name)
+    DATABASE_REF.child(CURRENT_UID).setValue(USER)
         .addOnFailureListener { showToast(it.message.toString()) }
         .addOnSuccessListener {
             appPreference.setSignIn(true)
             appPreference.setName(USER.name)
             appPreference.setUserId(USER.firebaseId)
-           ON_COMPLETE }
-
+            ON_COMPLETE() }
 }
 
 fun DataSnapshot.getUserFromFirebase() = this.getValue(User::class.java) ?: User()

@@ -6,4 +6,7 @@
     <dimen name="verySmallMargin">4dp</dimen>
     <dimen name="small_padding">4dp</dimen>
     <dimen name="btn_corners">5dp</dimen>
+    <dimen name="registration_google_image">40dp</dimen>
+    <dimen name="big_padding">12dp</dimen>
+    <dimen name="alert_dialog_margin">40dp</dimen>
 </resources>

@@ -9,4 +9,9 @@
     <string name="e_mail">E-mail</string>
     <string name="password">Password</string>
     <string name="registration_toolbar_title">Регистрация</string>
+    <string name="add_info">Заполните все поля</string>
+    <string name="Registration_email_btn">зарегистрироваться</string>
+    <string name="enter_your_name">Введите имя</string>
+    <string name="contune">Продолжить</string>
+    <string name="enter_name">Введите отображаемое имя</string>
 </resources>
