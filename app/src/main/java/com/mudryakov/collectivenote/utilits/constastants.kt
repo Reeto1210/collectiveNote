@@ -8,12 +8,16 @@ import com.mudryakov.collectivenote.database.AppDatabaseRepository
 import com.mudryakov.collectivenote.database.firebase.FireBaseRepository
 import com.mudryakov.collectivenote.models.User
 
-const val CHILD_NAME = "name"
+
+
+
+const val CREATOR ="creator"
+const val MEMBER = "member"
 const val SIGN_CODE_REQUEST = 1488
 const val TYPE_GOOGLE_ACCOUNT = "googleAcc"
 const val TYPE_EMAIL = "emailAcc"
-lateinit var EMAIL:String
-lateinit var PASSWORD:String
+
+
 lateinit var USER: User
 
 lateinit var APP_ACTIVITY:MainActivity

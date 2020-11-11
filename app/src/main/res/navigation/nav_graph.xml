@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.mudryakov.collectivenote.historyFragment"
+        android:name="com.mudryakov.collectivenote.screens.historyFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.mudryakov.collectivenote.MainFragment"
+        android:name="com.mudryakov.collectivenote.screens.mainScreen.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/questFragment"
-        android:name="com.mudryakov.collectivenote.QuestFragment"
+        android:name="com.mudryakov.collectivenote.screens.QuestFragment"
         android:label="fragment_quest"
         tools:layout="@layout/fragment_quest" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.mudryakov.collectivenote.registration.RegistrationFragment"
+        android:name="com.mudryakov.collectivenote.screens.registration.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" >
         <action
@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/newPaymentFragment"
-        android:name="com.mudryakov.collectivenote.newPaymentFragment"
+        android:name="com.mudryakov.collectivenote.screens.newPaymentFragment"
         android:label="fragment_new_payment"
         tools:layout="@layout/fragment_new_payment" >
         <action
@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/roomChooseFragment"
-        android:name="com.mudryakov.collectivenote.roomChooseFragment"
+        android:name="com.mudryakov.collectivenote.screens.roomChoose.roomChooseFragment"
         android:label="fragment_room_choose"
         tools:layout="@layout/fragment_room_choose" >
         <action

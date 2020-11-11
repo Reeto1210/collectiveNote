@@ -7,11 +7,25 @@
     <string name="Use_your_Gogle_account">Использовать свой Google аккаунт</string>
     <string name="Enter">Войти</string>
     <string name="e_mail">E-mail</string>
-    <string name="password">Password</string>
+    <string name="password">Пароль</string>
     <string name="registration_toolbar_title">Регистрация</string>
     <string name="add_info">Заполните все поля</string>
     <string name="Registration_email_btn">зарегистрироваться</string>
     <string name="enter_your_name">Введите имя</string>
     <string name="contune">Продолжить</string>
     <string name="enter_name">Введите отображаемое имя</string>
+    <string name="room_name">Название комнаты</string>
+
+    <string name="room_enter_title_text">Введите данные комнаты</string>
+    <string name="choose_room_alert_dialog_text">В этом окне вы можете создать свою комнату и пригласить туда друзей, либо присоединиться к уже созданой комнате</string>
+    <string name="choose_room_alert_dialog_title">Выберите действие</string>
+    <string name="choose_room_alert_dialog_possitive_button">Создать</string>
+    <string name="choose_room_alert_dialog_negative_button">Присоединиться</string>
+    <string name="create_room">Создать комнату</string>
+    <string name="join_room">Присоединиться к комнате</string>
+    <string name="this_namy_busy">Это название занятно</string>
+    <string name="check_room_acc">Проверьте данные комнаты</string>
+    <string name="toast_room_create_room">\"комната \"</string>
+    <string name="toast_create_room_maded">\ создана\"</string>
+    <string name="toast_join_room">\"Вы присоедились к комнате \"</string>
 </resources>

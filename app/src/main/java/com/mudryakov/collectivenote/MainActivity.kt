@@ -10,7 +10,7 @@ import com.mudryakov.collectivenote.databinding.ActivityMainBinding
 import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
 import com.mudryakov.collectivenote.utilits.SIGN_CODE_REQUEST
 import com.mudryakov.collectivenote.utilits.appPreference
-import com.mudryakov.collectivenote.utilits.handleSignInresult
+import com.mudryakov.collectivenote.database.firebase.handleSignInresult
 
 class MainActivity : AppCompatActivity() {
     var _Binding: ActivityMainBinding? = null

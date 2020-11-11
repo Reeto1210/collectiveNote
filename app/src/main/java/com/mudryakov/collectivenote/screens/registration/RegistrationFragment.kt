@@ -1,4 +1,4 @@
-package com.mudryakov.collectivenote.registration
+package com.mudryakov.collectivenote.screens.registration
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.mudryakov.collectivenote.R
+import com.mudryakov.collectivenote.database.firebase.USERNAME
 import com.mudryakov.collectivenote.databinding.FragmentRegistrationBinding
 
 
@@ -58,25 +59,26 @@ class RegistrationFragment : Fragment() {
                     }
                 }
             }
-        KeyboardVisibilityEvent.setEventListener(APP_ACTIVITY, this, keyBoardListener)
+        KeyboardVisibilityEvent.setEventListener(APP_ACTIVITY, viewLifecycleOwner, keyBoardListener)
 
     }
 
     private fun initialization() {
-        mViewModel = ViewModelProvider(this).get(RegistrationViewModel::class.java)
-        mViewModel.initCommons()
+         initCommons()
         if (appPreference.getSignIn()) {
-            APP_ACTIVITY.navConroller.navigate(R.id.action_registrationFragment_to_roomChooseFragment)
+                    APP_ACTIVITY.navConroller.navigate(R.id.action_registrationFragment_to_roomChooseFragment)
         } else {
+            mViewModel = ViewModelProvider(this).get(RegistrationViewModel::class.java)
             emailBtnClick()
             gooleSighbtnClick()
+
         }
     }
 
     private fun emailBtnClick() {
         mBinding.registrationEmailBtn.setOnClickListener {
             val email = mBinding.registrationInputEmail.text.toString()
-            val pass = mBinding.registrationInputPassword.toString()
+            val pass = mBinding.registrationInputPassword.text.toString()
             if (email.isNotEmpty() && pass.isNotEmpty()) {
                 mViewModel.connectToFirebase(TYPE_EMAIL, email, pass) {
                     onRegisterSuccess()
@@ -102,7 +104,7 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun makeDialog(onConfirm: () -> Unit) {
-        mBinding.registrationDialogName.setText(USER.name)
+        mBinding.registrationDialogName.setText(USERNAME)
         mBinding.firstRegistration.startRegisterAnimation(false)
         mBinding.registrationDialog.startRegisterAnimation(true)
         mBinding.alertChangeNameBtn.setOnClickListener {
