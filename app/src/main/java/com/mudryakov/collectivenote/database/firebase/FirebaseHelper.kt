@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.storage.StorageReference
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
 import com.mudryakov.collectivenote.models.User
 import com.mudryakov.collectivenote.utilits.*
@@ -26,13 +27,20 @@ lateinit var PASSWORD:String
 
 const val CHILD_PASS = "password"
 const val NODE_USERS = "users"
-const val NODE_ROOM_DATA = "groupsData"
+const val NODE_ROOM_DATA = "roomsData"
 const val CHILD_CREATOR = "creator"
 const val NODE_ROOM_NAMES = "roomNames"
+const val NODE_ROOM_PAYMENTS ="roomsPayments"
+const val NODE_ROOMS_QUESTS ="roomsQuests"
+const val NODE_PAYMENT_IMAGES = "paymentImages"
+const val NODE_ROOM_MEMBERS = "rooms_members"
 
 
+lateinit var CURRENT_ROOM_UID:String
 lateinit var REF_DATABASE_ROOT: DatabaseReference
+lateinit var REF_DATABASE_STORAGE: StorageReference
 lateinit var REPOSITORY: AppDatabaseRepository
+
 lateinit var AUTH: FirebaseAuth
 lateinit var CURRENT_UID: String
 private lateinit var ON_REGISTRATION_COMPLETE: () -> Unit
@@ -124,9 +132,12 @@ fun updateUserRoomId(roomkey:String, function: () -> Unit) {
     ).setValue(roomkey)
         .addOnFailureListener { problem -> showToast(problem.message.toString()) }
         .addOnSuccessListener {
-            appPreference.setSignInRoom(true)
-            appPreference.setRoomId(roomkey)
-            function()}
+            REF_DATABASE_ROOT.child(NODE_ROOM_MEMBERS).child(roomkey).child(CURRENT_UID).setValue(CURRENT_UID)
+                .addOnSuccessListener {   appPreference.setSignInRoom(true)
+                appPreference.setRoomId(roomkey)
+                function() }
+                .addOnFailureListener { prob -> showToast(prob.message.toString()) }
+          }
 }
 
 fun DataSnapshot.getUserFromFirebase() = this.getValue(User::class.java) ?: User()

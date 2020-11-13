@@ -1,8 +1,14 @@
 package com.mudryakov.collectivenote.database.firebase
 
+import android.net.Uri
+import com.google.firebase.database.ServerValue
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
-import com.mudryakov.collectivenote.utilits.*
+import com.mudryakov.collectivenote.models.PaymentModel
+import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
+import com.mudryakov.collectivenote.utilits.AppValueEventListener
+import com.mudryakov.collectivenote.utilits.appPreference
+import com.mudryakov.collectivenote.utilits.showToast
 
 class FireBaseRepository : AppDatabaseRepository {
 
@@ -12,7 +18,7 @@ class FireBaseRepository : AppDatabaseRepository {
     }
 
 
-    override  fun createNewRoom(roomName: String, roomPass: String, onSucces: () -> Unit) {
+    override fun createNewRoom(roomName: String, roomPass: String, onSucces: () -> Unit) {
         REF_DATABASE_ROOT.child(NODE_ROOM_NAMES).addListenerForSingleValueEvent(
             AppValueEventListener { DataSnapshot ->
                 if (DataSnapshot.hasChild(roomName)) {
@@ -29,7 +35,7 @@ class FireBaseRepository : AppDatabaseRepository {
         )
     }
 
-    override  fun joinRoom(roomName: String, roomPass: String, onSucces: () -> Unit) {
+    override fun joinRoom(roomName: String, roomPass: String, onSucces: () -> Unit) {
         lateinit var tryingId: String
         REF_DATABASE_ROOT.child(NODE_ROOM_NAMES).child(roomName)
             .addListenerForSingleValueEvent(AppValueEventListener {
@@ -38,7 +44,7 @@ class FireBaseRepository : AppDatabaseRepository {
                     .addListenerForSingleValueEvent(AppValueEventListener { DataSnapshot ->
                         if (DataSnapshot.value == roomPass) {
                             updateUserRoomId(tryingId) {
-                                        onSucces()
+                                onSucces()
                             }
                         } else {
                             showToast(APP_ACTIVITY.getString(R.string.check_room_acc))
@@ -49,11 +55,17 @@ class FireBaseRepository : AppDatabaseRepository {
     }
 
 
-    override  fun addNewPayment(onSucces: () -> Unit) {
-        TODO("Not yet implemented")
+    override  fun addNewPayment(payment: PaymentModel, onSucces: () -> Unit) {
+        val currentRef = REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID)
+        val key = currentRef.push().key.toString()
+        payment.firebaseId = key
+        payment.time = ServerValue.TIMESTAMP
+        currentRef.child(key).setValue(payment).addOnSuccessListener { onSucces() }
+            .addOnFailureListener { showToast(it.message.toString()) }
     }
 
-    override  fun changeName(name: String, onSucces: () -> Unit) {
+
+    override fun changeName(name: String, onSucces: () -> Unit) {
         REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_NAME).setValue(name)
             .addOnSuccessListener {
                 appPreference.setUserId(CURRENT_UID)
@@ -64,12 +76,28 @@ class FireBaseRepository : AppDatabaseRepository {
             .addOnFailureListener { showToast(it.message.toString()) }
     }
 
-    override  fun addnewQuest(onSucces: () -> Unit) {
+    override fun addnewQuest(onSucces: () -> Unit) {
         TODO("Not yet implemented")
     }
 
-    override  fun getQuest(onSucces: () -> Unit) {
+    override fun getQuest(onSucces: () -> Unit) {
         TODO("Not yet implemented")
+    }
+
+    override fun pushFileToBase(imageUri: Uri, onSucces: (String) -> Unit) {
+val key = REF_DATABASE_ROOT.push().key.toString()
+        val path = REF_DATABASE_STORAGE.child(NODE_PAYMENT_IMAGES).child(key)
+        path.putFile(imageUri)
+            .addOnFailureListener { showToast(it.message.toString()) }
+            .addOnCompleteListener {_->
+                path.downloadUrl
+                    .addOnFailureListener {ex-> showToast(ex.message.toString()) }
+                    .addOnSuccessListener { onSucces(it.toString()) }
+
+
+            }
+
+
     }
 
 }

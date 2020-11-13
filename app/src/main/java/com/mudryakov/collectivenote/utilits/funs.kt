@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.core.view.ViewCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.mudryakov.collectivenote.database.firebase.*
 import com.mudryakov.collectivenote.models.User
 
@@ -37,5 +38,5 @@ fun initCommons() {
     REPOSITORY = FireBaseRepository()
     AUTH = FirebaseAuth.getInstance()
     REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference
-
+    REF_DATABASE_STORAGE = FirebaseStorage.getInstance().reference
 }

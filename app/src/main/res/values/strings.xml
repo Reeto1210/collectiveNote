@@ -33,4 +33,9 @@
     <string name="settings">Настройки</string>
     <string name="help">Помощь</string>
     <string name="add_new_payment_title">Добавление нового платежа</string>
+    <string name="summ">Сумма</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="add_new_payment_description_hint">Назначение</string>
+    <string name="fill_all_plates">Заполните поля</string>
+    <string name="toast_payment_added">Платёж добавлен</string>
 </resources>

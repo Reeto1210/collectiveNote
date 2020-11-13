@@ -38,5 +38,6 @@ class MainActivity : AppCompatActivity() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInresult(task)
         }
+
     }
 }

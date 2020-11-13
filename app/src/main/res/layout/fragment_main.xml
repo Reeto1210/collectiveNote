@@ -24,16 +24,13 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
 
-       android:id="@+id/main_add_new_payment"
+        android:id="@+id/main_add_new_payment"
         android:src="@drawable/ic_baseline_add_24"
         app:tint= "@color/white"
-        android:backgroundTint="@color/design_default_color_primary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/app_margin"
         app:layout_anchor="@id/include"
         app:layout_anchorGravity="end"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        style="@style/fab_style" />
 
     <include
         android:id="@+id/include"

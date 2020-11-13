@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.mudryakov.collectivenote.R
+import com.mudryakov.collectivenote.database.firebase.CURRENT_ROOM_UID
+import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.databinding.FragmentMainBinding
 import com.mudryakov.collectivenote.models.User
 import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
@@ -40,7 +42,8 @@ class MainFragment : Fragment() {
         mViewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
         USER =
             User(appPreference.getUserId(), appPreference.getUserName(), appPreference.getRoomId())
-
+        CURRENT_UID = USER.firebaseId
+        CURRENT_ROOM_UID = USER.roomId
 
     }
 
