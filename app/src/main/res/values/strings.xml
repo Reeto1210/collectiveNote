@@ -28,4 +28,9 @@
     <string name="toast_room_create_room">\"комната \"</string>
     <string name="toast_create_room_maded">\ создана\"</string>
     <string name="toast_join_room">\"Вы присоедились к комнате \"</string>
+    <string name="bottom_sheet_history">История вложений</string>
+    <string name="bottom_sheet_take_quest">Взять задание</string>
+    <string name="settings">Настройки</string>
+    <string name="help">Помощь</string>
+    <string name="add_new_payment_title">Добавление нового платежа</string>
 </resources>

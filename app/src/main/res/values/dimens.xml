@@ -9,4 +9,8 @@
     <dimen name="registration_google_image">40dp</dimen>
     <dimen name="big_padding">12dp</dimen>
     <dimen name="alert_dialog_margin">40dp</dimen>
+    <dimen name="bottom_sheet_btn_size">60dp</dimen>
+    <dimen name="normal_text">20sp</dimen>
+    <dimen name="bottom_sheet_arrow">50dp</dimen>
+    <dimen name="app_elevation">6dp</dimen>
 </resources>

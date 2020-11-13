@@ -33,6 +33,7 @@ class RegistrationFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _Binding = null
+
     }
 
     override fun onStart() {

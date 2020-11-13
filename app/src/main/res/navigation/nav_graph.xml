@@ -34,6 +34,12 @@
         <action
             android:id="@+id/action_mainFragment_to_roomChooseFragment"
             app:destination="@id/roomChooseFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/questFragment"
@@ -55,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/newPaymentFragment"
-        android:name="com.mudryakov.collectivenote.screens.newPaymentFragment"
+        android:name="com.mudryakov.collectivenote.screens.addNewPayment.newPaymentFragment"
         android:label="fragment_new_payment"
         tools:layout="@layout/fragment_new_payment" >
         <action
@@ -70,5 +76,26 @@
         <action
             android:id="@+id/action_roomChooseFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.mudryakov.collectivenote.screens.HelpFragment"
+        android:label="fragment_help"
+        tools:layout="@layout/fragment_help" >
+        <action
+            android:id="@+id/action_helpFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.mudryakov.collectivenote.screens.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_roomChooseFragment"
+            app:destination="@id/roomChooseFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
     </fragment>
 </navigation>

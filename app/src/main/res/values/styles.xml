@@ -28,4 +28,34 @@
         <item name="android:textSize">@dimen/Large_text</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="bottom_sheet_btn_style">
+        <item name="android:layout_width">@dimen/bottom_sheet_btn_size</item>
+        <item name="android:layout_height">@dimen/bottom_sheet_btn_size</item>
+    </style>
+
+    <style name="bottom_sheet_divider">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="bottom_sheet_linear_layout_style">
+
+        <item name="android:layout_margin">@dimen/app_margin</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">false</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bottom_sheet_btn_ripple</item>
+
+    </style>
+
+    <style name="bottom_sheet_text_style">
+        <item name="android:textSize">@dimen/normal_text</item>
+        <item name="android:layout_margin">@dimen/app_margin</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
