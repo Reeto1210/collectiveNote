@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
+import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.User
 import com.mudryakov.collectivenote.utilits.*
 
@@ -139,5 +140,7 @@ fun updateUserRoomId(roomkey:String, function: () -> Unit) {
                 .addOnFailureListener { prob -> showToast(prob.message.toString()) }
           }
 }
+fun PaymentModel.convertIdtoName() {
 
+}
 fun DataSnapshot.getUserFromFirebase() = this.getValue(User::class.java) ?: User()

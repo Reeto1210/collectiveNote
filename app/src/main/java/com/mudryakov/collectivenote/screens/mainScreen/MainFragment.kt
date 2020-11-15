@@ -42,8 +42,7 @@ class MainFragment : Fragment() {
         mViewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
         USER =
             User(appPreference.getUserId(), appPreference.getUserName(), appPreference.getRoomId())
-        CURRENT_UID = USER.firebaseId
-        CURRENT_ROOM_UID = USER.roomId
+         CURRENT_ROOM_UID = USER.roomId
 
     }
 

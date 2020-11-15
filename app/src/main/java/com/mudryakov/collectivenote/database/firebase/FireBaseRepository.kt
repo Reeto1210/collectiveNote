@@ -1,6 +1,7 @@
 package com.mudryakov.collectivenote.database.firebase
 
 import android.net.Uri
+import androidx.lifecycle.LiveData
 import com.google.firebase.database.ServerValue
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
@@ -11,7 +12,7 @@ import com.mudryakov.collectivenote.utilits.appPreference
 import com.mudryakov.collectivenote.utilits.showToast
 
 class FireBaseRepository : AppDatabaseRepository {
-
+    override val allPayments: LiveData<List<PaymentModel>> = allPaymentsFirebase()
 
     override fun connectToDatabase(type: String, onSucces: () -> Unit) {
         logIn(type) { onSucces() }

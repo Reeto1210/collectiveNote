@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.mudryakov.collectivenote.screens.historyFragment"
+        android:name="com.mudryakov.collectivenote.screens.history.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" >
         <action

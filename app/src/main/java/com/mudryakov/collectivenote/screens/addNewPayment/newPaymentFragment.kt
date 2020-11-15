@@ -38,8 +38,6 @@ class newPaymentFragment : Fragment() {
     }
 
     private fun initialization() {
-
-
         mViewModel = ViewModelProvider(this).get(AddNewPaymentViewModel::class.java)
         mBinding.addNewPaymentConfirm.setOnClickListener {
             val sum = mBinding.addNewPaymentSumm.text.toString()
@@ -50,14 +48,16 @@ class newPaymentFragment : Fragment() {
                 }
             else showToast(getString(R.string.fill_all_plates))
 
-           if (sum.isNotEmpty() && description.isNotEmpty()) {hideKeyboard(APP_ACTIVITY)
-            APP_ACTIVITY.navConroller.navigate(R.id.action_newPaymentFragment_to_mainFragment)}
+            if (sum.isNotEmpty() && description.isNotEmpty()) {
+                hideKeyboard(APP_ACTIVITY)
+                APP_ACTIVITY.navConroller.navigate(R.id.action_newPaymentFragment_to_mainFragment)
+            }
         }
 
-        mBinding.addPaymentPhoto.setOnClickListener {
+        mBinding.addPaymentAttachImage.setOnClickListener {
             CropImage.activity()
                 .setAspectRatio(1, 1)
-                .setRequestedSize(250, 250)
+                .setRequestedSize(600, 600)
                 .start(APP_ACTIVITY, this)
         }
 
@@ -68,6 +68,7 @@ class newPaymentFragment : Fragment() {
             && resultCode == RESULT_OK
         ) {
             imageUri = CropImage.getActivityResult(data).uri
+            mBinding.addPaymentAttachImage.setImageURI(imageUri)
         }
     }
 }

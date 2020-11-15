@@ -11,6 +11,7 @@
     <color name="colorBottomSheetBackground">#F8E2E2</color>
     <color name="color_for_main_on_bottom_open">#7E000000</color>
     <color name="color_ripple">#666363</color>
+    <color name="color_grey_image">#A8A5A5</color>
 
 
 </resources>

@@ -7,10 +7,10 @@
     tools:context=".screens.addNewPayment.newPaymentFragment">
 
     <EditText
-       android:inputType="numberDecimal"
         android:id="@+id/add_new_payment_summ"
         style="@style/input_text_style"
         android:hint="@string/summ"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,7 +19,8 @@
         android:id="@+id/add_new_payment_description"
         style="@style/input_text_style"
         android:hint="@string/add_new_payment_description_hint"
-        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintEnd_toStartOf="@+id/add_payment_attach_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_new_payment_summ" />
 
@@ -31,13 +32,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_new_payment_description" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_payment_photo"
-        style="@style/fab_style"
+    <ImageView
+       android:padding="@dimen/small_padding"
+        android:id="@+id/add_payment_attach_image"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_margin="@dimen/app_margin"
+        android:background="@drawable/background_for_custom_buttons"
         android:src="@drawable/ic_add_photo"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/add_new_payment_description"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/white" />
+        app:layout_constraintTop_toTopOf="@+id/add_new_payment_description" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

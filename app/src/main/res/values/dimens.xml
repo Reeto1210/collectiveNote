@@ -13,4 +13,8 @@
     <dimen name="normal_text">20sp</dimen>
     <dimen name="bottom_sheet_arrow">50dp</dimen>
     <dimen name="app_elevation">6dp</dimen>
+    <dimen name="history_recycle_name_length">100dp</dimen>
+    <dimen name="history_recycle_item_date">100dp</dimen>
+    <dimen name="history_recycle_image_indicator">35dp</dimen>
+    <dimen name="history_recycle_full_image">300dp</dimen>
 </resources>

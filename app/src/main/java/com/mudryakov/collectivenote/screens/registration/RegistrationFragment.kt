@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.mudryakov.collectivenote.R
+import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.database.firebase.USERNAME
 import com.mudryakov.collectivenote.databinding.FragmentRegistrationBinding
 
@@ -67,6 +68,7 @@ class RegistrationFragment : Fragment() {
     private fun initialization() {
          initCommons()
         if (appPreference.getSignIn()) {
+            CURRENT_UID = appPreference.getUserId()
                     APP_ACTIVITY.navConroller.navigate(R.id.action_registrationFragment_to_roomChooseFragment)
         } else {
             mViewModel = ViewModelProvider(this).get(RegistrationViewModel::class.java)

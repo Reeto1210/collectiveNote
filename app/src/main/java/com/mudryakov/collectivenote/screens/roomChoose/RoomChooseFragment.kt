@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.mudryakov.collectivenote.R
+import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.database.firebase.USERNAME
 import com.mudryakov.collectivenote.databinding.FragmentRoomChooseBinding
 import com.mudryakov.collectivenote.utilits.*
@@ -29,12 +30,10 @@ class roomChooseFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         initialization()
-
         if (appPreference.getSignInRoom()) {
             showToast(getString(R.string.toast_join_room) + appPreference.getRoomId())
             navNext()
         } else {
-
         val builder = AlertDialog.Builder(this.context)
         builder.setTitle(getString(R.string.choose_room_alert_dialog_title))
             .setMessage(getString(R.string.choose_room_alert_dialog_text))
@@ -50,13 +49,14 @@ class roomChooseFragment : Fragment() {
             }
             .setCancelable(false)
             .show()
+
     }
     }
 
     private fun initialization() {
+        CURRENT_UID = appPreference.getUserId()
         APP_ACTIVITY.title = USERNAME
         mViewModel = ViewModelProvider(APP_ACTIVITY).get(RoomChooseViewModel::class.java)
-
     }
 
     private fun enterRoom(userType: String) {

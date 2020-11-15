@@ -9,6 +9,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.mudryakov.collectivenote.database.firebase.*
 import com.mudryakov.collectivenote.models.User
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun showToast(text: String) = Toast.makeText(APP_ACTIVITY, text, Toast.LENGTH_SHORT).show()
 
@@ -39,4 +41,9 @@ fun initCommons() {
     AUTH = FirebaseAuth.getInstance()
     REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference
     REF_DATABASE_STORAGE = FirebaseStorage.getInstance().reference
+}
+ fun String.transformToDate(): String {
+ val date = Date(this.toLong())
+    val timeFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+    return timeFormat.format(date)
 }
