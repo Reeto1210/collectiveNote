@@ -35,7 +35,7 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.myV
 
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
 
-        holder.fromName.text = "Мудряков"
+        holder.fromName.text = listOfpayments[position].fromName
         holder.description.text = listOfpayments[position].description
         holder.sum.text = listOfpayments[position].summ
         holder.date.text = listOfpayments[position].time.toString().transformToDate()
@@ -52,7 +52,6 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.myV
             listOfpayments.add(payment)
             listOfpayments.sortByDescending { it.time.toString() }
             notifyItemInserted(listOfpayments.indexOf(payment))
-
         }
     }
 
@@ -60,7 +59,7 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.myV
         holder.attachedImage.setOnClickListener {
             if (holder.fullScreenImage.visibility == View.GONE && listOfpayments[holder.adapterPosition].imageUrl != "empty") {
                 holder.fullScreenImage.visibility = View.VISIBLE
-                holder.fullScreenImage.setImageResource(R.drawable.test)           ///тут сейчас будем загружать картинку из файловой системы, проверяя её наличие по руму, если нет в файлахБ скачиваем в файлы и добавляем в рум.
+                holder.fullScreenImage.setImageResource(R.drawable.test) ///тут сейчас будем загружать картинку из файловой системы, проверяя её наличие по руму, если нет в файлахБ скачиваем в файлы и добавляем в рум.
             } else {
                 holder.fullScreenImage.visibility = View.GONE
             }
@@ -76,5 +75,8 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.myV
     }
 
 }
+
+
+
 
 

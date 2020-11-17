@@ -9,8 +9,6 @@ class allPaymentsFirebase: LiveData<List<PaymentModel>>() {
     val listener = AppValueEventListener{ DataSnapshot->
         value = DataSnapshot.children.map { it.getValue(PaymentModel::class.java)?:PaymentModel()
         }
-
-
     }
 
     override fun onActive() {
@@ -22,5 +20,6 @@ class allPaymentsFirebase: LiveData<List<PaymentModel>>() {
         super.onInactive()
         REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID).removeEventListener(listener)
     }
+
 
 }

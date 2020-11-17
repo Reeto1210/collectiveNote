@@ -39,4 +39,7 @@
     <string name="fill_all_plates">Заполните поля</string>
     <string name="toast_payment_added">Платёж добавлен</string>
     <string name="history">История</string>
+    <string name="catch_payment_summ">Неверный формат суммы</string>
+     <string name="value_members">Количество участников: %1$d</string>
+     <string name="total_sum_payed">Всего потрачено: %1$d</string>
 </resources>

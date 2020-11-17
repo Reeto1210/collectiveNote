@@ -16,6 +16,7 @@
 
 
     <EditText
+
         android:id="@+id/room_choose_name"
         style="@style/input_text_style"
         android:layout_marginTop="276dp"

@@ -19,9 +19,10 @@ class HistoryFragment : Fragment() {
     var _Binding: FragmentHistoryBinding? = null
     val mBinding get() = _Binding!!
     lateinit var mViewModel: HistoryFragmentViewModel
-    lateinit var mObserver: Observer<List<PaymentModel>>
+    lateinit var mPaymentObserver: Observer<List<PaymentModel>>
     lateinit var mAdapter: HistoryRecyclerAdapter
     lateinit var mRecyclerView: RecyclerView
+    var count = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,23 +35,29 @@ class HistoryFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         initialization()
-        mViewModel.paymentList.observe(this, mObserver)
+        mViewModel.paymentList.observe(this, mPaymentObserver)
+
     }
 
     private fun initialization() {
+        mViewModel = ViewModelProvider(this).get(HistoryFragmentViewModel::class.java)
+
         mRecyclerView = mBinding.historyRecycle
         mAdapter = HistoryRecyclerAdapter()
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = LinearLayoutManager(APP_ACTIVITY)
-        mViewModel = ViewModelProvider(this).get(HistoryFragmentViewModel::class.java)
-        mObserver = Observer {
+        mPaymentObserver = Observer {
             it.forEach { pay ->
-                //тут меняем id человека на имя
-                mAdapter.addItem(pay) }
+                mAdapter.addItem(pay)
+            }
             mRecyclerView.smoothScrollToPosition(0)
 
         }
     }
 
-
+    override fun onDestroyView() {
+        _Binding = null
+        mViewModel.paymentList.removeObserver(mPaymentObserver)
+        super.onDestroyView()
+    }
 }

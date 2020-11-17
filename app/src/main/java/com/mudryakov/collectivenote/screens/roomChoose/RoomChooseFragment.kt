@@ -31,6 +31,7 @@ class roomChooseFragment : Fragment() {
         super.onStart()
         initialization()
         if (appPreference.getSignInRoom()) {
+            CURRENT_UID = appPreference.getUserId()
             showToast(getString(R.string.toast_join_room) + appPreference.getRoomId())
             navNext()
         } else {
@@ -54,7 +55,6 @@ class roomChooseFragment : Fragment() {
     }
 
     private fun initialization() {
-        CURRENT_UID = appPreference.getUserId()
         APP_ACTIVITY.title = USERNAME
         mViewModel = ViewModelProvider(APP_ACTIVITY).get(RoomChooseViewModel::class.java)
     }

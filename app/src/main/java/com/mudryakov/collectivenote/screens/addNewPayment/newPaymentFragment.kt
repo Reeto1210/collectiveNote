@@ -34,7 +34,6 @@ class newPaymentFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         initialization()
-
     }
 
     private fun initialization() {
@@ -42,25 +41,29 @@ class newPaymentFragment : Fragment() {
         mBinding.addNewPaymentConfirm.setOnClickListener {
             val sum = mBinding.addNewPaymentSumm.text.toString()
             val description = mBinding.addNewPaymentDescription.text.toString()
-            if (sum.isNotEmpty() && description.isNotEmpty())
-                mViewModel.addNewPayment(sum, description, imageUri) {
-                    showToast(getString(R.string.toast_payment_added))
-                }
-            else showToast(getString(R.string.fill_all_plates))
+            try {
+                sum.toInt()
+                if (sum.isNotEmpty() && description.isNotEmpty())
+                    mViewModel.addNewPayment(sum, description, imageUri) {
+                        showToast(getString(R.string.toast_payment_added))
 
-            if (sum.isNotEmpty() && description.isNotEmpty()) {
-                hideKeyboard(APP_ACTIVITY)
-                APP_ACTIVITY.navConroller.navigate(R.id.action_newPaymentFragment_to_mainFragment)
+                    }
+                else showToast(getString(R.string.fill_all_plates))
+                if (sum.isNotEmpty() && description.isNotEmpty()) {
+                    hideKeyboard(APP_ACTIVITY)
+                    APP_ACTIVITY.navConroller.navigate(R.id.action_newPaymentFragment_to_mainFragment)
+                }
+            } catch (e: Exception) {
+                mBinding.addNewPaymentSumm.setText("")
+                showToast(getString(R.string.catch_payment_summ))
             }
         }
-
         mBinding.addPaymentAttachImage.setOnClickListener {
             CropImage.activity()
                 .setAspectRatio(1, 1)
                 .setRequestedSize(600, 600)
                 .start(APP_ACTIVITY, this)
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

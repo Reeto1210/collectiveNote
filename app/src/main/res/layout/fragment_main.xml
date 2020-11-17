@@ -7,31 +7,58 @@
     android:layout_height="match_parent">
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_main_recycle"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="@dimen/app_margin"
+            android:background="@color/white"
+            android:elevation="@dimen/app_elevation"
+            android:maxHeight="@dimen/max_main_fragment_recycle_height"
+            android:padding="@dimen/small_padding"
+            android:scrollbars="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_fragment_total_payment_room"
+            tools:listitem="@layout/main_fragment_recycle_item" />
+
+        <TextView
+            android:id="@+id/main_fragment_total_payment_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/app_margin"
+            android:background="@color/white"
+            android:elevation="@dimen/app_elevation"
+            android:padding="@dimen/small_padding"
+            android:textColor="@color/black"
+            android:textSize="@dimen/normal_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/main_back"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0"
-            android:background="@color/color_for_main_on_bottom_open" />
+            android:background="@color/color_for_main_on_bottom_open"
+            android:elevation="@dimen/elevation_for_dask"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-
         android:id="@+id/main_add_new_payment"
+        style="@style/fab_style"
         android:src="@drawable/ic_baseline_add_24"
-        app:tint= "@color/white"
         app:layout_anchor="@id/include"
         app:layout_anchorGravity="end"
-        tools:ignore="ContentDescription"
-        style="@style/fab_style" />
-
+        app:tint="@color/white"
+        tools:ignore="ContentDescription" />
     <include
         android:id="@+id/include"
         layout="@layout/main_bottom_sheet" />

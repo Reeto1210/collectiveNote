@@ -8,7 +8,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.mudryakov.collectivenote.database.firebase.*
-import com.mudryakov.collectivenote.models.User
+import com.mudryakov.collectivenote.models.PaymentModel
+import com.mudryakov.collectivenote.models.UserModel
+import com.mudryakov.collectivenote.screens.mainScreen.MainFragmentViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 

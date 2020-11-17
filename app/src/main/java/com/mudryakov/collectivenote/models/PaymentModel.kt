@@ -5,11 +5,13 @@ data class PaymentModel(
     val summ: String = "",
     val description: String = "",
     var time: Any = "",
-    val fromId: String = "",
-    var imageUrl: String = "empty"
-){
+    var fromId: String = "",
+    var imageUrl: String = "empty",
+    var fromName: String = ""
+) {
     override fun equals(other: Any?): Boolean {
         if (other !is PaymentModel) return false
-        return  this.firebaseId == other.firebaseId
+        return this.firebaseId == other.firebaseId
     }
 }
+
