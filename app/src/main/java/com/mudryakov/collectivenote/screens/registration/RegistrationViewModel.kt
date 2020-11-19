@@ -2,22 +2,27 @@ package com.mudryakov.collectivenote.screens.registration
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
-import com.mudryakov.collectivenote.database.firebase.EMAIL
-import com.mudryakov.collectivenote.database.firebase.PASSWORD
-import com.mudryakov.collectivenote.database.firebase.REPOSITORY
-import com.mudryakov.collectivenote.utilits.*
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.mudryakov.collectivenote.database.RoomDatabase.AppRoomRepository
+import com.mudryakov.collectivenote.database.RoomDatabase.MyRoomDatabase
+//import com.mudryakov.collectivenote.database.RoomDatabase.MyRoomDatabase
+import com.mudryakov.collectivenote.database.firebase.*
+import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
+import com.mudryakov.collectivenote.utilits.TYPE_EMAIL
+import com.mudryakov.collectivenote.utilits.TYPE_GOOGLE_ACCOUNT
+import com.mudryakov.collectivenote.utilits.appPreference
 
 class RegistrationViewModel(application: Application) : AndroidViewModel(application) {
+    val mContext = application.applicationContext
 
     fun connectToFirebase(
         type: String,
         email: String = "",
         password: String = "",
         onSucces: () -> Unit
-    )  {
+    ) {
         when (type) {
             TYPE_GOOGLE_ACCOUNT -> REPOSITORY.connectToDatabase(TYPE_GOOGLE_ACCOUNT, onSucces)
             TYPE_EMAIL -> {
@@ -29,11 +34,21 @@ class RegistrationViewModel(application: Application) : AndroidViewModel(applica
     }
 
 
-
     fun changeName(name: String, onSucces: () -> Unit) {
         REPOSITORY.changeName(name) {
-             onSucces()
+            onSucces()
         }
+
+    }
+
+    fun initCommons() {
+        appPreference.getPreference(APP_ACTIVITY)
+        val dao = MyRoomDatabase.getDatabase(mContext).getDao()
+        ROOM_REPOSITORY = AppRoomRepository(dao)
+        REPOSITORY = FireBaseRepository()
+        AUTH = FirebaseAuth.getInstance()
+        REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference
+        REF_DATABASE_STORAGE = FirebaseStorage.getInstance().reference
 
     }
 

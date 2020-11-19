@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
+import com.mudryakov.collectivenote.database.RoomDatabase.AppRoomRepository
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utilits.*
@@ -43,6 +44,7 @@ lateinit var CURRENT_ROOM_UID:String
 lateinit var REF_DATABASE_ROOT: DatabaseReference
 lateinit var REF_DATABASE_STORAGE: StorageReference
 lateinit var REPOSITORY: AppDatabaseRepository
+lateinit var ROOM_REPOSITORY:AppRoomRepository
 
 lateinit var AUTH: FirebaseAuth
 lateinit var CURRENT_UID: String

@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.savedstate:savedstate:1.1.0-alpha01@aar">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/f79289b02f447e8fc72cf0bedb38d324/jetified-savedstate-1.1.0-alpha01/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/f79289b02f447e8fc72cf0bedb38d324/jetified-savedstate-1.1.0-alpha01/res" />
-      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/f79289b02f447e8fc72cf0bedb38d324/jetified-savedstate-1.1.0-alpha01/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/5e9007316445fd46352842f9fecadc0e/jetified-savedstate-1.1.0-alpha01/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/5e9007316445fd46352842f9fecadc0e/jetified-savedstate-1.1.0-alpha01/res" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/5e9007316445fd46352842f9fecadc0e/jetified-savedstate-1.1.0-alpha01/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

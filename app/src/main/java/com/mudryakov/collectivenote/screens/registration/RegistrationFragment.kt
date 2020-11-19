@@ -66,12 +66,13 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun initialization() {
-         initCommons()
+        mViewModel = ViewModelProvider(this).get(RegistrationViewModel::class.java)
+         mViewModel.initCommons()
         if (appPreference.getSignIn()) {
             CURRENT_UID = appPreference.getUserId()
                     APP_ACTIVITY.navConroller.navigate(R.id.action_registrationFragment_to_roomChooseFragment)
         } else {
-            mViewModel = ViewModelProvider(this).get(RegistrationViewModel::class.java)
+
             emailBtnClick()
             gooleSighbtnClick()
 
@@ -115,4 +116,5 @@ class RegistrationFragment : Fragment() {
             mViewModel.changeName(newName) { onConfirm() }
         }
     }
+
 }
