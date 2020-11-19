@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_mainFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_singleUserPayments"
+            app:destination="@id/singleUserPayments" />
     </fragment>
     <fragment
         android:id="@+id/questFragment"
@@ -97,5 +100,14 @@
         <action
             android:id="@+id/action_settingsFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleUserPayments"
+        android:name="com.mudryakov.collectivenote.screens.singleUserPayments.SingleUserPayments"
+        android:label="fragment_single_user_payments"
+        tools:layout="@layout/fragment_single_user_payments" >
+        <action
+            android:id="@+id/action_singleUserPayments_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
 </navigation>

@@ -26,7 +26,7 @@ var USERNAME:String = ""
 lateinit var EMAIL:String
 lateinit var PASSWORD:String
 
-
+const val NODE_UPDATE_HELPER ="updateHelper"
 const val CHILD_PASS = "password"
 const val CHILD_TOTALPAY_AT_CURRENT_ROOM = "totalPayAtCurrentRoom"
 const val NODE_USERS = "users"
@@ -131,6 +131,7 @@ fun pushRoomToFirebase(roomName: String, roomPass: String, function: (String) ->
     mainHashMap["$NODE_ROOM_NAMES/$roomName"] = roomkey
     REF_DATABASE_ROOT.updateChildren(mainHashMap)
         .addOnSuccessListener {function(roomkey)
+            REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID).setValue("Created")
         }
         .addOnFailureListener { problem -> showToast(problem.message.toString()) }
 }

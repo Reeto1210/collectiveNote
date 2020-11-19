@@ -27,7 +27,7 @@ class MainFragment : Fragment() {
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<*>
     private lateinit var mObserver: Observer<List<UserModel>>
     private lateinit var mRecycle: RecyclerView
-    private lateinit var mAdapter: MainRecycleAdapter
+    var mAdapter:MainRecycleAdapter? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,7 +48,7 @@ class MainFragment : Fragment() {
             var totalSumm = 0
             list.forEach {
                 totalSumm += it.totalPayAtCurrentRoom.toInt()
-                mAdapter.addItem(it)
+                mAdapter?.addItem(it)
             }
             mBinding.mainFragmentTotalPaymentRoom.text =
                 getString(R.string.total_sum_payed, totalSumm)

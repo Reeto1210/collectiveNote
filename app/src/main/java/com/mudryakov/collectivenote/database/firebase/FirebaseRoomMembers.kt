@@ -1,25 +1,28 @@
 package com.mudryakov.collectivenote.database.firebase
 
 import androidx.lifecycle.LiveData
+import com.google.firebase.database.ChildEventListener
 import com.mudryakov.collectivenote.models.UserModel
+import com.mudryakov.collectivenote.utilits.AppChildEventValueListener
 import com.mudryakov.collectivenote.utilits.AppValueEventListener
 import com.mudryakov.collectivenote.utilits.addMySingleListener
 
 
 class FirebaseRoomMembers : LiveData<List<UserModel>>() {
+
     val mutableListOFUsers = mutableListOf<UserModel>()
     lateinit var list: List<String>
 
     val listener = AppValueEventListener {
+        mutableListOFUsers.clear()
 
         REF_DATABASE_ROOT.child(NODE_ROOM_MEMBERS).child(CURRENT_ROOM_UID)
-            .addValueEventListener(AppValueEventListener {DatasnapShot ->
-                list = DatasnapShot.children.map { it.value.toString() }
-                mutableListOFUsers.clear()
+            .addMySingleListener{DatasnapShot ->
+                list = DatasnapShot.children.map { sn-> sn.value.toString() }
                 list.forEach { id ->
                     getUserFromId(id)
                 }
-            })
+            }
     }
 
     private fun getUserFromId(id: String) {
@@ -32,21 +35,21 @@ class FirebaseRoomMembers : LiveData<List<UserModel>>() {
                 ).addMySingleListener {
                     currentUser.totalPayAtCurrentRoom = it.value.toString()
                     mutableListOFUsers.add(currentUser)
-                    if (mutableListOFUsers.size == list.size) value = mutableListOFUsers
+                    if (mutableListOFUsers.size == list.size){ value = mutableListOFUsers}
+
                 }
             }
     }
 
 
     override fun onActive() {
-       REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID).addValueEventListener(listener)
+      REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID).addValueEventListener(listener)
         super.onActive()
 
     }
 
     override fun onInactive() {
-        REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID)
-            .removeEventListener(listener)
+        REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID).removeEventListener(listener)
         super.onInactive()
     }
 

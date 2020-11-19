@@ -15,7 +15,7 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>
     class myViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val username = view.main_recycle_item_username
         val totalPayd = view.main_recycle_item_total_summ
-
+        val divider = view.divider
     }
 
 
@@ -27,7 +27,9 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>
 
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
         val currentUser = list[position]
-        holder.totalPayd.text = if ( currentUser.totalPayAtCurrentRoom.isNotEmpty()) currentUser.totalPayAtCurrentRoom else "0"
+       // holder.divider.visibility = if (position == 0) View.INVISIBLE else View.INVISIBLE
+        holder.totalPayd.text =
+            if (currentUser.totalPayAtCurrentRoom.isNotEmpty()) currentUser.totalPayAtCurrentRoom else "0"
         holder.username.text = currentUser.name
     }
 
@@ -52,9 +54,9 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>
 
     private fun addUserToRecycle(user: UserModel) {
         list.add(user)
-       if (user.firebaseId == CURRENT_UID){
-          list.reverse()
-       }
+        if (user.firebaseId == CURRENT_UID) {
+            list.reverse()
+        }
         notifyItemInserted(list.indexOf(user))
     }
 

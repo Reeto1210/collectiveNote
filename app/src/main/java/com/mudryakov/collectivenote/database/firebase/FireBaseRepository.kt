@@ -8,6 +8,7 @@ import com.mudryakov.collectivenote.database.AppDatabaseRepository
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utilits.*
+import kotlin.random.Random
 
 class FireBaseRepository : AppDatabaseRepository {
 
@@ -43,6 +44,8 @@ class FireBaseRepository : AppDatabaseRepository {
                 REF_DATABASE_ROOT.child(NODE_ROOM_DATA).child(tryingId).child(CHILD_PASS)
                     .addListenerForSingleValueEvent(AppValueEventListener { DataSnapshot ->
                         if (DataSnapshot.value == roomPass) {
+                            REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID).setValue(
+                                Random(10000))
                             updateUserRoomId(tryingId) {
                                 onSucces()
                             }
@@ -72,7 +75,8 @@ class FireBaseRepository : AppDatabaseRepository {
                             CHILD_TOTALPAY_AT_CURRENT_ROOM
                         ).setValue(totalSumm)
                             .addOnSuccessListener {
-                            appPreference.setTotalSumm(totalSumm)
+                            REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID).setValue(key)
+                                appPreference.setTotalSumm(totalSumm)
                             USER.totalPayAtCurrentRoom = appPreference.getTotalSumm()
                             onSucces()
                         }

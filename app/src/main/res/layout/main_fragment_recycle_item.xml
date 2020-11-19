@@ -11,24 +11,34 @@
         android:textStyle="bold"
          android:textSize="@dimen/normal_text"
         android:id="@+id/main_recycle_item_username"
-        android:layout_width="140dp"
+        android:layout_width="@dimen/history_item_width"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/app_margin"
-        android:text="asdasd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:textColor="@color/black"
+                android:textColor="@color/black"
         android:textSize="@dimen/normal_text"
         android:id="@+id/main_recycle_item_total_summ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/app_margin"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
-
         app:layout_constraintStart_toEndOf="@+id/main_recycle_item_username"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:background="@color/color_grey_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/app_margin"
+        android:layout_marginStart="@dimen/app_margin"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

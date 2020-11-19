@@ -38,7 +38,10 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.myV
         holder.sum.text = curPayment.summ
         holder.date.text = curPayment.time.toString().transformToDate()
 
-        if (arOfOpened.contains(position)) holder.fullScreenImage.visibility = View.VISIBLE
+        if (arOfOpened.contains(position)) {
+            holder.fullScreenImage.visibility = View.VISIBLE
+            holder.fullScreenImage.setImage(curPayment.imageUrl)
+        }
         else holder.fullScreenImage.visibility = View.GONE
         if (curPayment.imageUrl != "empty") {
             holder.attachedImage.setImageResource(R.drawable.ic_photo_coloring)

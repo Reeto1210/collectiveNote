@@ -62,4 +62,15 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/app_margin</item>
     </style>
+
+    <style name="single_payment_text_view">
+        <item name="android:layout_marginStart">@dimen/app_margin</item>
+        <item name="android:layout_marginEnd">@dimen/app_margin</item>
+        <item name="android:gravity">center</item>
+
+
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/normal_text</item>
+    </style>
 </resources>

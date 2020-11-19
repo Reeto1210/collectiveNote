@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/big_padding">
+
+    <TextView
+
+        android:id="@+id/single_payment_summ"
+        style="@style/single_payment_text_view"
+        android:layout_width="0dp"
+        android:layout_marginTop="@dimen/app_margin"
+        android:text="суммa"
+        android:textColor="@color/design_default_color_secondary_variant"
+        android:textSize="@dimen/Large_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/single_payment_description"
+        style="@style/single_payment_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="описанaие"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/single_payment_summ" />
+
+    <TextView
+
+        android:id="@+id/single_payment_date"
+        style="@style/single_payment_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="дата"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/single_payment_description" />
+
+    <ImageView
+
+        android:id="@+id/single_pay_image"
+        android:layout_width="@dimen/single_payments_image"
+        android:layout_height="@dimen/single_payments_image"
+android:visibility="gone"
+        android:layout_marginTop="@dimen/app_margin"
+        android:background="@drawable/background_for_custom_buttons"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/single_payment_date"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:layout_marginStart="@dimen/app_margin"
+        android:layout_marginEnd="@dimen/app_margin"
+        android:background="@color/color_grey_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
