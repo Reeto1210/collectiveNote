@@ -8,12 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.models.PaymentModel
-import com.mudryakov.collectivenote.utilits.getImage
+import com.mudryakov.collectivenote.utilits.setImage
 import com.mudryakov.collectivenote.utilits.transformToDate
 import kotlinx.android.synthetic.main.history_recycle_item.view.*
 
 class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.myViewHolder>() {
-   var arOfOpened = arrayListOf<Int>()
+    var arOfOpened = arrayListOf<Int>()
     var listOfpayments = mutableListOf<PaymentModel>()
 
     class myViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -32,20 +32,17 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.myV
     }
 
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
-
-        holder.fromName.text = listOfpayments[position].fromName
-        holder.description.text = listOfpayments[position].description
-        holder.sum.text = listOfpayments[position].summ
-        holder.date.text = listOfpayments[position].time.toString().transformToDate()
+        val curPayment = listOfpayments[position]
+        holder.fromName.text = curPayment.fromName
+        holder.description.text = curPayment.description
+        holder.sum.text = curPayment.summ
+        holder.date.text = curPayment.time.toString().transformToDate()
 
         if (arOfOpened.contains(position)) holder.fullScreenImage.visibility = View.VISIBLE
         else holder.fullScreenImage.visibility = View.GONE
-        if (listOfpayments[position].imageUrl != "empty"){
+        if (curPayment.imageUrl != "empty") {
             holder.attachedImage.setImageResource(R.drawable.ic_photo_coloring)
-          holder.fullScreenImage.setImageResource(R.drawable.test)
-        }
-
-        else {
+        } else {
             holder.attachedImage.setImageResource(R.drawable.ic_photo)
 
 
@@ -63,26 +60,30 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.myV
     }
 
     override fun onViewAttachedToWindow(holder: myViewHolder) {
-          holder.attachedImage.setOnClickListener {
-          if (holder.fullScreenImage.visibility == View.GONE && listOfpayments[holder.adapterPosition].imageUrl != "empty") {
-           arOfOpened.add(holder.adapterPosition)
-            holder.fullScreenImage.visibility = View.VISIBLE
-           getImage(listOfpayments[holder.adapterPosition].imageUrl)
+        val curPayment = listOfpayments[holder.adapterPosition]
+        holder.attachedImage.setOnClickListener {
+            if (holder.fullScreenImage.visibility == View.GONE && curPayment.imageUrl != "empty") {
+                holder.fullScreenImage.visibility = View.VISIBLE
+                if (holder.adapterPosition != listOfpayments.lastIndex) {
+                    arOfOpened.add(holder.adapterPosition)
+                }
+                holder.fullScreenImage.setImage(curPayment.imageUrl)
+            } else {
+                holder.fullScreenImage.visibility = View.GONE
+                arOfOpened.remove(holder.adapterPosition)
 
-        } else {
-          holder.fullScreenImage.visibility = View.GONE
+            }
+        }
+        holder.fullScreenImage.setOnClickListener {
+            holder.fullScreenImage.visibility = View.GONE
             arOfOpened.remove(holder.adapterPosition)
-          }
-    }
-       holder.fullScreenImage.setOnClickListener {
-          holder.fullScreenImage.visibility = View.GONE
-           arOfOpened.remove(holder.adapterPosition)
-       }
+        }
     }
 
     override fun onViewDetachedFromWindow(holder: myViewHolder) {
+
         holder.attachedImage.setOnClickListener {}
-                super.onViewDetachedFromWindow(holder)
+        super.onViewDetachedFromWindow(holder)
     }
 
 }

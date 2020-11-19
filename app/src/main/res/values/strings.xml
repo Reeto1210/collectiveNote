@@ -43,4 +43,5 @@
      <string name="value_members">Количество участников: %1$d</string>
      <string name="total_sum_payed">Всего потрачено: %1$d</string>
     <string name="eror_in_download">Произошёл сбой при скачивании файла</string>
+    <string name="trouble_with_download">Ошибка загрузки</string>
 </resources>
