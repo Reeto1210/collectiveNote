@@ -19,6 +19,7 @@ class roomChooseFragment : Fragment() {
     var _Binding: FragmentRoomChooseBinding? = null
     val mBinding get() = _Binding!!
     lateinit var mViewModel: RoomChooseViewModel
+    var messageText = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,28 +31,28 @@ class roomChooseFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         initialization()
+
         if (appPreference.getSignInRoom()) {
             CURRENT_UID = appPreference.getUserId()
-            showToast(getString(R.string.toast_join_room) + appPreference.getRoomId())
             navNext()
         } else {
-        val builder = AlertDialog.Builder(this.context)
-        builder.setTitle(getString(R.string.choose_room_alert_dialog_title))
-            .setMessage(getString(R.string.choose_room_alert_dialog_text))
-            .setPositiveButton(getString(R.string.choose_room_alert_dialog_possitive_button)) { _: DialogInterface, _: Int ->
-                enterRoom(
-                    CREATOR
-                )
-            }
-            .setNeutralButton(getString(R.string.choose_room_alert_dialog_negative_button)) { _: DialogInterface, _: Int ->
-                enterRoom(
-                    MEMBER
-                )
-            }
-            .setCancelable(false)
-            .show()
+            val builder = AlertDialog.Builder(this.context)
+            builder.setTitle(getString(R.string.choose_room_alert_dialog_title))
+                .setMessage(getString(R.string.choose_room_alert_dialog_text))
+                .setPositiveButton(getString(R.string.choose_room_alert_dialog_possitive_button)) { _: DialogInterface, _: Int ->
+                    enterRoom(
+                        CREATOR
+                    )
+                }
+                .setNeutralButton(getString(R.string.choose_room_alert_dialog_negative_button)) { _: DialogInterface, _: Int ->
+                    enterRoom(
+                        MEMBER
+                    )
+                }
+                .setCancelable(false)
+                .show()
 
-    }
+        }
     }
 
     private fun initialization() {
@@ -69,10 +70,11 @@ class roomChooseFragment : Fragment() {
     private fun createRoom() {
         APP_ACTIVITY.title = getString(R.string.create_room)
         mBinding.roomChooseContinue.setOnClickListener {
+            showProgressBar()
             val roomName = mBinding.roomChooseName.text.toString()
             val roomPass = mBinding.roomChoosePassword.text.toString()
-            mViewModel.createRoom(roomName, roomPass) {
-                showToast(getString(R.string.toast_room_create_room) + roomName + getString(R.string.toast_create_room_maded))
+            mViewModel.createRoom(roomName, roomPass, { onfail() }) {
+                messageText = getString(R.string.toast_create_room, roomName)
                 navNext()
             }
         }
@@ -82,16 +84,30 @@ class roomChooseFragment : Fragment() {
     private fun joinRoom() {
         APP_ACTIVITY.title = getString(R.string.join_room)
         mBinding.roomChooseContinue.setOnClickListener {
+            showProgressBar()
             val roomName = mBinding.roomChooseName.text.toString()
             val roomPass = mBinding.roomChoosePassword.text.toString()
-            mViewModel.joinRoom(roomName, roomPass) {
-                showToast(getString(R.string.toast_join_room) + roomName)
+            mViewModel.joinRoom(roomName, roomPass, { onfail() }) {
+                messageText = getString(R.string.toast_join_room, roomName)
                 navNext()
             }
         }
     }
 
     private fun navNext() {
+        showToast(messageText)
+        appPreference.setSignInRoom(true)
+        appPreference.setSignInRoom(true)
         APP_ACTIVITY.navConroller.navigate(R.id.action_roomChooseFragment_to_mainFragment)
+    }
+
+    private fun showProgressBar() {
+        mBinding.roomChooseProgressBar.visibility = View.VISIBLE
+        mBinding.roomChooseContinue.visibility = View.GONE
+    }
+
+    private fun onfail() {
+        mBinding.roomChooseProgressBar.visibility = View.GONE
+        mBinding.roomChooseContinue.visibility = View.VISIBLE
     }
 }

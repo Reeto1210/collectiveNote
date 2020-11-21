@@ -39,10 +39,11 @@ class newPaymentFragment : Fragment() {
     private fun initialization() {
         mViewModel = ViewModelProvider(this).get(AddNewPaymentViewModel::class.java)
         mBinding.addNewPaymentConfirm.setOnClickListener {
-            val sum = mBinding.addNewPaymentSumm.text.toString()
+            val sum = mBinding.addNewPaymentSumm.text.toString().replace(',','.')
             val description = mBinding.addNewPaymentDescription.text.toString()
+
             try {
-                sum.toInt()
+                sum.toLong()
                 if (sum.isNotEmpty() && description.isNotEmpty())
                     mViewModel.addNewPayment(sum, description, imageUri) {
                         showToast(getString(R.string.toast_payment_added))

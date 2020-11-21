@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.history.HistoryFragment"
-  >
+    tools:context=".screens.singleUserPayments.SingleUserPayments">
 
     <androidx.recyclerview.widget.RecyclerView
 
-        android:id="@+id/history_recycle"
+        android:id="@+id/single_payments_recycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        tools:listitem="@layout/history_recycle_item" />
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/single_user_payments_recycle_item" />
     <ProgressBar
-
-        android:id="@+id/history_progress_bar"
+        android:id="@+id/single_payment_progress_bar"
         android:layout_margin="@dimen/app_margin"
         android:layout_width="@dimen/progress_bar_size"
         android:layout_height="@dimen/progress_bar_size"

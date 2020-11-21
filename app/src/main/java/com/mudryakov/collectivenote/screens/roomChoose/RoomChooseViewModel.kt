@@ -9,15 +9,15 @@ import kotlinx.coroutines.launch
 
 class RoomChooseViewModel(application: Application) : AndroidViewModel(application) {
 
-    fun createRoom(name: String, pass: String, function: () -> Unit)= viewModelScope.launch(
+    fun createRoom(name: String, pass: String, onFail:()->Unit,onSuccess: () -> Unit)= viewModelScope.launch(
         Dispatchers.IO
     ) {
-        REPOSITORY.createNewRoom(name, pass, function)
+        REPOSITORY.createNewRoom(name, pass, onFail,onSuccess)
     }
 
-    fun joinRoom(name: String, pass: String, function: () -> Unit)= viewModelScope.launch(
+    fun joinRoom(name: String, pass: String,onFail:()->Unit,onSuccess: () -> Unit )= viewModelScope.launch(
         Dispatchers.IO
     ) {
-        REPOSITORY.joinRoom(name, pass, function)
+        REPOSITORY.joinRoom(name, pass, onFail,onSuccess)
     }
 }

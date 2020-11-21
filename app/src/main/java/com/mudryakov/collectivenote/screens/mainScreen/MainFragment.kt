@@ -14,10 +14,7 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CURRENT_ROOM_UID
 import com.mudryakov.collectivenote.databinding.FragmentMainBinding
 import com.mudryakov.collectivenote.models.UserModel
-import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
-import com.mudryakov.collectivenote.utilits.AppBottomSheetCallBack
-import com.mudryakov.collectivenote.utilits.USER
-import com.mudryakov.collectivenote.utilits.appPreference
+import com.mudryakov.collectivenote.utilits.*
 
 
 class MainFragment : Fragment() {
@@ -27,7 +24,10 @@ class MainFragment : Fragment() {
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<*>
     private lateinit var mObserver: Observer<List<UserModel>>
     private lateinit var mRecycle: RecyclerView
+
     var mAdapter:MainRecycleAdapter? = null
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,13 +43,16 @@ class MainFragment : Fragment() {
     }
 
     private fun drawContent() {
+
         initBottomSheetBehavior()
         mObserver = Observer { list ->
-            var totalSumm = 0
+            var totalSumm = 0L
             list.forEach {
-                totalSumm += it.totalPayAtCurrentRoom.toInt()
+                totalSumm += it.totalPayAtCurrentRoom.toLong()
                 mAdapter?.addItem(it)
-            }
+           mBinding.loadingLayout.visibility = View.GONE
+
+                }
             mBinding.mainFragmentTotalPaymentRoom.text =
                 getString(R.string.total_sum_payed, totalSumm)
         }
@@ -59,14 +62,14 @@ class MainFragment : Fragment() {
 
     private fun initialization() {
         APP_ACTIVITY.title = APP_ACTIVITY.getString(R.string.app_name)
+
         USER = UserModel(
             appPreference.getUserId(),
             appPreference.getUserName(),
             appPreference.getRoomId(),
             appPreference.getTotalSumm()
-
         )
-        CURRENT_ROOM_UID = USER.roomId
+        CURRENT_ROOM_UID = appPreference.getRoomId()
         mViewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
         initRecycle()
 
@@ -110,6 +113,7 @@ class MainFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        mAdapter = null
         _Binding = null
         mViewModel.allMembers.removeObserver(mObserver)
         super.onDestroyView()

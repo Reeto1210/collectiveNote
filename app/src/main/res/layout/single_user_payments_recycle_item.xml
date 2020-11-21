@@ -4,7 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/big_padding">
+    android:background="@color/white"
+    android:elevation="@dimen/app_elevation"
+    android:layout_marginStart="@dimen/app_margin"
+    android:layout_marginEnd="@dimen/app_margin"
+    android:layout_marginBottom="@dimen/little_margin"
+    android:layout_marginTop="@dimen/little_margin"
+    android:paddingBottom="@dimen/app_margin">
 
     <TextView
 
@@ -37,6 +43,7 @@
         style="@style/single_payment_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/small_text"
         android:text="дата"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +54,7 @@
         android:id="@+id/single_pay_image"
         android:layout_width="@dimen/single_payments_image"
         android:layout_height="@dimen/single_payments_image"
-android:visibility="gone"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/app_margin"
         android:background="@drawable/background_for_custom_buttons"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -56,15 +63,6 @@ android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/single_payment_date"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="1px"
-        android:layout_marginStart="@dimen/app_margin"
-        android:layout_marginEnd="@dimen/app_margin"
-        android:background="@color/color_grey_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

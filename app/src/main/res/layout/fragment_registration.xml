@@ -6,15 +6,22 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     tools:context=".screens.registration.RegistrationFragment">
+    <ProgressBar
+        android:visibility="gone"
+        android:layout_margin="@dimen/verySmallMargin"
+        android:id="@+id/fragment_registration_progress_bar"
+        android:layout_width="@dimen/small_corner_progress_bar_size"
+        android:layout_height="@dimen/small_corner_progress_bar_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/first_registration"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <TextView
-
-
             android:id="@+id/registration_email_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,6 +54,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/registration_input_email" />
 
+
         <TextView
             android:id="@+id/registration_tip"
             android:layout_width="wrap_content"
@@ -56,6 +64,15 @@
             android:text="@string/Use_your_Gogle_account"
             android:textColor="@color/design_default_color_secondary_variant"
             android:textSize="@dimen/small_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registration_input_password" />
+
+        <TextView
+            android:id="@+id/registration_email_btn"
+            style="@style/btn_style"
+            android:text="@string/Registration_email_btn"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/registration_input_password" />
@@ -103,14 +120,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/registration_email_btn"
-            style="@style/btn_style"
-            android:text="@string/Registration_email_btn"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/registration_input_password" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -137,9 +147,9 @@
         <EditText
             android:id="@+id/registration_dialog_name"
             style="@style/input_text_style"
-            android:maxLength="30"
             android:hint="@string/enter_your_name"
             android:inputType="textPersonName"
+            android:maxLength="30"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/alert_change_name_title" />
@@ -155,4 +165,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,8 +40,8 @@ class SinglePaymentAdapter : RecyclerView.Adapter<SinglePaymentAdapter.myViewHol
 
     override fun getItemCount(): Int = listOfpayments.size
 
-    fun addItem(payment: PaymentModel) {
-        if (!listOfpayments.contains(payment)) {
+    fun addItem1(payment: PaymentModel) {
+          if (!listOfpayments.contains(payment)) {
             listOfpayments.add(payment)
             listOfpayments.sortByDescending { it.time.toString() }
             notifyItemInserted(listOfpayments.indexOf(payment))

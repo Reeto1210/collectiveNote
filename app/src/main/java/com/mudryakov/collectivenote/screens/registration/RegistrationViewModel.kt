@@ -17,18 +17,14 @@ import com.mudryakov.collectivenote.utilits.appPreference
 class RegistrationViewModel(application: Application) : AndroidViewModel(application) {
     val mContext = application.applicationContext
 
-    fun connectToFirebase(
-        type: String,
-        email: String = "",
-        password: String = "",
-        onSucces: () -> Unit
+    fun connectToFirebase( type: String, email: String = "", password: String = "", onFail:()->Unit,onSucces: () -> Unit
     ) {
         when (type) {
-            TYPE_GOOGLE_ACCOUNT -> REPOSITORY.connectToDatabase(TYPE_GOOGLE_ACCOUNT, onSucces)
+            TYPE_GOOGLE_ACCOUNT -> REPOSITORY.connectToDatabase(TYPE_GOOGLE_ACCOUNT, onFail,onSucces)
             TYPE_EMAIL -> {
                 EMAIL = email
                 PASSWORD = password
-                REPOSITORY.connectToDatabase(TYPE_EMAIL, onSucces)
+                REPOSITORY.connectToDatabase(TYPE_EMAIL, onFail, onSucces)
             }
         }
     }

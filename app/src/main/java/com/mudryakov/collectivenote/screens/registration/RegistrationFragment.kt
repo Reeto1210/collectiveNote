@@ -22,6 +22,7 @@ class RegistrationFragment : Fragment() {
     var _Binding: FragmentRegistrationBinding? = null
     val mBinding get() = _Binding!!
     private lateinit var mViewModel: RegistrationViewModel
+    var isLoading = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +35,6 @@ class RegistrationFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _Binding = null
-
     }
 
     override fun onStart() {
@@ -55,9 +55,11 @@ class RegistrationFragment : Fragment() {
                         mBinding.registrationTip.startRegisterAnimation(false)
                         mBinding.registrationEmailBtn.startRegisterAnimation(true)
                     } else {
+
                         mBinding.registrationBtnSignInGoogle.startRegisterAnimation(true)
                         mBinding.registrationTip.startRegisterAnimation(true)
                         mBinding.registrationEmailBtn.startRegisterAnimation(false)
+
                     }
                 }
             }
@@ -67,41 +69,49 @@ class RegistrationFragment : Fragment() {
 
     private fun initialization() {
         mViewModel = ViewModelProvider(this).get(RegistrationViewModel::class.java)
-         mViewModel.initCommons()
+        mViewModel.initCommons()
         if (appPreference.getSignIn()) {
             CURRENT_UID = appPreference.getUserId()
-                    APP_ACTIVITY.navConroller.navigate(R.id.action_registrationFragment_to_roomChooseFragment)
+            APP_ACTIVITY.navConroller.navigate(R.id.action_registrationFragment_to_roomChooseFragment)
         } else {
 
             emailBtnClick()
-            gooleSighbtnClick()
+            googleSighbtnClick()
 
         }
     }
 
     private fun emailBtnClick() {
         mBinding.registrationEmailBtn.setOnClickListener {
+            if (!isLoading){
+
             val email = mBinding.registrationInputEmail.text.toString()
             val pass = mBinding.registrationInputPassword.text.toString()
             if (email.isNotEmpty() && pass.isNotEmpty()) {
-                mViewModel.connectToFirebase(TYPE_EMAIL, email, pass) {
+                showProgressBar()
+                mViewModel.connectToFirebase(TYPE_EMAIL, email, pass, { onRegistrationFail() }) {
                     onRegisterSuccess()
                 }
             } else showToast(getString(R.string.add_info))
         }
+        }
 
     }
 
-    private fun gooleSighbtnClick() {
+    private fun googleSighbtnClick() {
         mBinding.registrationBtnSignInGoogle.setOnClickListener {
-            mViewModel.connectToFirebase(TYPE_GOOGLE_ACCOUNT) {
+           if (!isLoading){
+            showProgressBar()
+            mViewModel.connectToFirebase(TYPE_GOOGLE_ACCOUNT, onFail = { onRegistrationFail() }) {
                 onRegisterSuccess()
             }
+           }
         }
     }
 
     private fun onRegisterSuccess() {
-        hideKeyboard(APP_ACTIVITY)
+       hideKeyboard(APP_ACTIVITY)
+       onRegistrationFail() //hide progressBar
         makeDialog {
             APP_ACTIVITY.navConroller.navigate((R.id.action_registrationFragment_to_roomChooseFragment))
         }
@@ -112,9 +122,23 @@ class RegistrationFragment : Fragment() {
         mBinding.firstRegistration.startRegisterAnimation(false)
         mBinding.registrationDialog.startRegisterAnimation(true)
         mBinding.alertChangeNameBtn.setOnClickListener {
+
             val newName = mBinding.registrationDialogName.text.toString()
-            mViewModel.changeName(newName) { onConfirm() }
-        }
+               if (!isLoading) {
+               showProgressBar()
+               mViewModel.changeName(newName) { onConfirm() }
+           }}
     }
 
+    fun onRegistrationFail() {
+       isLoading = false
+        mBinding.fragmentRegistrationProgressBar.visibility = View.GONE
+    }
+
+
+    fun showProgressBar() {
+        isLoading = true
+        mBinding.fragmentRegistrationProgressBar.visibility = View.VISIBLE
+
+    }
 }

@@ -1,5 +1,6 @@
 package com.mudryakov.collectivenote.screens.mainScreen
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.models.UserModel
+import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
 import kotlinx.android.synthetic.main.main_fragment_recycle_item.view.*
 
 class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>() {
@@ -15,6 +17,7 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>
     class myViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val username = view.main_recycle_item_username
         val totalPayd = view.main_recycle_item_total_summ
+        val layout = view.recycle_main_layout
         val divider = view.divider
     }
 
@@ -27,7 +30,7 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>
 
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
         val currentUser = list[position]
-       // holder.divider.visibility = if (position == 0) View.INVISIBLE else View.INVISIBLE
+         holder.divider.visibility = if (position == 0) View.GONE else View.VISIBLE
         holder.totalPayd.text =
             if (currentUser.totalPayAtCurrentRoom.isNotEmpty()) currentUser.totalPayAtCurrentRoom else "0"
         holder.username.text = currentUser.name
@@ -60,5 +63,23 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>
         notifyItemInserted(list.indexOf(user))
     }
 
+    override fun onViewAttachedToWindow(holder: myViewHolder) {
+        val curUser = list[holder.adapterPosition]
+        holder.layout.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("userId", curUser.firebaseId)
+            bundle.putString("userName", curUser.name)
+            APP_ACTIVITY.navConroller.navigate(
+                R.id.action_mainFragment_to_singleUserPayments,
+                bundle
+            )
 
+        }
+        super.onViewAttachedToWindow(holder)
+    }
+
+    override fun onViewDetachedFromWindow(holder: myViewHolder) {
+        holder.layout.setOnClickListener { }
+        super.onViewDetachedFromWindow(holder)
+    }
 }

@@ -9,16 +9,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_main_recycle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-           android:maxWidth="@dimen/max_main_fragment_recycle_height"
             android:layout_margin="@dimen/app_margin"
             android:background="@color/white"
             android:elevation="@dimen/app_elevation"
+            android:maxWidth="@dimen/max_main_fragment_recycle_height"
             android:maxHeight="@dimen/max_main_fragment_recycle_height"
             android:padding="@dimen/small_padding"
             android:scrollbars="vertical"
@@ -47,8 +48,7 @@
             android:layout_height="match_parent"
             android:alpha="0"
             android:background="@color/color_for_main_on_bottom_open"
-            android:elevation="@dimen/elevation_for_dask"
-            />
+            android:elevation="@dimen/elevation_for_dask" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -60,9 +60,43 @@
         app:layout_anchorGravity="end"
         app:tint="@color/white"
         tools:ignore="ContentDescription" />
+
     <include
         android:id="@+id/include"
-        layout="@layout/main_bottom_sheet" />
+        layout="@layout/main_bottom_sheet"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+       android:elevation="@dimen/loading_elevation"
+        android:id="@+id/loading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_loading_main">
+
+        <TextView
+            android:id="@+id/main_text_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Название загрузки"
+            android:textColor="@color/design_default_color_secondary_variant"
+            android:textSize="@dimen/Large_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+
+            android:id="@+id/main_progress_bar"
+            android:layout_width="@dimen/progress_bar_size"
+            android:layout_height="@dimen/progress_bar_size"
+            android:layout_margin="@dimen/app_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_text_loading" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

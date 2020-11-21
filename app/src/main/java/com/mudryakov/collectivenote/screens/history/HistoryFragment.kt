@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +23,7 @@ class HistoryFragment : Fragment() {
     lateinit var mPaymentObserver: Observer<List<PaymentModel>>
     var mAdapter: HistoryRecyclerAdapter? = null
     lateinit var mRecyclerView: RecyclerView
+    lateinit var mProgressBar:ProgressBar
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,7 +40,8 @@ class HistoryFragment : Fragment() {
     }
 
     private fun initialization() {
-       var i = 0
+        mProgressBar = mBinding.historyProgressBar
+
         mViewModel = ViewModelProvider(this).get(HistoryFragmentViewModel::class.java)
         mRecyclerView = mBinding.historyRecycle
         mAdapter = HistoryRecyclerAdapter()
@@ -47,10 +50,9 @@ class HistoryFragment : Fragment() {
         mPaymentObserver = Observer {
             it.forEach { pay ->
                 mAdapter?.addItem(pay)
-           i++
-           println(i.toString())
             }
             mRecyclerView.smoothScrollToPosition(0)
+            mProgressBar.visibility = View.GONE
         }
     }
 
