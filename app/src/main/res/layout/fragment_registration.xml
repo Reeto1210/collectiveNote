@@ -157,7 +157,7 @@
         <TextView
             android:id="@+id/alert_change_name_btn"
             style="@style/btn_style"
-            android:text="@string/contune"
+            android:text="@string/continue_it"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

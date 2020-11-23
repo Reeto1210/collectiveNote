@@ -17,7 +17,7 @@ interface AppDatabaseRepository {
     fun addnewQuest(onSucces: () -> Unit)
     fun getQuest(onSucces: () -> Unit)
     fun pushFileToBase(imageUri: Uri, onSucces: (String) -> Unit)
-
+    fun signOut()
 
 
 }

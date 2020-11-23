@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
    android:id="@+id/recycle_main_layout"
+    android:background="@drawable/main_recycler_item_ripple"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,8 +9,8 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:textColor="@color/design_default_color_secondary_variant"
-        android:textStyle="bold"
+       android:textColor="@color/black"
+
          android:textSize="@dimen/normal_text"
         android:id="@+id/main_recycle_item_username"
         android:layout_width="@dimen/history_item_width"

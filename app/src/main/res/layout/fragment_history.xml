@@ -7,13 +7,23 @@
     tools:context=".screens.history.HistoryFragment"
   >
 
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/history_list_is_empty"
+        android:text="@string/list_of_payments_is_empty"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/list_is_empty" />
+
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/history_recycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        tools:listitem="@layout/history_recycle_item" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
 
     <ProgressBar
 

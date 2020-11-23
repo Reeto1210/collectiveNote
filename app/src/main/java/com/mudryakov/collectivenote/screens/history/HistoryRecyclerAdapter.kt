@@ -23,6 +23,7 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.myV
         val sum: TextView = view.history_summ
         val attachedImage: ImageView = view.history_image
         val fullScreenImage: ImageView = view.history_full_image
+        val baseLayout = view.history_recycle_layout
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
@@ -64,7 +65,7 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.myV
 
     override fun onViewAttachedToWindow(holder: myViewHolder) {
         val curPayment = listOfpayments[holder.adapterPosition]
-        holder.attachedImage.setOnClickListener {
+        holder.baseLayout.setOnClickListener {
             if (holder.fullScreenImage.visibility == View.GONE && curPayment.imageUrl != "empty") {
                 holder.fullScreenImage.visibility = View.VISIBLE
                 if (holder.adapterPosition != listOfpayments.lastIndex) {
@@ -77,15 +78,12 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.myV
 
             }
         }
-        holder.fullScreenImage.setOnClickListener {
-            holder.fullScreenImage.visibility = View.GONE
-            arOfOpened.remove(holder.adapterPosition)
-        }
+
     }
 
     override fun onViewDetachedFromWindow(holder: myViewHolder) {
 
-        holder.attachedImage.setOnClickListener {}
+        holder.baseLayout.setOnClickListener {}
         super.onViewDetachedFromWindow(holder)
     }
 

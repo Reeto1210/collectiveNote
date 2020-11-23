@@ -13,6 +13,7 @@ import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.database.firebase.USERNAME
 import com.mudryakov.collectivenote.databinding.FragmentRoomChooseBinding
 import com.mudryakov.collectivenote.utilits.*
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 
 
 class roomChooseFragment : Fragment() {
@@ -74,6 +75,7 @@ class roomChooseFragment : Fragment() {
             val roomName = mBinding.roomChooseName.text.toString()
             val roomPass = mBinding.roomChoosePassword.text.toString()
             mViewModel.createRoom(roomName, roomPass, { onfail() }) {
+                appPreference.setRoomName(roomName)
                 messageText = getString(R.string.toast_create_room, roomName)
                 navNext()
             }
@@ -88,6 +90,7 @@ class roomChooseFragment : Fragment() {
             val roomName = mBinding.roomChooseName.text.toString()
             val roomPass = mBinding.roomChoosePassword.text.toString()
             mViewModel.joinRoom(roomName, roomPass, { onfail() }) {
+                appPreference.setRoomName(roomName)
                 messageText = getString(R.string.toast_join_room, roomName)
                 navNext()
             }
@@ -95,9 +98,10 @@ class roomChooseFragment : Fragment() {
     }
 
     private fun navNext() {
-        showToast(messageText)
+        hideKeyboard(APP_ACTIVITY)
+        if (!appPreference.getSignInRoom()) showToast(messageText)
         appPreference.setSignInRoom(true)
-        appPreference.setSignInRoom(true)
+
         APP_ACTIVITY.navConroller.navigate(R.id.action_roomChooseFragment_to_mainFragment)
     }
 

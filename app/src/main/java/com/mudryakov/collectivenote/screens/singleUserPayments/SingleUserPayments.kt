@@ -49,11 +49,17 @@ class SingleUserPayments : Fragment() {
         mRecycle.layoutManager = LinearLayoutManager(APP_ACTIVITY)
         mRecycle.adapter = mAdapter
         mPaymentObserver = Observer {
+            var isEmpty = true
             it.forEach { payment ->
-                if (payment.fromId == userId) mAdapter?.addItem1(payment)
-                mProgressBar.visibility = View.GONE
+                if (payment.fromId == userId) {
+                    mAdapter?.addItem1(payment)
+                    isEmpty = false
+                }
                 mRecycle.smoothScrollToPosition(0)
             }
+            mBinding.singlePaymentProgressBar.visibility = View.GONE
+            if (isEmpty) mBinding.singlePaymentsEmpty.visibility = View.VISIBLE
+            else mBinding.singlePaymentsEmpty.visibility = View.GONE
 
         }
         mViewModel.singleUserPayments.observe(this, mPaymentObserver)

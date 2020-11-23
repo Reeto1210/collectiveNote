@@ -1,21 +1,28 @@
 <resources>
+    <!-- general -->
     <string name="app_name">Collective note</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="common_app_name">Рабочее название</string>
+    <string name="add_info">Заполните все поля</string>
+    <string name="total_sum_payed">Всего потрачено: %1$d₽</string>
+    <string name="list_of_payments_is_empty">Список платежей пуст</string>
+    <string name="eror_in_download">Произошёл сбой при скачивании файла</string>
+    <string name="trouble_with_download">Ошибка загрузки</string>
+    <string name="sum_currency">%1$s₽</string>
+
+    <!-- registration -->
     <string name="title_email_registration">Введите e-mail и пароль</string>
     <string name="Use_your_Gogle_account">Использовать свой Google аккаунт</string>
     <string name="Enter">Войти</string>
     <string name="e_mail">E-mail</string>
     <string name="password">Пароль</string>
     <string name="registration_toolbar_title">Регистрация</string>
-    <string name="add_info">Заполните все поля</string>
     <string name="Registration_email_btn">зарегистрироваться</string>
     <string name="enter_your_name">Введите имя</string>
-    <string name="contune">Продолжить</string>
+    <string name="continue_it">Продолжить</string>
     <string name="enter_name">Введите отображаемое имя</string>
-    <string name="room_name">Название комнаты</string>
+    <string name="room_name_hint">Название комнаты</string>
 
+    <!-- roomChoose -->
     <string name="room_enter_title_text">Введите данные комнаты</string>
     <string name="choose_room_alert_dialog_text">В этом окне вы можете создать свою комнату и пригласить туда друзей, либо присоединиться к уже созданой комнате</string>
     <string name="choose_room_alert_dialog_title">Выберите действие</string>
@@ -25,22 +32,38 @@
     <string name="join_room">Присоединиться к комнате</string>
     <string name="this_namy_busy">Это название занятно</string>
     <string name="check_room_acc">Проверьте данные комнаты</string>
-      <string name="toast_join_room">Вы присоедились к комнате %1$s"</string>
-      <string name="toast_create_room">Вы создали комнату %1$s"</string>
+    <string name="toast_join_room">Вы присоедились к комнате %1$s"</string>
+    <string name="toast_create_room">Вы создали комнату %1$s"</string>
+
+    <!-- bottomSheet -->
     <string name="bottom_sheet_history">История вложений</string>
     <string name="bottom_sheet_take_quest">Взять задание</string>
     <string name="settings">Настройки</string>
     <string name="help">Помощь</string>
+
+    <!-- addNewPayment -->
     <string name="add_new_payment_title">Добавление нового платежа</string>
     <string name="summ">Сумма</string>
     <string name="confirm">Подтвердить</string>
     <string name="add_new_payment_description_hint">Назначение</string>
-    <string name="fill_all_plates">Заполните поля</string>
     <string name="toast_payment_added">Платёж добавлен</string>
-    <string name="history">История</string>
     <string name="catch_payment_summ">Неверный формат суммы</string>
+
+    <!-- fragmentHistory -->
+          <string name="history">История</string>
+
+    <!-- fragmentSettings -->
     <string name="value_members">Количество участников: %1$d</string>
-    <string name="total_sum_payed">Всего потрачено: %1$d</string>
-    <string name="eror_in_download">Произошёл сбой при скачивании файла</string>
-    <string name="trouble_with_download">Ошибка загрузки</string>
+    <string name="room_name">Комната: %1$s</string>
+    <string name="user_name">Имя пользователя : %1$s</string>
+    <string name="total_members_ar_room">Пользователей в комнате: %1$d</string>
+    <string name="total_value_of_payments">Всего платежей: %1$d</string>
+    <string name="total_user_payed">Ваши траты: %1$s₽</string>
+    <string name="exit_room">Выйти из комнаты</string>
+    <string name="Change_acc">Сменить аккаунт</string>
+    <string name="room_info">Информация о комнате</string>
+    <string name="timeless_curency">Текущая валюта: рубли(₽)</string>
+    <string name="loading_main">Название загрузки</string>
+
+
 </resources>

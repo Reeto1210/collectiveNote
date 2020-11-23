@@ -11,10 +11,15 @@ object appPreference {
     private const val IS_SIGN_IN = "isSignIn"
     private const val IS_SIGN_IN_ROOM = "isSignInRoom"
     private const val ROOM_ID = "roomId"
-    private const val TOTAL_PAY = "total_pay"
-
+    private const val TOTAL_PAY = "totalPay"
+    private const val ROOM_NAME= "roomName"
 
     private lateinit var mPreference: SharedPreferences
+
+   fun clear(){
+      mPreference.edit().clear()
+          .apply()
+   }
 
     fun getPreference(context: Context): SharedPreferences {
         mPreference = context.getSharedPreferences(namePref, Context.MODE_PRIVATE)
@@ -85,6 +90,16 @@ object appPreference {
     fun getTotalSumm(): String {
         return mPreference.getString(TOTAL_PAY, "0").toString()
     }
+
+fun setRoomName(name:String){
+    mPreference.edit().putString(ROOM_NAME, name)
+        .apply()
+}
+fun getRoomName():String{
+    return mPreference.getString(ROOM_NAME, FAIL).toString()
+
+}
+
 
 }
 

@@ -130,5 +130,9 @@ class FireBaseRepository : AppDatabaseRepository {
 
     }
 
+    override fun signOut() {
+        AUTH.signOut()
+    }
+
 
 }

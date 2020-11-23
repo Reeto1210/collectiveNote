@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.models.PaymentModel
+import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
 import com.mudryakov.collectivenote.utilits.setImage
 import com.mudryakov.collectivenote.utilits.transformToDate
 import kotlinx.android.synthetic.main.single_user_payments_recycle_item.view.*
@@ -30,7 +31,7 @@ class SinglePaymentAdapter : RecyclerView.Adapter<SinglePaymentAdapter.myViewHol
         val curPayment = listOfpayments[position]
         holder.date.text = curPayment.time.toString().transformToDate()
         holder.description.text = curPayment.description
-        holder.sum.text = curPayment.summ
+        holder.sum.text = APP_ACTIVITY.getString(R.string.sum_currency, curPayment.summ)
         if (curPayment.imageUrl != "empty") {
             holder.image.visibility = View.VISIBLE
             holder.image.setImage(curPayment.imageUrl)

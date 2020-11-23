@@ -32,7 +32,7 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>
         val currentUser = list[position]
          holder.divider.visibility = if (position == 0) View.GONE else View.VISIBLE
         holder.totalPayd.text =
-            if (currentUser.totalPayAtCurrentRoom.isNotEmpty()) currentUser.totalPayAtCurrentRoom else "0"
+            if (currentUser.totalPayAtCurrentRoom.isNotEmpty()) APP_ACTIVITY.getString(R.string.sum_currency, currentUser.totalPayAtCurrentRoom) else "0"
         holder.username.text = currentUser.name
     }
 

@@ -1,13 +1,17 @@
 package com.mudryakov.collectivenote.utilits
 
 //import com.mudryakov.collectivenote.database.RoomDatabase.MyRoomDatabase
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
+import com.mudryakov.collectivenote.MainActivity
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.NODE_PAYMENT_IMAGES
 import com.mudryakov.collectivenote.database.firebase.REF_DATABASE_STORAGE
@@ -64,4 +68,10 @@ fun ImageView.setImage(url: String) {
 
     }
 
+
+}
+fun restartActivity(){
+    val intent = Intent(APP_ACTIVITY, MainActivity::class.java)
+    APP_ACTIVITY.startActivity(intent)
+    APP_ACTIVITY.finish()
 }

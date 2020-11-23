@@ -17,8 +17,8 @@ class FirebaseRoomMembers : LiveData<List<UserModel>>() {
         mutableListOFUsers.clear()
 
         REF_DATABASE_ROOT.child(NODE_ROOM_MEMBERS).child(CURRENT_ROOM_UID)
-            .addMySingleListener{DatasnapShot ->
-                list = DatasnapShot.children.map { sn-> sn.value.toString() }
+            .addMySingleListener{DataSnapShot ->
+                list = DataSnapShot.children.map { sn-> sn.value.toString() }
                 list.forEach { id ->
                     getUserFromId(id)
                 }
@@ -31,14 +31,15 @@ class FirebaseRoomMembers : LiveData<List<UserModel>>() {
                 val currentUser = (userSnap.getValue(UserModel::class.java) ?: UserModel())
                 mutableListOFUsers.remove(currentUser)
                 REF_DATABASE_ROOT.child(NODE_USERS).child(currentUser.firebaseId).child(
-                    CHILD_TOTALPAY_AT_CURRENT_ROOM
+                    CHILD_TOTAL_PAY).child(
+                   CURRENT_ROOM_UID
                 ).addMySingleListener {
-                    currentUser.totalPayAtCurrentRoom = it.value.toString()
+                   currentUser.totalPayAtCurrentRoom = if (it.value != null) it.value.toString() else "0"
                     mutableListOFUsers.add(currentUser)
                     if (mutableListOFUsers.size == list.size){ value = mutableListOFUsers}
 
                 }
-            }
+                }
     }
 
 

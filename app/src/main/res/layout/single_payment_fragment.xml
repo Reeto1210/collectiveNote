@@ -5,6 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".screens.singleUserPayments.SingleUserPayments">
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/single_payments_empty"
+        android:text="@string/list_of_payments_is_empty"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        style="@style/list_is_empty" />
 
     <androidx.recyclerview.widget.RecyclerView
 
@@ -14,8 +23,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/single_user_payments_recycle_item" />
+        />
     <ProgressBar
         android:id="@+id/single_payment_progress_bar"
         android:layout_margin="@dimen/app_margin"

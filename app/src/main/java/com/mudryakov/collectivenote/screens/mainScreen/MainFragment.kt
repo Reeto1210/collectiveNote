@@ -106,7 +106,9 @@ class MainFragment : Fragment() {
                 R.id.action_mainFragment_to_questFragment
             )
         }
-        mBinding.include.bottomSheetSettings.setOnClickListener { }
+        mBinding.include.bottomSheetSettings.setOnClickListener {
+            APP_ACTIVITY.navConroller.navigate(R.id.action_mainFragment_to_settingsFragment)
+        }
         mBinding.include.bottomSheetHelp.setOnClickListener { }
         mBinding.mainAddNewPayment.setOnClickListener { APP_ACTIVITY.navConroller.navigate(R.id.action_mainFragment_to_newPaymentFragment) }
 

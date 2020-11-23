@@ -49,7 +49,7 @@ class newPaymentFragment : Fragment() {
                         showToast(getString(R.string.toast_payment_added))
 
                     }
-                else showToast(getString(R.string.fill_all_plates))
+                else showToast(getString(R.string.add_info))
                 if (sum.isNotEmpty() && description.isNotEmpty()) {
                     hideKeyboard(APP_ACTIVITY)
                     APP_ACTIVITY.navConroller.navigate(R.id.action_newPaymentFragment_to_mainFragment)

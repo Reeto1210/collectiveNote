@@ -53,6 +53,8 @@ class HistoryFragment : Fragment() {
             }
             mRecyclerView.smoothScrollToPosition(0)
             mProgressBar.visibility = View.GONE
+       if (it.isEmpty()) mBinding.historyListIsEmpty.visibility = View.VISIBLE
+            else mBinding.historyListIsEmpty.visibility = View.GONE
         }
     }
 
