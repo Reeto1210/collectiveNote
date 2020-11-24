@@ -25,7 +25,7 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.main_fragment_recycle_item, parent, false)
-        return myViewHolder(view)
+               return myViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
@@ -34,6 +34,7 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>
         holder.totalPayd.text =
             if (currentUser.totalPayAtCurrentRoom.isNotEmpty()) APP_ACTIVITY.getString(R.string.sum_currency, currentUser.totalPayAtCurrentRoom) else "0"
         holder.username.text = currentUser.name
+
     }
 
     override fun getItemCount() = list.size

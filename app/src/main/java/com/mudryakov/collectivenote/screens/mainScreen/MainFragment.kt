@@ -14,7 +14,10 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CURRENT_ROOM_UID
 import com.mudryakov.collectivenote.databinding.FragmentMainBinding
 import com.mudryakov.collectivenote.models.UserModel
-import com.mudryakov.collectivenote.utilits.*
+import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
+import com.mudryakov.collectivenote.utilits.AppBottomSheetCallBack
+import com.mudryakov.collectivenote.utilits.USER
+import com.mudryakov.collectivenote.utilits.appPreference
 
 
 class MainFragment : Fragment() {
@@ -24,7 +27,7 @@ class MainFragment : Fragment() {
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<*>
     private lateinit var mObserver: Observer<List<UserModel>>
     private lateinit var mRecycle: RecyclerView
-
+private lateinit var mLayoutManager: LinearLayoutManager
     var mAdapter:MainRecycleAdapter? = null
 
 
@@ -39,20 +42,20 @@ class MainFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         initialization()
-    drawContent()
+           drawContent()
     }
 
     private fun drawContent() {
-
-        initBottomSheetBehavior()
+           initBottomSheetBehavior()
         mObserver = Observer { list ->
             var totalSumm = 0L
             list.forEach {
                 totalSumm += it.totalPayAtCurrentRoom.toLong()
                 mAdapter?.addItem(it)
-           mBinding.loadingLayout.visibility = View.GONE
+                     }
+            mBinding.loadingLayout.visibility = View.GONE
 
-                }
+
             mBinding.mainFragmentTotalPaymentRoom.text =
                 getString(R.string.total_sum_payed, totalSumm)
         }
@@ -79,9 +82,11 @@ class MainFragment : Fragment() {
     private fun initRecycle() {
         mRecycle = mBinding.fragmentMainRecycle
         mAdapter = MainRecycleAdapter()
+       mLayoutManager = LinearLayoutManager(this.context)
         mRecycle.adapter = mAdapter
-        mRecycle.layoutManager = LinearLayoutManager(APP_ACTIVITY)
-    }
+        mRecycle.layoutManager = mLayoutManager
+ mLayoutManager
+       }
 
     private fun initBottomSheetBehavior() {
         mBottomSheetBehavior = BottomSheetBehavior.from(mBinding.include.bottomSheet)
@@ -120,4 +125,5 @@ class MainFragment : Fragment() {
         mViewModel.allMembers.removeObserver(mObserver)
         super.onDestroyView()
     }
+
 }
