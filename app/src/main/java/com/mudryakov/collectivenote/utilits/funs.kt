@@ -75,3 +75,11 @@ fun restartActivity(){
     APP_ACTIVITY.startActivity(intent)
     APP_ACTIVITY.finish()
 }
+
+fun fastNavigate(id:Int){
+    APP_ACTIVITY.navConroller.navigate(id)
+}
+ fun changeTitleMargin(id:Int) {
+    val startMargin = APP_ACTIVITY.resources.getDimension(id).toInt()
+    APP_ACTIVITY.mBinding.mainToolbar.setTitleMargin(startMargin, 0, 0, 0)
+}

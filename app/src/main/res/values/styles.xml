@@ -37,17 +37,6 @@
 
 
 
-    <style name="bottom_sheet_linear_layout_style">
-
-        <item name="android:layout_margin">@dimen/app_margin</item>
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">false</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/bottom_sheet_btn_ripple</item>
-        <item name = "layout_constraintHorizontal_bias">0.0</item>
-       
-    </style>
 
     <style name="bottom_sheet_text_style">
         <item name="android:textSize">@dimen/normal_text</item>
@@ -89,4 +78,10 @@
         <item name="android:textSize">@dimen/normal_text</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/normal_text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

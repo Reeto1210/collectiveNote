@@ -13,10 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.databinding.FragmentHistoryBinding
 import com.mudryakov.collectivenote.models.PaymentModel
+import com.mudryakov.collectivenote.screens.BaseFragmentBack
 import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
 
 
-class HistoryFragment : Fragment() {
+class HistoryFragment : BaseFragmentBack() {
     var _Binding: FragmentHistoryBinding? = null
     val mBinding get() = _Binding!!
     lateinit var mViewModel: HistoryFragmentViewModel

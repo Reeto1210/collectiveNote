@@ -11,13 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.databinding.FragmentNewPaymentBinding
+import com.mudryakov.collectivenote.screens.BaseFragmentBack
 import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
+import com.mudryakov.collectivenote.utilits.fastNavigate
 import com.mudryakov.collectivenote.utilits.showToast
 import com.theartofdev.edmodo.cropper.CropImage
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 
 
-class newPaymentFragment : Fragment() {
+class newPaymentFragment : BaseFragmentBack() {
     var _Binding: FragmentNewPaymentBinding? = null
     val mBinding get() = _Binding!!
     lateinit var mViewModel: AddNewPaymentViewModel
@@ -34,6 +36,7 @@ class newPaymentFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         initialization()
+
     }
 
     private fun initialization() {
@@ -52,7 +55,7 @@ class newPaymentFragment : Fragment() {
                 else showToast(getString(R.string.add_info))
                 if (sum.isNotEmpty() && description.isNotEmpty()) {
                     hideKeyboard(APP_ACTIVITY)
-                    APP_ACTIVITY.navConroller.navigate(R.id.action_newPaymentFragment_to_mainFragment)
+                 fastNavigate(R.id.action_newPaymentFragment_to_mainFragment)
                 }
             } catch (e: Exception) {
                 mBinding.addNewPaymentSumm.setText("")

@@ -10,6 +10,7 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.database.firebase.USERNAME
 import com.mudryakov.collectivenote.databinding.FragmentRegistrationBinding
+import com.mudryakov.collectivenote.screens.BaseFragmentBack
 
 
 import com.mudryakov.collectivenote.utilits.*
@@ -18,7 +19,7 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventList
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 
 
-class RegistrationFragment : Fragment() {
+class RegistrationFragment :Fragment() {
     var _Binding: FragmentRegistrationBinding? = null
     val mBinding get() = _Binding!!
     private lateinit var mViewModel: RegistrationViewModel
@@ -72,7 +73,7 @@ class RegistrationFragment : Fragment() {
         mViewModel.initCommons()
         if (appPreference.getSignIn()) {
             CURRENT_UID = appPreference.getUserId()
-            APP_ACTIVITY.navConroller.navigate(R.id.action_registrationFragment_to_roomChooseFragment)
+            fastNavigate(R.id.action_registrationFragment_to_roomChooseFragment)
         } else {
 
             emailBtnClick()
@@ -113,7 +114,7 @@ class RegistrationFragment : Fragment() {
        hideKeyboard(APP_ACTIVITY)
        onRegistrationFail() //hide progressBar
         makeDialog {
-            APP_ACTIVITY.navConroller.navigate((R.id.action_registrationFragment_to_roomChooseFragment))
+            fastNavigate(R.id.action_registrationFragment_to_roomChooseFragment)
         }
     }
 

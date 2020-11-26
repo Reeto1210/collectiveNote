@@ -1,9 +1,7 @@
 package com.mudryakov.collectivenote.database.firebase
 
 import androidx.lifecycle.LiveData
-import com.google.firebase.database.ChildEventListener
 import com.mudryakov.collectivenote.models.UserModel
-import com.mudryakov.collectivenote.utilits.AppChildEventValueListener
 import com.mudryakov.collectivenote.utilits.AppValueEventListener
 import com.mudryakov.collectivenote.utilits.addMySingleListener
 

@@ -102,7 +102,7 @@ class roomChooseFragment : Fragment() {
         if (!appPreference.getSignInRoom()) showToast(messageText)
         appPreference.setSignInRoom(true)
 
-        APP_ACTIVITY.navConroller.navigate(R.id.action_roomChooseFragment_to_mainFragment)
+       fastNavigate(R.id.action_roomChooseFragment_to_mainFragment)
     }
 
     private fun showProgressBar() {

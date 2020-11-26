@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+
+    >
+
+
+
+
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/main_add_new_payment"
+            style="@style/fab_style"
+            android:src="@drawable/ic_baseline_add_24"
+            app:layout_anchorGravity="end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/white"
+            tools:ignore="ContentDescription" />
+
         <androidx.recyclerview.widget.RecyclerView
              android:overScrollMode="never"
             android:nestedScrollingEnabled="false"
@@ -53,19 +72,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/main_add_new_payment"
-        style="@style/fab_style"
-        android:src="@drawable/ic_baseline_add_24"
-        app:layout_anchor="@id/include"
-        app:layout_anchorGravity="end"
-        app:tint="@color/white"
-        tools:ignore="ContentDescription" />
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/main_bottom_sheet"
-        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:elevation="@dimen/loading_elevation"
@@ -73,6 +80,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_loading_main">
+
+
 
         <TextView
             android:id="@+id/main_text_loading"
@@ -97,4 +106,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
