@@ -35,10 +35,10 @@
     <ImageView
        android:padding="@dimen/small_padding"
         android:id="@+id/add_payment_attach_image"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="@dimen/add_payment_image_size"
+        android:layout_height="@dimen/add_payment_image_size"
         android:layout_margin="@dimen/app_margin"
-        android:background="@drawable/background_for_custom_buttons"
+        android:background="@drawable/btn_ripple"
         android:src="@drawable/ic_add_photo"
         app:layout_constraintBottom_toBottomOf="@+id/add_new_payment_description"
         app:layout_constraintEnd_toEndOf="parent"

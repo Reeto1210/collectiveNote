@@ -38,6 +38,7 @@ const val NODE_ROOM_MEMBERS = "rooms_members"
 const val CHILD_TOTAL_PAY = "totalPay"
 
 
+
 lateinit var CURRENT_ROOM_UID: String
 lateinit var REF_DATABASE_ROOT: DatabaseReference
 lateinit var REF_DATABASE_STORAGE: StorageReference

@@ -8,7 +8,6 @@ import com.mudryakov.collectivenote.database.AppDatabaseRepository
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utilits.*
-import kotlin.random.Random
 
 class FireBaseRepository : AppDatabaseRepository {
 
@@ -132,6 +131,12 @@ class FireBaseRepository : AppDatabaseRepository {
 
     override fun signOut() {
         AUTH.signOut()
+    }
+
+    override fun remindPassword(onSuccess: (String) -> Unit) {
+        REF_DATABASE_ROOT.child(NODE_ROOM_DATA).child(CURRENT_ROOM_UID).child(CHILD_PASS).addMySingleListener {
+            onSuccess(it.value.toString())
+        }
     }
 
 

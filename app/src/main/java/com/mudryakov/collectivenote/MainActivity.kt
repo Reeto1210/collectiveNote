@@ -1,10 +1,8 @@
 package com.mudryakov.collectivenote
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.view.WindowManager
+import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.customview.widget.ViewDragHelper
@@ -18,18 +16,16 @@ import com.mudryakov.collectivenote.databinding.ActivityMainBinding
 import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
 import com.mudryakov.collectivenote.utilits.SIGN_CODE_REQUEST
 import com.mudryakov.collectivenote.utilits.appPreference
-import com.mudryakov.collectivenote.utilits.showToast
-import java.lang.Exception
-import java.lang.reflect.Field
+import com.mudryakov.collectivenote.utilits.fastNavigate
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var _Binding: ActivityMainBinding? = null
     val mBinding get() = _Binding!!
     lateinit var navConroller: NavController
     var actionBar: ActionBar? = null
-    lateinit var mDrawer:DrawerLayout
-    lateinit var navView: NavigationView
+    lateinit var mDrawer: DrawerLayout
+    lateinit var mNavView: NavigationView
 
     var back = true
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,27 +37,33 @@ class MainActivity : AppCompatActivity() {
         navConroller = Navigation.findNavController(APP_ACTIVITY, R.id.container)
         actionBar = supportActionBar
         mDrawer = mBinding.myDrawer
-        navView = mBinding.myNavView
-
+        mNavView = mBinding.myNavView
+        mNavView.itemIconTintList = null
     }
 
     override fun onStart() {
         super.onStart()
+
         appPreference.getPreference(APP_ACTIVITY)
         setDrawerEdge()
-               }
+        mNavView.setNavigationItemSelectedListener(this)
+
+
+    }
+
 
     private fun setDrawerEdge() {
-       val width = APP_ACTIVITY.resources.getDimension(R.dimen.drawer_edge).toInt()
+        val width = APP_ACTIVITY.resources.getDimension(R.dimen.drawer_edge).toInt()
         try {
-             val viewDragHelper = mDrawer::class.java
+            val viewDragHelper = mDrawer::class.java
                 .getDeclaredField("mLeftDragger")
                 .apply { isAccessible = true }
                 .run { get(mDrawer) as ViewDragHelper }
             viewDragHelper.let { it::class.java.getDeclaredField("mEdgeSize") }
                 .apply { isAccessible = true }
-                .apply { setInt(viewDragHelper,width) }
-        } catch (e: Exception) {}
+                .apply { setInt(viewDragHelper, width) }
+        } catch (e: Exception) {
+        }
 
     }
 
@@ -76,8 +78,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-      if (back) onBackPressed()
-        else mDrawer.openDrawer(navView)
+        if (back) onBackPressed()
+        else mDrawer.openDrawer(mNavView)
+        return true
+
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        mDrawer.closeDrawer(mNavView)
+        when (item.itemId) {
+            R.id.drawer_history -> fastNavigate(R.id.action_mainFragment_to_historyFragment)
+            R.id.drawer_info -> fastNavigate(R.id.action_mainFragment_to_roomInfoFragment)
+            R.id.drawer_settings -> fastNavigate(R.id.action_mainFragment_to_settingsFragment)
+        }
+
+
         return true
     }
+
+
 }

@@ -8,8 +8,4 @@ class SettingsViewModel(application: Application):AndroidViewModel(application){
     fun signOut(){
         REPOSITORY.signOut()
     }
-    val allpayments = REPOSITORY.allPayments
-    val allMembers = REPOSITORY.groupMembers
-
-
 }

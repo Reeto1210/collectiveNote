@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.databinding.SinglePaymentFragmentBinding
 import com.mudryakov.collectivenote.models.PaymentModel
+import com.mudryakov.collectivenote.screens.BaseFragmentBack
 import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
 
-class SingleUserPayments : Fragment() {
+class SingleUserPayments : BaseFragmentBack() {
     private var _Binding: SinglePaymentFragmentBinding? = null
     private val mBinding get() = _Binding!!
     var mAdapter: SinglePaymentAdapter? = null
@@ -26,7 +27,7 @@ class SingleUserPayments : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _Binding = SinglePaymentFragmentBinding.inflate(layoutInflater)
         return mBinding.root
     }

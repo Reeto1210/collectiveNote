@@ -26,23 +26,20 @@
             android:id="@+id/action_mainFragment_to_questFragment"
             app:destination="@id/questFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_newPaymentFragment"
             app:destination="@id/newPaymentFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_roomChooseFragment"
-            app:destination="@id/roomChooseFragment" />
         <action
             android:id="@+id/action_mainFragment_to_helpFragment"
             app:destination="@id/helpFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_singleUserPayments"
             app:destination="@id/singleUserPayments" />
+        <action
+            android:id="@+id/action_mainFragment_to_roomInfoFragment"
+            app:destination="@id/roomInfoFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/questFragment"
@@ -90,24 +87,30 @@
             app:destination="@id/mainFragment" />
     </fragment>
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.mudryakov.collectivenote.screens.settings.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" >
-        <action
-            android:id="@+id/action_settingsFragment_to_roomChooseFragment"
-            app:destination="@id/roomChooseFragment" />
-        <action
-            android:id="@+id/action_settingsFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/singleUserPayments"
         android:name="com.mudryakov.collectivenote.screens.singleUserPayments.SingleUserPayments"
         android:label="fragment_single_user_payments"
         tools:layout="@layout/fragment_single_user_payments" >
         <action
             android:id="@+id/action_singleUserPayments_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/roomInfoFragment"
+        android:name="com.mudryakov.collectivenote.screens.roomInfo.RoomInfoFragment"
+        android:label="fragment_room_info"
+        tools:layout="@layout/fragment_room_info" >
+        <action
+            android:id="@+id/action_roomInfoFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.mudryakov.collectivenote.screens.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
 </navigation>

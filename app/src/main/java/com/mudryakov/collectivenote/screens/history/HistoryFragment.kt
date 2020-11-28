@@ -19,7 +19,7 @@ import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
 
 class HistoryFragment : BaseFragmentBack() {
     var _Binding: FragmentHistoryBinding? = null
-    val mBinding get() = _Binding!!
+    private val mBinding get() = _Binding!!
     lateinit var mViewModel: HistoryFragmentViewModel
     lateinit var mPaymentObserver: Observer<List<PaymentModel>>
     var mAdapter: HistoryRecyclerAdapter? = null

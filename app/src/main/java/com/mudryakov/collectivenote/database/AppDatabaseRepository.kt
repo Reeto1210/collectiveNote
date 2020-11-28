@@ -18,7 +18,7 @@ interface AppDatabaseRepository {
     fun getQuest(onSucces: () -> Unit)
     fun pushFileToBase(imageUri: Uri, onSucces: (String) -> Unit)
     fun signOut()
-
+fun remindPassword(onSuccess: (String) -> Unit)
 
 }
 

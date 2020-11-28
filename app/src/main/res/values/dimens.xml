@@ -30,4 +30,7 @@
     <dimen name="margin_main_toolbar_title">62dp</dimen>
     <dimen name="toolbar_hamburger_size">30dp</dimen>
     <dimen name="drawer_edge">100dp</dimen>
+    <dimen name="header_height">200dp</dimen>
+    <dimen name="add_payment_image_size">45dp</dimen>
+    <dimen name="standart_icon_size">24dp</dimen>
 </resources>

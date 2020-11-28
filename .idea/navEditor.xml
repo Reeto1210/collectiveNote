@@ -81,17 +81,12 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_mainFragment_to_registrationFragment">
+                            <entry key="action_mainFragment_to_roomInfoFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_mainFragment_to_roomChooseFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_mainFragment_to_settingsFragment">
+                            <entry key="action_mainFragment_to_singleUserPayments">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -185,28 +180,35 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="settingsFragment">
+                  <entry key="roomInfoFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="-484" />
-                            <option name="y" value="407" />
+                            <option name="y" value="354" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_settingsFragment_to_registrationFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_settingsFragment_to_roomChooseFragment">
+                            <entry key="action_roomInfoFragment_to_mainFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="settingsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-602" />
+                            <option name="y" value="-425" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -219,6 +221,15 @@
                             <option name="x" value="-290" />
                             <option name="y" value="-444" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_singleUserPayments_to_mainFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

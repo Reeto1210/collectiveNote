@@ -36,7 +36,7 @@ class MainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _Binding = FragmentMainBinding.inflate(layoutInflater)
         return mBinding.root
     }
@@ -54,7 +54,7 @@ class MainFragment : Fragment() {
     private fun initDrawer() {
 
         APP_ACTIVITY.back = false
-        APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+      APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         APP_ACTIVITY.actionBar?.setDisplayHomeAsUpEnabled(true)
         APP_ACTIVITY.actionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24)
 
@@ -104,7 +104,8 @@ class MainFragment : Fragment() {
         mAdapter = null
         _Binding = null
         mViewModel.allMembers.removeObserver(mObserver)
-        APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
+         APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         super.onDestroyView()
 
     }

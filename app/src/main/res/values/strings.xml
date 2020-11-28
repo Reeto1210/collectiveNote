@@ -8,7 +8,8 @@
     <string name="eror_in_download">Произошёл сбой при скачивании файла</string>
     <string name="trouble_with_download">Ошибка загрузки</string>
     <string name="sum_currency">%1$s₽</string>
-
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loading_main">Название загрузки</string>
     <!-- registration -->
     <string name="title_email_registration">Введите e-mail и пароль</string>
     <string name="Use_your_Gogle_account">Использовать свой Google аккаунт</string>
@@ -50,20 +51,21 @@
     <string name="catch_payment_summ">Неверный формат суммы</string>
 
     <!-- fragmentHistory -->
-          <string name="history">История</string>
+    <string name="history">История</string>
 
-    <!-- fragmentSettings -->
+    <!-- fragmentInfo -->
     <string name="value_members">Количество участников: %1$d</string>
     <string name="room_name">Комната: %1$s</string>
-    <string name="user_name">Имя пользователя : %1$s</string>
     <string name="total_members_ar_room">Пользователей в комнате: %1$d</string>
     <string name="total_value_of_payments">Всего платежей: %1$d</string>
     <string name="total_user_payed">Ваши траты: %1$s₽</string>
+    <string name="room_info">Информация о комнате</string>
+    <string name="room_pass">Пароль: %1$s</string>
+    <string name="timeless_curency">Текущая валюта: рубли(₽)</string>
+
+    <!-- settingsInfo -->
+    <string name="info_password_btn">Напомнить пароль</string>
     <string name="exit_room">Выйти из комнаты</string>
     <string name="Change_acc">Сменить аккаунт</string>
-    <string name="room_info">Информация о комнате</string>
-    <string name="timeless_curency">Текущая валюта: рубли(₽)</string>
-    <string name="loading_main">Название загрузки</string>
-
-
+    <string name="user_name">Имя пользователя : %1$s</string>
 </resources>

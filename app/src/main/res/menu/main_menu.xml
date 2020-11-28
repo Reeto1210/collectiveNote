@@ -3,36 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
+    <group >
 
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
 
-            android:title="Gallery" />
         <item
-            android:id="@+id/nav_slideshow"
-
-            android:title="Slideshow" />
+            android:id="@+id/drawer_history"
+            android:icon="@drawable/ic_history_drawer"
+            android:title="@string/history" />
         <item
-            android:id="@+id/nav_manage"
 
-            android:title="Tools" />
+            android:id="@+id/drawer_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings" />
+        <item
+            android:id="@+id/drawer_info"
+            android:icon="@drawable/ic_drawer_info"
+            android:title="@string/room_info" />
+
+
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-
-                android:title="Send" />
-        </menu>
-    </item>
+    <group android:id="@+id/bottom_menu">
+    <item
+        android:id="@+id/drawer_help"
+        android:icon="@drawable/ic_help"
+        android:title="@string/help" />
+    </group>
 
 </menu>

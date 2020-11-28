@@ -1,14 +1,12 @@
 package com.mudryakov.collectivenote.utilits
 
 //import com.mudryakov.collectivenote.database.RoomDatabase.MyRoomDatabase
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import com.mudryakov.collectivenote.MainActivity
@@ -56,7 +54,7 @@ fun ImageView.setImage(url: String) {
     if (file.exists() && file.length() != 0L) {
         val uri = file.absolutePath.toUri()
         this.setImageURI(uri)
-      } else {
+    } else {
         Picasso.get()
             .load(url)
             .error(R.drawable.sorry)
@@ -70,16 +68,26 @@ fun ImageView.setImage(url: String) {
 
 
 }
-fun restartActivity(){
+
+fun restartActivity() {
     val intent = Intent(APP_ACTIVITY, MainActivity::class.java)
     APP_ACTIVITY.startActivity(intent)
     APP_ACTIVITY.finish()
 }
 
-fun fastNavigate(id:Int){
+fun fastNavigate(id: Int) {
     APP_ACTIVITY.navConroller.navigate(id)
 }
- fun changeTitleMargin(id:Int) {
-    val startMargin = APP_ACTIVITY.resources.getDimension(id).toInt()
-    APP_ACTIVITY.mBinding.mainToolbar.setTitleMargin(startMargin, 0, 0, 0)
+
+fun View.makeVisible() {
+    this.visibility = View.VISIBLE
 }
+
+fun View.makeInvisible() {
+    this.visibility = View.INVISIBLE
+}
+
+fun View.makeGone() {
+    this.visibility = View.GONE
+}
+

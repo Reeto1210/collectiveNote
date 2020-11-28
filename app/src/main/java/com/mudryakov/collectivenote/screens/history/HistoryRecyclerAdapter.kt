@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.models.PaymentModel
@@ -23,7 +24,7 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.myV
         val sum: TextView = view.history_summ
         val attachedImage: ImageView = view.history_image
         val fullScreenImage: ImageView = view.history_full_image
-        val baseLayout = view.history_recycle_layout
+        val baseLayout: ConstraintLayout = view.history_recycle_layout
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
