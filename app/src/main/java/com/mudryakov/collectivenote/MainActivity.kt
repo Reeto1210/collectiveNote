@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.drawer_history -> fastNavigate(R.id.action_mainFragment_to_historyFragment)
             R.id.drawer_info -> fastNavigate(R.id.action_mainFragment_to_roomInfoFragment)
             R.id.drawer_settings -> fastNavigate(R.id.action_mainFragment_to_settingsFragment)
+            R.id.drawer_help -> fastNavigate(R.id.action_mainFragment_to_helpFragment)
         }
 
 

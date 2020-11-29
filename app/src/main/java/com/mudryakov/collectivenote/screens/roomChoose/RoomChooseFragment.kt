@@ -71,10 +71,11 @@ class roomChooseFragment : Fragment() {
     private fun createRoom() {
         APP_ACTIVITY.title = getString(R.string.create_room)
         mBinding.roomChooseContinue.setOnClickListener {
+
             showProgressBar()
             val roomName = mBinding.roomChooseName.text.toString()
             val roomPass = mBinding.roomChoosePassword.text.toString()
-            mViewModel.createRoom(roomName, roomPass, { onfail() }) {
+            mViewModel.createRoom(roomName, roomPass, { onFail() }) {
                 appPreference.setRoomName(roomName)
                 messageText = getString(R.string.toast_create_room, roomName)
                 navNext()
@@ -86,10 +87,11 @@ class roomChooseFragment : Fragment() {
     private fun joinRoom() {
         APP_ACTIVITY.title = getString(R.string.join_room)
         mBinding.roomChooseContinue.setOnClickListener {
+
             showProgressBar()
             val roomName = mBinding.roomChooseName.text.toString()
             val roomPass = mBinding.roomChoosePassword.text.toString()
-            mViewModel.joinRoom(roomName, roomPass, { onfail() }) {
+            mViewModel.joinRoom(roomName, roomPass, { onFail() }) {
                 appPreference.setRoomName(roomName)
                 messageText = getString(R.string.toast_join_room, roomName)
                 navNext()
@@ -106,11 +108,12 @@ class roomChooseFragment : Fragment() {
     }
 
     private fun showProgressBar() {
-        mBinding.roomChooseProgressBar.visibility = View.VISIBLE
+      hideKeyboard(APP_ACTIVITY)
+       mBinding.roomChooseProgressBar.visibility = View.VISIBLE
         mBinding.roomChooseContinue.visibility = View.GONE
     }
 
-    private fun onfail() {
+    private fun onFail() {
         mBinding.roomChooseProgressBar.visibility = View.GONE
         mBinding.roomChooseContinue.visibility = View.VISIBLE
     }

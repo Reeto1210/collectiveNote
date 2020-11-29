@@ -6,7 +6,7 @@ import com.mudryakov.collectivenote.utilits.AppValueEventListener
 import com.mudryakov.collectivenote.utilits.addMySingleListener
 
 
-class FirebaseRoomMembers : LiveData<List<UserModel>>() {
+class FirebaseGroupMembers : LiveData<List<UserModel>>() {
 
     val mutableListOFUsers = mutableListOf<UserModel>()
     lateinit var list: List<String>
@@ -38,7 +38,9 @@ class FirebaseRoomMembers : LiveData<List<UserModel>>() {
 
                 }
                 }
-    }
+
+
+       }
 
 
     override fun onActive() {
@@ -51,5 +53,8 @@ class FirebaseRoomMembers : LiveData<List<UserModel>>() {
         REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID).removeEventListener(listener)
         super.onInactive()
     }
+
+
+
 
 }

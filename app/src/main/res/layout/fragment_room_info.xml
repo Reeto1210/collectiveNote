@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".screens.roomInfo.RoomInfoFragment">
 
-    <TextView
-        android:id="@+id/settings_info_room"
-        style="@style/title_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/room_info"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="@dimen/progress_bar_size"
@@ -24,20 +14,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/settings_info_room" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/settings_info_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/app_margin"
-        android:layout_marginTop="@dimen/app_margin"
         android:background="@color/white"
         android:elevation="@dimen/app_elevation"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_info_room">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/settings_room_name"

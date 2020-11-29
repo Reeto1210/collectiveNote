@@ -6,6 +6,7 @@ import com.mudryakov.collectivenote.database.firebase.REPOSITORY
 
 
 class HistoryFragmentViewModel(application: Application):AndroidViewModel(application) {
+
    val paymentList = REPOSITORY.allPayments
 }
 

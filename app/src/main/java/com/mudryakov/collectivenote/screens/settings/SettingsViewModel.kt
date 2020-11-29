@@ -8,4 +8,9 @@ class SettingsViewModel(application: Application):AndroidViewModel(application){
     fun signOut(){
         REPOSITORY.signOut()
     }
+fun changeName(name: String, onSucces: () -> Unit){
+    REPOSITORY.changeName(name,onSucces)
+
+}
+
 }

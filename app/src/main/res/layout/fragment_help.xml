@@ -1,8 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.HelpFragment">
+    tools:context=".screens.help.HelpFragment">
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+       android:id="@+id/help_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/app_margin"
+        android:background="@color/white"
+        android:elevation="@dimen/app_elevation"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/help_main_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/app_margin"
+            android:text="Душещипательная история почему програмист не должен умереть с голоду а так же контактый емейл  и прочая инфа
+Чем в казино всё проебать, лучше разраба поддержать!"
+            android:textSize="@dimen/normal_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_dev_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/app_margin"
+
+            android:autoLink="email"
+            android:text="E-mail для связи: mudryakov21@mail.ru"
+            android:textColor="@color/black"
+            android:textSize="@dimen/normal_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/help_main_text" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        style="@style/btn_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Поддержать разработчика"
+        android:textSize="@dimen/small_text"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/help_main_layout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

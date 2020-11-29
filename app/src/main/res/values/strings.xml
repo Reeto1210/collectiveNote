@@ -36,9 +36,8 @@
     <string name="toast_join_room">Вы присоедились к комнате %1$s"</string>
     <string name="toast_create_room">Вы создали комнату %1$s"</string>
 
-    <!-- bottomSheet -->
+    <!-- navDrawer -->
     <string name="bottom_sheet_history">История вложений</string>
-    <string name="bottom_sheet_take_quest">Взять задание</string>
     <string name="settings">Настройки</string>
     <string name="help">Помощь</string>
 
@@ -63,9 +62,17 @@
     <string name="room_pass">Пароль: %1$s</string>
     <string name="timeless_curency">Текущая валюта: рубли(₽)</string>
 
-    <!-- settingsInfo -->
+    <!-- Info -->
     <string name="info_password_btn">Напомнить пароль</string>
     <string name="exit_room">Выйти из комнаты</string>
     <string name="Change_acc">Сменить аккаунт</string>
+
+    <!-- settings -->
     <string name="user_name">Имя пользователя : %1$s</string>
+    <string name="edit">Редактировать</string>
+    <string name="name_changed">Имя изменено</string>
+    <string name="name_cant_be_empty_toast">Имя не может быть пустым</string>
+
+    <!-- help -->
+
 </resources>

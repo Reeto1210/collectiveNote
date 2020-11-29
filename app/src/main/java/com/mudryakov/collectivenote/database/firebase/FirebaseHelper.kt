@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
 import com.mudryakov.collectivenote.database.RoomDatabase.AppRoomRepository
+import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utilits.*
 
@@ -32,12 +33,10 @@ const val NODE_ROOM_DATA = "roomsData"
 const val CHILD_CREATOR = "creator"
 const val NODE_ROOM_NAMES = "roomNames"
 const val NODE_ROOM_PAYMENTS = "roomsPayments"
-const val NODE_ROOMS_QUESTS = "roomsQuests"
 const val NODE_PAYMENT_IMAGES = "paymentImages"
 const val NODE_ROOM_MEMBERS = "rooms_members"
 const val CHILD_TOTAL_PAY = "totalPay"
-
-
+const val CHILD_FROM_NAME = "fromName"
 
 lateinit var CURRENT_ROOM_UID: String
 lateinit var REF_DATABASE_ROOT: DatabaseReference
@@ -51,7 +50,7 @@ private lateinit var ON_REGISTRATION_COMPLETE: () -> Unit
 private lateinit var ON_REGISTRATION_FAIL: () -> Unit
 
 
-fun logIn(type: String, onFail:()->Unit, onCompelete: () -> Unit) {
+fun logIn(type: String, onFail: () -> Unit, onCompelete: () -> Unit) {
     ON_REGISTRATION_COMPLETE = onCompelete
     ON_REGISTRATION_FAIL = onFail
 
@@ -71,8 +70,7 @@ fun tryLogInEmail(function: () -> Unit) {
             if (it is FirebaseAuthInvalidCredentialsException) {
                 ON_REGISTRATION_FAIL()
                 showToast(it.message.toString())
-                        }
-                else {
+            } else {
                 function()
             }
         }
@@ -85,7 +83,8 @@ fun createNewEmailUser() {
     }
         .addOnFailureListener {
             ON_REGISTRATION_FAIL()
-            showToast(it.message.toString()) }
+            showToast(it.message.toString())
+        }
 }
 
 
@@ -117,9 +116,10 @@ fun pushUserToFirebase() {
     REF_DATABASE_ROOT.child(NODE_USERS).addMySingleListener {
         if (!it.hasChild(CURRENT_UID)) {
             REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).setValue(USER)
-                .addOnFailureListener {
-                        ex -> showToast(ex.message.toString())
-                    ON_REGISTRATION_FAIL()}
+                .addOnFailureListener { ex ->
+                    showToast(ex.message.toString())
+                    ON_REGISTRATION_FAIL()
+                }
                 .addOnSuccessListener {
                     ON_REGISTRATION_COMPLETE()
                 }
@@ -129,7 +129,12 @@ fun pushUserToFirebase() {
 
 }
 
-fun pushRoomToFirebase(roomName: String, roomPass: String,onFail: () -> Unit, function: (String) -> Unit) {
+fun pushRoomToFirebase(
+    roomName: String,
+    roomPass: String,
+    onFail: () -> Unit,
+    function: (String) -> Unit
+) {
     val mainHashMap = HashMap<String, Any>()
     val roomInfoHashMap = HashMap<String, Any>()
     val roomkey = REF_DATABASE_ROOT.push().key.toString()
@@ -145,9 +150,9 @@ fun pushRoomToFirebase(roomName: String, roomPass: String,onFail: () -> Unit, fu
             REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(roomkey).setValue("Created")
         }
         .addOnFailureListener { problem ->
-               onFail()
-                showToast(problem.message.toString())
-           }
+            onFail()
+            showToast(problem.message.toString())
+        }
 }
 
 fun updateUserRoomId(roomkey: String, onFail: () -> Unit, onSuccess: () -> Unit) {
@@ -155,20 +160,22 @@ fun updateUserRoomId(roomkey: String, onFail: () -> Unit, onSuccess: () -> Unit)
     REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(
         CHILD_ROOM_ID
     ).setValue(roomkey)
-        .addOnFailureListener {problem->
-                onFail()
-               showToast(problem.message.toString()) }
+        .addOnFailureListener { problem ->
+            onFail()
+            showToast(problem.message.toString())
+        }
         .addOnSuccessListener {
             REF_DATABASE_ROOT.child(NODE_ROOM_MEMBERS).child(roomkey).child(CURRENT_UID)
                 .setValue(CURRENT_UID)
                 .addOnSuccessListener {
-                     appPreference.setRoomId(roomkey)
+                    appPreference.setRoomId(roomkey)
                     CURRENT_ROOM_UID = roomkey
                     updatePreferenceCurrentPay { onSuccess() }
 
                 }
-                .addOnFailureListener { prob -> showToast(prob.message.toString())
-                   onFail()
+                .addOnFailureListener { prob ->
+                    showToast(prob.message.toString())
+                    onFail()
                 }
         }
 }
@@ -183,8 +190,46 @@ fun updatePreferenceCurrentPay(function: () -> Unit) {
                 .child(CHILD_TOTALPAY_AT_CURRENT_ROOM)
                 .setValue(totalPay)
                 .addOnSuccessListener { function() }
-                .addOnFailureListener { ex -> showToast(ex.message.toString())
-                    ON_REGISTRATION_FAIL()}
+                .addOnFailureListener { ex ->
+                    showToast(ex.message.toString())
+                    ON_REGISTRATION_FAIL()
+                }
         }
 
 }
+
+fun updateAllUserPayments() {
+    findAllUsersRooms{ listOfId->
+        findAllUsersPayments(listOfId){roomId,paymentId->
+            changePaymentFromName(roomId,paymentId)
+        }
+    }
+}
+
+fun changePaymentFromName(roomId: String, paymentId: String) {
+  REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(roomId).child(paymentId).child(CHILD_FROM_NAME).setValue(appPreference.getUserName())
+}
+
+fun findAllUsersPayments(listOfId: List<String>, function: (roomId:String,paymentId:String) -> Unit) {
+    listOfId.forEach { id ->
+        REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(id).addMySingleListener {
+            val list = it.children.map { payment ->
+                payment.getValue(PaymentModel::class.java) ?: PaymentModel()
+            }
+            list.forEach { curPayment ->
+                if (curPayment.fromId == CURRENT_UID)
+                   function(id,curPayment.firebaseId)
+            }
+        }
+    }
+}
+
+
+fun findAllUsersRooms(onComlete: (List<String>) -> Unit) {
+    REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_TOTAL_PAY)
+        .addMySingleListener {
+            val list = it.children.map { room -> room.key.toString() }
+            onComlete(list)
+        }
+}
+

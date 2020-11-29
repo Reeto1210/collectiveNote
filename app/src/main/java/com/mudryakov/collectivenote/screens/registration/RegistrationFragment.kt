@@ -125,19 +125,23 @@ class RegistrationFragment :Fragment() {
         mBinding.alertChangeNameBtn.setOnClickListener {
 
             val newName = mBinding.registrationDialogName.text.toString()
+              if (newName.isNotEmpty()){
                if (!isLoading) {
                showProgressBar()
-               mViewModel.changeName(newName) { onConfirm() }
-           }}
+                   mViewModel.changeName(newName) { onConfirm() }
+           }}else
+               showToast(getString(R.string.name_cant_be_empty_toast))
+        }
+
     }
 
-    fun onRegistrationFail() {
+    private fun onRegistrationFail() {
        isLoading = false
         mBinding.fragmentRegistrationProgressBar.visibility = View.GONE
     }
 
 
-    fun showProgressBar() {
+    private fun showProgressBar() {
         isLoading = true
         mBinding.fragmentRegistrationProgressBar.visibility = View.VISIBLE
 

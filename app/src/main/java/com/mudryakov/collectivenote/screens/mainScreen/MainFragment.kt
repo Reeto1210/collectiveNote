@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.graphics.vector.PathNode
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -19,7 +18,6 @@ import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
 import com.mudryakov.collectivenote.utilits.USER
 import com.mudryakov.collectivenote.utilits.appPreference
 import com.mudryakov.collectivenote.utilits.fastNavigate
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainFragment : Fragment() {
@@ -29,9 +27,7 @@ class MainFragment : Fragment() {
     private lateinit var mObserver: Observer<List<UserModel>>
     private lateinit var mRecycle: RecyclerView
     private lateinit var mLayoutManager: LinearLayoutManager
-
     var mAdapter: MainRecycleAdapter? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +37,6 @@ class MainFragment : Fragment() {
         return mBinding.root
     }
 
-
     override fun onResume() {
         super.onResume()
         initialization()
@@ -49,12 +44,9 @@ class MainFragment : Fragment() {
         initDrawer()
     }
 
-
-
     private fun initDrawer() {
-
         APP_ACTIVITY.back = false
-      APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         APP_ACTIVITY.actionBar?.setDisplayHomeAsUpEnabled(true)
         APP_ACTIVITY.actionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24)
 
@@ -67,7 +59,6 @@ class MainFragment : Fragment() {
                 totalSum += it.totalPayAtCurrentRoom.toLong()
                 mAdapter?.addItem(it)
             }
-
             mBinding.loadingLayout.visibility = View.GONE
             mBinding.mainFragmentTotalPaymentRoom.text =
                 getString(R.string.total_sum_payed, totalSum)
@@ -104,8 +95,7 @@ class MainFragment : Fragment() {
         mAdapter = null
         _Binding = null
         mViewModel.allMembers.removeObserver(mObserver)
-
-         APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         super.onDestroyView()
 
     }

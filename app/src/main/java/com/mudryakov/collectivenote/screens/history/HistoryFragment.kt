@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +13,7 @@ import com.mudryakov.collectivenote.databinding.FragmentHistoryBinding
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
 import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
+import com.mudryakov.collectivenote.utilits.makeInvisible
 
 
 class HistoryFragment : BaseFragmentBack() {
@@ -24,11 +23,12 @@ class HistoryFragment : BaseFragmentBack() {
     lateinit var mPaymentObserver: Observer<List<PaymentModel>>
     var mAdapter: HistoryRecyclerAdapter? = null
     lateinit var mRecyclerView: RecyclerView
-    lateinit var mProgressBar:ProgressBar
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _Binding = FragmentHistoryBinding.inflate(layoutInflater)
         APP_ACTIVITY.title = getString(R.string.history)
         return mBinding.root
@@ -37,26 +37,28 @@ class HistoryFragment : BaseFragmentBack() {
     override fun onStart() {
         super.onStart()
         initialization()
-        mViewModel.paymentList.observe(this, mPaymentObserver)
+        initObservers()
     }
 
-    private fun initialization() {
-        mProgressBar = mBinding.historyProgressBar
-
-        mViewModel = ViewModelProvider(this).get(HistoryFragmentViewModel::class.java)
-        mRecyclerView = mBinding.historyRecycle
-        mAdapter = HistoryRecyclerAdapter()
-        mRecyclerView.adapter = mAdapter
-        mRecyclerView.layoutManager = LinearLayoutManager(APP_ACTIVITY)
+    private fun initObservers() {
         mPaymentObserver = Observer {
             it.forEach { pay ->
                 mAdapter?.addItem(pay)
             }
             mRecyclerView.smoothScrollToPosition(0)
-            mProgressBar.visibility = View.GONE
-       if (it.isEmpty()) mBinding.historyListIsEmpty.visibility = View.VISIBLE
-            else mBinding.historyListIsEmpty.visibility = View.GONE
+            mBinding.historyProgressBar.makeInvisible()
+            if (it.isEmpty()) mBinding.historyListIsEmpty.makeInvisible()
+            else mBinding.historyListIsEmpty.makeInvisible()
         }
+        mViewModel.paymentList.observe(this, mPaymentObserver)
+    }
+
+    private fun initialization() {
+        mViewModel = ViewModelProvider(this).get(HistoryFragmentViewModel::class.java)
+        mRecyclerView = mBinding.historyRecycle
+        mAdapter = HistoryRecyclerAdapter()
+        mRecyclerView.adapter = mAdapter
+        mRecyclerView.layoutManager = LinearLayoutManager(APP_ACTIVITY)
     }
 
     override fun onDestroyView() {

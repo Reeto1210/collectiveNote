@@ -23,9 +23,6 @@
             android:id="@+id/action_mainFragment_to_historyFragment"
             app:destination="@id/historyFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_questFragment"
-            app:destination="@id/questFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_newPaymentFragment"
             app:destination="@id/newPaymentFragment" />
         <action
@@ -40,15 +37,6 @@
         <action
             android:id="@+id/action_mainFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/questFragment"
-        android:name="com.mudryakov.collectivenote.screens.QuestFragment"
-        android:label="fragment_quest"
-        tools:layout="@layout/fragment_quest" >
-        <action
-            android:id="@+id/action_questFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
@@ -79,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
-        android:name="com.mudryakov.collectivenote.screens.HelpFragment"
+        android:name="com.mudryakov.collectivenote.screens.help.HelpFragment"
         android:label="fragment_help"
         tools:layout="@layout/fragment_help" >
         <action
@@ -90,7 +78,7 @@
         android:id="@+id/singleUserPayments"
         android:name="com.mudryakov.collectivenote.screens.singleUserPayments.SingleUserPayments"
         android:label="fragment_single_user_payments"
-        tools:layout="@layout/fragment_single_user_payments" >
+        tools:layout="@layout/single_payment_fragment" >
         <action
             android:id="@+id/action_singleUserPayments_to_mainFragment"
             app:destination="@id/mainFragment" />

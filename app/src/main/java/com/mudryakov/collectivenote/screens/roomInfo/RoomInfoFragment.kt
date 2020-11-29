@@ -11,6 +11,7 @@ import com.mudryakov.collectivenote.databinding.FragmentRoomInfoBinding
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
+import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
 import com.mudryakov.collectivenote.utilits.appPreference
 import com.mudryakov.collectivenote.utilits.makeInvisible
 import com.mudryakov.collectivenote.utilits.makeVisible
@@ -33,7 +34,7 @@ class RoomInfoFragment : BaseFragmentBack() {
         savedInstanceState: Bundle?
     ): View {
         _Binding = FragmentRoomInfoBinding.inflate(layoutInflater)
-        return mBinding.root
+                return mBinding.root
     }
 
     override fun onStart() {
@@ -65,6 +66,7 @@ class RoomInfoFragment : BaseFragmentBack() {
     }
 
     private fun initialization() {
+        APP_ACTIVITY.title = getString(R.string.room_info)
         mViewModel = ViewModelProvider(this).get(RoomInfoViewModel::class.java)
         mBinding.infoIconPass.setImageResource(R.drawable.info_pass_icon)
         mBinding.infoIconPass.makeVisible()

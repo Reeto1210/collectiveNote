@@ -131,7 +131,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/alert_dialog_margin"
         android:visibility="gone"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -145,7 +144,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/registration_dialog_name"
+                 android:id="@+id/registration_dialog_name"
             style="@style/input_text_style"
             android:hint="@string/enter_your_name"
             android:inputType="textPersonName"

@@ -9,6 +9,7 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
+import com.mudryakov.collectivenote.utilits.appPreference
 import kotlinx.android.synthetic.main.main_fragment_recycle_item.view.*
 
 class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>() {
@@ -59,8 +60,9 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>
     private fun addUserToRecycle(user: UserModel) {
         list.add(user)
         if (user.firebaseId == CURRENT_UID) {
+           list.last().name = appPreference.getUserName()
             list.reverse()
-        }
+                }
         notifyItemInserted(list.indexOf(user))
     }
 

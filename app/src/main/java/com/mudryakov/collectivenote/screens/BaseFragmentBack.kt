@@ -11,8 +11,6 @@ open class BaseFragmentBack() : Fragment() {
         APP_ACTIVITY.back = true
         APP_ACTIVITY.actionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
 
-
-
     }
 
 

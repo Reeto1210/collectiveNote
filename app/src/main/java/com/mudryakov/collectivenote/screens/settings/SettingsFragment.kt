@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.databinding.FragmentSettingsBinding
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
-import com.mudryakov.collectivenote.utilits.appPreference
-import com.mudryakov.collectivenote.utilits.restartActivity
+import com.mudryakov.collectivenote.utilits.*
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 
 
 class SettingsFragment : BaseFragmentBack() {
@@ -30,13 +30,33 @@ class SettingsFragment : BaseFragmentBack() {
     }
 
     private fun initialization() {
+        APP_ACTIVITY.title = getString(R.string.settings)
+        mBinding.settingsName.text = getString(R.string.user_name, appPreference.getUserName())
         setHasOptionsMenu(true)
         mViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
+        initBehaivor()
+    }
+
+    private fun initBehaivor() {
+        mBinding.settongsChangeNameBtn.setOnClickListener {
+            mBinding.settongsChangeNameBtn.makeGone()
+            mBinding.settingsEditNameEditText.makeVisible()
+            mBinding.settingsBtnContinue.makeVisible()
+        }
+        mBinding.settingsBtnContinue.setOnClickListener {
+            val newName = mBinding.settingsEditNameEditText.text.toString()
+            if (newName.isNotEmpty()) {
+                mViewModel.changeName(newName) {
+                    showToast(getString(R.string.name_changed))
+                    hideKeyboard(APP_ACTIVITY)
+                    fastNavigate(R.id.action_settingsFragment_to_mainFragment)
+                }
+            } else showToast(getString(R.string.name_cant_be_empty_toast))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         activity?.menuInflater?.inflate(R.menu.settings_menu, menu)
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -53,7 +73,7 @@ class SettingsFragment : BaseFragmentBack() {
         restartActivity()
     }
 
-    fun changeRoom() {
+    private fun changeRoom() {
         appPreference.setRoomId("fail")
         appPreference.setSignInRoom(false)
         appPreference.setTotalSumm("0")
