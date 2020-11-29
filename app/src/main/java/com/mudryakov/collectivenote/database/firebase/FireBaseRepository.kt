@@ -77,7 +77,7 @@ class FireBaseRepository : AppDatabaseRepository {
 
 
     override fun addNewPayment(payment: PaymentModel, onSucces: () -> Unit) {
-        val totalSumm = (USER.totalPayAtCurrentRoom.toLong() + payment.summ.toLong()).toString()
+        val totalSumm = (appPreference.getTotalSumm().toLong() + payment.summ.toLong()).toString()
         val currentRef = REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID)
         val key = currentRef.push().key.toString()
         payment.firebaseId = key
@@ -97,7 +97,6 @@ class FireBaseRepository : AppDatabaseRepository {
                                 REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID)
                                     .setValue(key)
                                 appPreference.setTotalSumm(totalSumm)
-                                USER.totalPayAtCurrentRoom = totalSumm
                                 onSucces()
                             }
                             .addOnFailureListener {

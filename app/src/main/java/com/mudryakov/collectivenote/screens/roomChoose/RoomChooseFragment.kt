@@ -16,7 +16,7 @@ import com.mudryakov.collectivenote.utilits.*
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 
 
-class roomChooseFragment : Fragment() {
+class RoomChooseFragment : Fragment() {
     var _Binding: FragmentRoomChooseBinding? = null
     val mBinding get() = _Binding!!
     lateinit var mViewModel: RoomChooseViewModel
@@ -24,7 +24,7 @@ class roomChooseFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _Binding = FragmentRoomChooseBinding.inflate(layoutInflater)
         return mBinding.root
     }
@@ -32,7 +32,6 @@ class roomChooseFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         initialization()
-
         if (appPreference.getSignInRoom()) {
             CURRENT_UID = appPreference.getUserId()
             navNext()
@@ -40,15 +39,11 @@ class roomChooseFragment : Fragment() {
             val builder = AlertDialog.Builder(this.context)
             builder.setTitle(getString(R.string.choose_room_alert_dialog_title))
                 .setMessage(getString(R.string.choose_room_alert_dialog_text))
-                .setPositiveButton(getString(R.string.choose_room_alert_dialog_possitive_button)) { _: DialogInterface, _: Int ->
-                    enterRoom(
-                        CREATOR
-                    )
+                 .setPositiveButton(getString(R.string.choose_room_alert_dialog_possitive_button)) { _: DialogInterface, _: Int ->
+                    enterRoom(CREATOR)
                 }
                 .setNeutralButton(getString(R.string.choose_room_alert_dialog_negative_button)) { _: DialogInterface, _: Int ->
-                    enterRoom(
-                        MEMBER
-                    )
+                    enterRoom(MEMBER)
                 }
                 .setCancelable(false)
                 .show()
@@ -57,7 +52,7 @@ class roomChooseFragment : Fragment() {
     }
 
     private fun initialization() {
-        APP_ACTIVITY.title = USERNAME
+        APP_ACTIVITY.title = appPreference.getUserName()
         mViewModel = ViewModelProvider(APP_ACTIVITY).get(RoomChooseViewModel::class.java)
     }
 
@@ -71,7 +66,6 @@ class roomChooseFragment : Fragment() {
     private fun createRoom() {
         APP_ACTIVITY.title = getString(R.string.create_room)
         mBinding.roomChooseContinue.setOnClickListener {
-
             showProgressBar()
             val roomName = mBinding.roomChooseName.text.toString()
             val roomPass = mBinding.roomChoosePassword.text.toString()
@@ -103,18 +97,17 @@ class roomChooseFragment : Fragment() {
         hideKeyboard(APP_ACTIVITY)
         if (!appPreference.getSignInRoom()) showToast(messageText)
         appPreference.setSignInRoom(true)
-
        fastNavigate(R.id.action_roomChooseFragment_to_mainFragment)
     }
 
     private fun showProgressBar() {
       hideKeyboard(APP_ACTIVITY)
-       mBinding.roomChooseProgressBar.visibility = View.VISIBLE
-        mBinding.roomChooseContinue.visibility = View.GONE
+       mBinding.roomChooseProgressBar.makeVisible()
+        mBinding.roomChooseContinue.makeGone()
     }
 
     private fun onFail() {
-        mBinding.roomChooseProgressBar.visibility = View.GONE
-        mBinding.roomChooseContinue.visibility = View.VISIBLE
+        mBinding.roomChooseProgressBar.makeGone()
+        mBinding.roomChooseContinue.makeVisible()
     }
 }

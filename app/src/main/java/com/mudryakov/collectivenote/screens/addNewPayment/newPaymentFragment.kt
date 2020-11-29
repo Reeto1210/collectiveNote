@@ -27,7 +27,7 @@ class newPaymentFragment : BaseFragmentBack() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _Binding = FragmentNewPaymentBinding.inflate(layoutInflater)
         APP_ACTIVITY.title = getString(R.string.add_new_payment_title)
         return mBinding.root
@@ -49,7 +49,7 @@ class newPaymentFragment : BaseFragmentBack() {
                 sum.toLong()
                 if (sum.isNotEmpty() && description.isNotEmpty())
                     mViewModel.addNewPayment(sum, description, imageUri) {
-                        showToast(getString(R.string.toast_payment_added))
+                        showToast(APP_ACTIVITY.getString(R.string.toast_payment_added))
 
                     }
                 else showToast(getString(R.string.add_info))

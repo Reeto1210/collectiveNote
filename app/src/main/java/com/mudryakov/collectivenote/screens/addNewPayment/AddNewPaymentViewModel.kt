@@ -8,6 +8,7 @@ import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.database.firebase.REPOSITORY
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.utilits.USER
+import com.mudryakov.collectivenote.utilits.appPreference
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
@@ -16,7 +17,7 @@ class AddNewPaymentViewModel(application: Application) : AndroidViewModel(applic
     fun addNewPayment(sum: String, description: String, imageUri: Uri?, onSucces: () -> Unit) =
         viewModelScope.launch(IO) {
             val currentPayment =
-                PaymentModel(summ = sum, description = description, fromId = CURRENT_UID,fromName = USER.name)
+                PaymentModel(summ = sum, description = description, fromId = CURRENT_UID,fromName = appPreference.getUserName())
             if (imageUri == null) {
                 REPOSITORY.addNewPayment(currentPayment) { onSucces() }
             } else {

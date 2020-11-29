@@ -15,7 +15,6 @@ import com.mudryakov.collectivenote.database.firebase.CURRENT_ROOM_UID
 import com.mudryakov.collectivenote.databinding.FragmentMainBinding
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
-import com.mudryakov.collectivenote.utilits.USER
 import com.mudryakov.collectivenote.utilits.appPreference
 import com.mudryakov.collectivenote.utilits.fastNavigate
 
@@ -40,19 +39,16 @@ class MainFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         initialization()
-        drawContent()
-        initDrawer()
+        initObservers()
     }
 
     private fun initDrawer() {
-        APP_ACTIVITY.back = false
-        APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         APP_ACTIVITY.actionBar?.setDisplayHomeAsUpEnabled(true)
         APP_ACTIVITY.actionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24)
-
+        APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
-    private fun drawContent() {
+    private fun initObservers() {
         mObserver = Observer { list ->
             var totalSum = 0L
             list.forEach {
@@ -62,23 +58,19 @@ class MainFragment : Fragment() {
             mBinding.loadingLayout.visibility = View.GONE
             mBinding.mainFragmentTotalPaymentRoom.text =
                 getString(R.string.total_sum_payed, totalSum)
+            APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         }
         mViewModel.allMembers.observe(this, mObserver)
     }
 
     private fun initialization() {
+        initDrawer()
+        APP_ACTIVITY.back = false
         APP_ACTIVITY.title = APP_ACTIVITY.getString(R.string.app_name)
-
-        USER = UserModel(
-            appPreference.getUserId(),
-            appPreference.getUserName(),
-            appPreference.getRoomId(),
-            appPreference.getTotalSumm()
-        )
         CURRENT_ROOM_UID = appPreference.getRoomId()
         mViewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
+                mBinding.mainAddNewPayment.setOnClickListener { fastNavigate(R.id.action_mainFragment_to_newPaymentFragment) }
         initRecycle()
-        mBinding.mainAddNewPayment.setOnClickListener { fastNavigate(R.id.action_mainFragment_to_newPaymentFragment) }
     }
 
 

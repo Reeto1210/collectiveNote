@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context=".screens.roomChoose.roomChooseFragment">
+    tools:context=".screens.roomChoose.RoomChooseFragment">
 
     <ProgressBar
-       android:id="@+id/room_choose_progress_bar"
+        android:id="@+id/room_choose_progress_bar"
         android:layout_width="@dimen/progress_bar_size"
         android:layout_height="@dimen/progress_bar_size"
         android:layout_margin="@dimen/app_margin"
@@ -24,36 +24,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <EditText
-        android:maxLength="15"
         android:id="@+id/room_choose_name"
         style="@style/input_text_style"
-        android:layout_marginTop="276dp"
         android:hint="@string/room_name_hint"
+        android:maxLength="15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/room_choose_title" />
+        app:layout_constraintTop_toBottomOf="@id/room_choose_title"
+        tools:ignore="Autofill,TextFields" />
 
     <EditText
-        android:maxLength="15"
         android:id="@+id/room_choose_password"
         style="@style/input_text_style"
         android:hint="@string/password"
+        android:maxLength="15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/room_choose_name" />
+        app:layout_constraintTop_toBottomOf="@+id/room_choose_name"
+        tools:ignore="Autofill,TextFields" />
 
     <TextView
         android:id="@+id/room_choose_continue"
         style="@style/btn_style"
-        android:layout_marginTop="120dp"
         android:text="@string/continue_it"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/room_choose_password" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

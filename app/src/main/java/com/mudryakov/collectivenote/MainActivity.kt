@@ -13,10 +13,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.navigation.NavigationView
 import com.mudryakov.collectivenote.database.firebase.handleSignInresult
 import com.mudryakov.collectivenote.databinding.ActivityMainBinding
-import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
-import com.mudryakov.collectivenote.utilits.SIGN_CODE_REQUEST
-import com.mudryakov.collectivenote.utilits.appPreference
-import com.mudryakov.collectivenote.utilits.fastNavigate
+import com.mudryakov.collectivenote.utilits.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -26,8 +28,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     var actionBar: ActionBar? = null
     lateinit var mDrawer: DrawerLayout
     lateinit var mNavView: NavigationView
-
-    var back = true
+    var doubleClick = false
+    var back = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _Binding = ActivityMainBinding.inflate(layoutInflater)
@@ -48,7 +50,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setDrawerEdge()
         mNavView.setNavigationItemSelectedListener(this)
 
-
     }
 
 
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
     }
-
+    @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -97,5 +98,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    override fun onBackPressed() {
+        if (back)
+            super.onBackPressed()
+        else {
+            if (doubleClick) super.onBackPressed()
+            else {
+                doubleClick = true
+                showToast("Нажмите ещё раз для выхода")
+                CoroutineScope(IO).launch {
+                    delay(1500)
+                    doubleClick = false
+                }
+            }
+        }
+    }
 
 }
