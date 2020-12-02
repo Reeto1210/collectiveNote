@@ -7,42 +7,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     >
 
-
-
-
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/main_add_new_payment"
+        style="@style/fab_style"
+        android:src="@drawable/ic_baseline_add_24"
+        app:layout_anchorGravity="end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white"
+        tools:ignore="ContentDescription" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/main_add_new_payment"
-            style="@style/fab_style"
-            android:src="@drawable/ic_baseline_add_24"
-            app:layout_anchorGravity="end"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:tint="@color/white"
-            tools:ignore="ContentDescription" />
+
 
         <androidx.recyclerview.widget.RecyclerView
-             android:overScrollMode="never"
-            android:nestedScrollingEnabled="false"
             android:id="@+id/fragment_main_recycle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_margin="@dimen/app_margin"
             android:background="@color/white"
             android:elevation="@dimen/app_elevation"
-            android:maxWidth="@dimen/max_main_fragment_recycle_height"
-            android:maxHeight="@dimen/max_main_fragment_recycle_height"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
             android:padding="@dimen/small_padding"
             android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/main_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_fragment_total_payment_room"
@@ -58,11 +53,13 @@
         <ImageView
             android:id="@+id/main_back"
             android:layout_width="match_parent"
-
             android:layout_height="match_parent"
             android:alpha="0"
             android:background="@color/color_for_main_on_bottom_open"
-            android:elevation="@dimen/elevation_for_dask" />
+            android:elevation="@dimen/elevation_for_dask"
+            tools:ignore="ContentDescription"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -74,7 +71,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_loading_main">
-
 
 
         <TextView

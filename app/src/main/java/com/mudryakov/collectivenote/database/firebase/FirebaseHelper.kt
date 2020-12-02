@@ -9,7 +9,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
@@ -55,28 +54,26 @@ fun logIn(type: String, onFail: () -> Unit, onCompelete: () -> Unit) {
     ON_REGISTRATION_FAIL = onFail
 
     when (type) {
-        TYPE_GOOGLE_ACCOUNT -> logInGogle()
-        TYPE_EMAIL -> tryLogInEmail { createNewEmailUser() }
+        TYPE_GOOGLE_ACCOUNT -> logInGoogle()
+        TYPE_EMAIL -> logInEmail()
     }
 }
 
 
-fun tryLogInEmail(function: () -> Unit) {
-    AUTH.signInWithEmailAndPassword(EMAIL, PASSWORD)
+fun logInEmail() {
+       AUTH.signInWithEmailAndPassword(EMAIL, PASSWORD)
         .addOnSuccessListener {
             CURRENT_UID = AUTH.currentUser?.uid.toString()
             ON_REGISTRATION_COMPLETE()
-        }.addOnFailureListener {
-            if (it is FirebaseAuthInvalidCredentialsException) {
-                ON_REGISTRATION_FAIL()
-                showToast(it.message.toString())
-            } else {
-                function()
-            }
+        }.addOnFailureListener { ex ->
+           ON_REGISTRATION_FAIL()
+            showToast(ex.message.toString())
         }
 }
 
-fun createNewEmailUser() {
+fun createNewEmailUser(onFail: () -> Unit,onSuccess: () -> Unit) {
+   ON_REGISTRATION_COMPLETE = onSuccess
+    ON_REGISTRATION_FAIL = onFail
     AUTH.createUserWithEmailAndPassword(EMAIL, PASSWORD).addOnSuccessListener {
         CURRENT_UID = AUTH.currentUser?.uid.toString()
         pushUserToFirebase()
@@ -88,12 +85,12 @@ fun createNewEmailUser() {
 }
 
 
-fun logInGogle() {
+fun logInGoogle() {
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestEmail()
         .build()
-    val mGogoglemSignClient = GoogleSignIn.getClient(APP_ACTIVITY, gso)
-    val intent: Intent = mGogoglemSignClient.signInIntent
+    val mGoogleSingInClient = GoogleSignIn.getClient(APP_ACTIVITY, gso)
+    val intent: Intent = mGoogleSingInClient.signInIntent
     APP_ACTIVITY.startActivityForResult(intent, SIGN_CODE_REQUEST)
 
 }
@@ -112,6 +109,7 @@ fun handleSignInresult(task: Task<GoogleSignInAccount>) {
 }
 
 fun pushUserToFirebase() {
+    appPreference.setUserId(CURRENT_UID)
     USER = UserModel(CURRENT_UID, USERNAME)
     REF_DATABASE_ROOT.child(NODE_USERS).addMySingleListener {
         if (!it.hasChild(CURRENT_UID)) {
@@ -157,7 +155,7 @@ fun pushRoomToFirebase(
 
 fun updateUserRoomId(roomkey: String, onFail: () -> Unit, onSuccess: () -> Unit) {
 
-    REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(
+    REF_DATABASE_ROOT.child(NODE_USERS).child(appPreference.getUserId()).child(
         CHILD_ROOM_ID
     ).setValue(roomkey)
         .addOnFailureListener { problem ->
@@ -199,18 +197,22 @@ fun updatePreferenceCurrentPay(function: () -> Unit) {
 }
 
 fun updateAllUserPayments() {
-    findAllUsersRooms{ listOfId->
-        findAllUsersPayments(listOfId){roomId,paymentId->
-            changePaymentFromName(roomId,paymentId)
+    findAllUsersRooms { listOfId ->
+        findAllUsersPayments(listOfId) { roomId, paymentId ->
+            changePaymentFromName(roomId, paymentId)
         }
     }
 }
 
 fun changePaymentFromName(roomId: String, paymentId: String) {
-  REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(roomId).child(paymentId).child(CHILD_FROM_NAME).setValue(appPreference.getUserName())
+    REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(roomId).child(paymentId)
+        .child(CHILD_FROM_NAME).setValue(appPreference.getUserName())
 }
 
-fun findAllUsersPayments(listOfId: List<String>, function: (roomId:String,paymentId:String) -> Unit) {
+fun findAllUsersPayments(
+    listOfId: List<String>,
+    function: (roomId: String, paymentId: String) -> Unit
+) {
     listOfId.forEach { id ->
         REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(id).addMySingleListener {
             val list = it.children.map { payment ->
@@ -218,7 +220,7 @@ fun findAllUsersPayments(listOfId: List<String>, function: (roomId:String,paymen
             }
             list.forEach { curPayment ->
                 if (curPayment.fromId == CURRENT_UID)
-                   function(id,curPayment.firebaseId)
+                    function(id, curPayment.firebaseId)
             }
         }
     }

@@ -9,17 +9,13 @@
     android:layout_marginEnd="@dimen/app_margin"
     android:background="@color/white"
     android:elevation="@dimen/app_elevation"
-
-
     android:paddingBottom="@dimen/app_margin">
 
     <TextView
-
         android:id="@+id/single_payment_summ"
         style="@style/single_payment_text_view"
         android:layout_width="0dp"
         android:layout_marginTop="@dimen/app_margin"
-        android:text="суммa"
         android:textColor="@color/design_default_color_secondary_variant"
         android:textSize="@dimen/Large_text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +28,6 @@
         style="@style/single_payment_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="описанaие"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,14 +39,12 @@
         style="@style/single_payment_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="дата"
         android:textSize="@dimen/small_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/single_payment_description" />
 
     <ImageView
-
         android:id="@+id/single_pay_image"
         android:layout_width="@dimen/single_payments_image"
         android:layout_height="@dimen/single_payments_image"

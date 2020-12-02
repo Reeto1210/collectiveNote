@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="app_margin">16dp</dimen>
+    <dimen name="app_double_margin">32dp</dimen>
     <dimen name="Large_text">24sp</dimen>
     <dimen name="small_text">14sp</dimen>
     <dimen name="verySmallMargin">4dp</dimen>
     <dimen name="small_padding">4dp</dimen>
     <dimen name="btn_corners">5dp</dimen>
-    <dimen name="registration_google_image">40dp</dimen>
+    <dimen name="login_google_image">40dp</dimen>
     <dimen name="big_padding">12dp</dimen>
     <dimen name="alert_dialog_margin">40dp</dimen>
     <dimen name="bottom_sheet_btn_size">60dp</dimen>

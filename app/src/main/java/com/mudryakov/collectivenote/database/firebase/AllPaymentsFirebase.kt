@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.utilits.AppValueEventListener
 
-class allPaymentsFirebase: LiveData<List<PaymentModel>>() {
+class AllPaymentsFirebase: LiveData<List<PaymentModel>>() {
 
-    val listener = AppValueEventListener{ DataSnapshot->
+    private val listener = AppValueEventListener{ DataSnapshot->
         value = DataSnapshot.children.map { it.getValue(PaymentModel::class.java)?:PaymentModel()
         }
     }

@@ -23,8 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/app_margin"
-            android:text="Душещипательная история почему програмист не должен умереть с голоду а так же контактый емейл  и прочая инфа
-Чем в казино всё проебать, лучше разраба поддержать!"
+            android:text="@string/help_main_text"
             android:textSize="@dimen/normal_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +36,7 @@
             android:layout_margin="@dimen/app_margin"
 
             android:autoLink="email"
-            android:text="E-mail для связи: mudryakov21@mail.ru"
+            android:text="@string/my_email"
             android:textColor="@color/black"
             android:textSize="@dimen/normal_text"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -9,7 +9,7 @@
     <EditText
         android:id="@+id/add_new_payment_summ"
         style="@style/input_text_style"
-        android:hint="@string/summ"
+        android:hint="@string/sum"
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

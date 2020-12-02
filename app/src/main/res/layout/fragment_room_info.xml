@@ -81,7 +81,7 @@
             android:id="@+id/settings_currency"
             style="@style/settings_room_info_text"
             android:layout_marginStart="@dimen/app_margin"
-            android:text="@string/timeless_curency"
+            android:text="@string/timeless_currency"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settings_user_total_payment" />

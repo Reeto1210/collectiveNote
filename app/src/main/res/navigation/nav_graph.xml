@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/registrationFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/historyFragment"
@@ -43,15 +43,20 @@
             app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/registrationFragment"
-        android:name="com.mudryakov.collectivenote.screens.registration.RegistrationFragment"
-        android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" >
+        android:id="@+id/loginFragment"
+        android:name="com.mudryakov.collectivenote.screens.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_registrationFragment_to_roomChooseFragment"
+            android:id="@+id/action_loginFragment_to_roomChooseFragment"
             app:destination="@id/roomChooseFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/nav_graph"/>
+        <action
+            android:id="@+id/action_loginFragment_to_emailRegistrationFragment"
+            app:destination="@id/emailRegistrationFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/newPaymentFragment"
@@ -120,5 +125,15 @@
             app:destination="@id/mainFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/nav_graph"/>
+    </fragment>
+    <fragment
+        android:id="@+id/emailRegistrationFragment"
+        android:name="com.mudryakov.collectivenote.screens.emailRegistration.EmailRegistrationFragment"
+        android:label="EmailRegistrationFragment" >
+        <action
+            android:id="@+id/action_emailRegistrationFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
 </navigation>

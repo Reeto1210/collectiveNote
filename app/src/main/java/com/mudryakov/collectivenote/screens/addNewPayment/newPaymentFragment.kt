@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.databinding.FragmentNewPaymentBinding
@@ -59,7 +58,7 @@ class newPaymentFragment : BaseFragmentBack() {
                 }
             } catch (e: Exception) {
                 mBinding.addNewPaymentSumm.setText("")
-                showToast(getString(R.string.catch_payment_summ))
+                showToast(getString(R.string.catch_payment_sum))
             }
         }
         mBinding.addPaymentAttachImage.setOnClickListener {

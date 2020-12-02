@@ -15,10 +15,14 @@ import kotlinx.coroutines.launch
 class FireBaseRepository : AppDatabaseRepository {
 
 
-    override var allPayments: LiveData<List<PaymentModel>> = allPaymentsFirebase()
+    override var allPayments: LiveData<List<PaymentModel>> = AllPaymentsFirebase()
     override val groupMembers: LiveData<List<UserModel>> = FirebaseGroupMembers()
-    override fun connectToDatabase(type: String, onFail: () -> Unit, onSucces: () -> Unit) {
+    override fun login(type: String, onFail: () -> Unit, onSucces: () -> Unit) {
         logIn(type, onFail) { onSucces() }
+    }
+
+    override fun emailRegistration(onFail: () -> Unit,onSucces: () -> Unit) {
+        createNewEmailUser(onFail,onSucces)
     }
 
     override fun createNewRoom(
@@ -29,7 +33,7 @@ class FireBaseRepository : AppDatabaseRepository {
     ) {
         REF_DATABASE_ROOT.child(NODE_ROOM_NAMES).addMySingleListener { DataSnapshot ->
             if (DataSnapshot.hasChild(roomName)) {
-                showToast(APP_ACTIVITY.getString(R.string.this_namy_busy))
+                showToast(APP_ACTIVITY.getString(R.string.this_name_busy))
             } else {
                 pushRoomToFirebase(roomName, roomPass, onFail) {
                     updateUserRoomId(it, onFail) {
@@ -111,13 +115,12 @@ class FireBaseRepository : AppDatabaseRepository {
 
 
     override fun changeName(name: String, onSucces: () -> Unit) {
+        CURRENT_UID = appPreference.getUserId()
         REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_NAME).setValue(name)
             .addOnSuccessListener {
-                appPreference.setUserId(CURRENT_UID)
                 appPreference.setSignIn(true)
                 appPreference.setName(name)
                 CoroutineScope(IO).launch { updateAllUserPayments() }
-
                 onSucces()
             }
             .addOnFailureListener { showToast(it.message.toString()) }

@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
-import com.mudryakov.collectivenote.database.firebase.USERNAME
 import com.mudryakov.collectivenote.databinding.FragmentRoomChooseBinding
 import com.mudryakov.collectivenote.utilits.*
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
@@ -32,14 +31,22 @@ class RoomChooseFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         initialization()
+
         if (appPreference.getSignInRoom()) {
             CURRENT_UID = appPreference.getUserId()
             navNext()
         } else {
+            startJoin()
+        }
+    }
+
+    private fun startJoin() {
+
+        if (checkConnectity()) {
             val builder = AlertDialog.Builder(this.context)
             builder.setTitle(getString(R.string.choose_room_alert_dialog_title))
                 .setMessage(getString(R.string.choose_room_alert_dialog_text))
-                 .setPositiveButton(getString(R.string.choose_room_alert_dialog_possitive_button)) { _: DialogInterface, _: Int ->
+                .setPositiveButton(getString(R.string.choose_room_alert_dialog_positive_button)) { _: DialogInterface, _: Int ->
                     enterRoom(CREATOR)
                 }
                 .setNeutralButton(getString(R.string.choose_room_alert_dialog_negative_button)) { _: DialogInterface, _: Int ->
@@ -47,8 +54,7 @@ class RoomChooseFragment : Fragment() {
                 }
                 .setCancelable(false)
                 .show()
-
-        }
+        } else buildNoInternetDialog { startJoin() }
     }
 
     private fun initialization() {
@@ -62,6 +68,7 @@ class RoomChooseFragment : Fragment() {
             else -> joinRoom()
         }
     }
+
 
     private fun createRoom() {
         APP_ACTIVITY.title = getString(R.string.create_room)
@@ -97,12 +104,12 @@ class RoomChooseFragment : Fragment() {
         hideKeyboard(APP_ACTIVITY)
         if (!appPreference.getSignInRoom()) showToast(messageText)
         appPreference.setSignInRoom(true)
-       fastNavigate(R.id.action_roomChooseFragment_to_mainFragment)
+        fastNavigate(R.id.action_roomChooseFragment_to_mainFragment)
     }
 
     private fun showProgressBar() {
-      hideKeyboard(APP_ACTIVITY)
-       mBinding.roomChooseProgressBar.makeVisible()
+        hideKeyboard(APP_ACTIVITY)
+        mBinding.roomChooseProgressBar.makeVisible()
         mBinding.roomChooseContinue.makeGone()
     }
 
