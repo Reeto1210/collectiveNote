@@ -11,10 +11,7 @@ import com.mudryakov.collectivenote.databinding.FragmentRoomInfoBinding
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
-import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
-import com.mudryakov.collectivenote.utilits.appPreference
-import com.mudryakov.collectivenote.utilits.makeInvisible
-import com.mudryakov.collectivenote.utilits.makeVisible
+import com.mudryakov.collectivenote.utilits.*
 
 
 class RoomInfoFragment : BaseFragmentBack() {
@@ -81,16 +78,17 @@ class RoomInfoFragment : BaseFragmentBack() {
 
     private fun updateInfo() {
         if (callback1 == callback2) {
-            mBinding.settingsRoomTotalPayed.text = getString(R.string.total_sum_payed, totalSumm)
+            mBinding.settingsRoomTotalPayed.text = getString(R.string.total_sum_payed, totalSumm,ROOM_CURRENCY )
             mBinding.settingsRoomName.text =
-                getString(R.string.room_name, appPreference.getRoomName())
+                getString(R.string.room_name, AppPreference.getRoomName())
             mBinding.settingsRoomMembersValue.text =
                 getString(R.string.total_members_ar_room, totalMembers)
             mBinding.settingsTotalValueOfPayments.text =
                 getString(R.string.total_value_of_payments, totalValueOfPayments)
             mBinding.settingsUserTotalPayment.text =
-                getString(R.string.total_user_payed, appPreference.getTotalSumm())
+                getString(R.string.total_user_payed, AppPreference.getTotalSumm(), ROOM_CURRENCY)
             mBinding.settingsRoomPass.text = getString(R.string.room_pass, "")
+           mBinding.settingsCurrency.text  = getString(R.string.room_current, ROOM_CURRENCY)
             mBinding.progressBar.makeInvisible()
             mBinding.settingsInfoLayout.makeVisible()
         }

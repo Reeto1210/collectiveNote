@@ -9,10 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.models.PaymentModel
-import com.mudryakov.collectivenote.utilits.makeGone
-import com.mudryakov.collectivenote.utilits.makeVisible
-import com.mudryakov.collectivenote.utilits.setImage
-import com.mudryakov.collectivenote.utilits.transformToDate
+import com.mudryakov.collectivenote.utilits.*
 import kotlinx.android.synthetic.main.history_recycle_item.view.*
 
 class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.MyViewHolder>() {
@@ -39,7 +36,8 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.MyV
         val curPayment = listOfPayments[position]
         holder.fromName.text = curPayment.fromName
         holder.description.text = curPayment.description
-        holder.sum.text = curPayment.summ
+        holder.sum.text = APP_ACTIVITY.getString(R.string.sum_currency,curPayment.summ,
+            ROOM_CURRENCY )
         holder.date.text = curPayment.time.toString().transformToDate()
 
         if (arOfOpened.contains(position)) {

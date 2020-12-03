@@ -1,6 +1,6 @@
 package com.mudryakov.collectivenote.utilits
 
-//import com.mudryakov.collectivenote.database.RoomDatabase.MyRoomDatabase
+
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.mudryakov.collectivenote.MainActivity
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.NODE_PAYMENT_IMAGES
@@ -26,15 +27,13 @@ import java.util.*
 fun showToast(text: String) = Toast.makeText(APP_ACTIVITY, text, Toast.LENGTH_SHORT).show()
 
 fun View.startRegisterAnimation(visible: Boolean) {
-
     if (visible) {
         this.visibility = View.VISIBLE
         ViewCompat.animate(this)
             .scaleX(1f)
             .scaleY(1f)
             .alpha(1f)
-            .setDuration(700)
-            .setInterpolator(AccelerateDecelerateInterpolator())
+            .setDuration(700).interpolator = AccelerateDecelerateInterpolator()
     } else {
         ViewCompat.animate(this)
             .scaleX(0.0F)
@@ -70,8 +69,6 @@ fun ImageView.setImage(url: String) {
         REF_DATABASE_STORAGE.child(NODE_PAYMENT_IMAGES).child(fileName).getFile(file)
 
     }
-
-
 }
 
 fun restartActivity() {
@@ -96,35 +93,44 @@ fun View.makeGone() {
     this.visibility = View.GONE
 }
 
-
 fun checkConnectity(): Boolean {
     val connectivityManager = APP_ACTIVITY.getSystemService(Context.CONNECTIVITY_SERVICE)
-    return if (connectivityManager is ConnectivityManager)
-    {
+    return if (connectivityManager is ConnectivityManager) {
         val networkInfo = connectivityManager.activeNetworkInfo
-        return networkInfo?.isConnected ?:false
+        return networkInfo?.isConnected ?: false
     } else false
-
 }
-fun buildNoInternetDialog(onClickPositiveButtonFunction:()->Unit){
+
+fun buildNoInternetDialog(onClickPositiveButtonFunction: () -> Unit) {
     val dialog = AlertDialog.Builder(APP_ACTIVITY)
-      dialog
+    dialog
         .setCancelable(false)
-          .setIcon(R.drawable.ic_no_internet)
-          .setTitle(APP_ACTIVITY.getString(R.string.internet_alert_dialog_title))
+        .setIcon(R.drawable.ic_no_internet)
+        .setTitle(APP_ACTIVITY.getString(R.string.internet_alert_dialog_title))
         .setMessage(APP_ACTIVITY.getString(R.string.internet_alert_dialog_message))
-        .setPositiveButton(APP_ACTIVITY.getString(R.string.ok)){ _: DialogInterface, _: Int -> onClickPositiveButtonFunction()}
+        .setPositiveButton(APP_ACTIVITY.getString(R.string.ok)) { _: DialogInterface, _: Int -> onClickPositiveButtonFunction() }
         .show()
 }
 
-fun showExeptionToast(ex: Any) {
-    val toastText =
+fun exceptionEmailLoginToast(ex: Any) {
+    val text =
         when (ex) {
-            is FirebaseAuthInvalidCredentialsException -> "Неверный пароль"
-            else -> "что то пошло не так"
+            is FirebaseAuthInvalidCredentialsException -> APP_ACTIVITY.getString(R.string.exception_check_credentials)
+            is FirebaseAuthInvalidUserException -> APP_ACTIVITY.getString(R.string.exception_login_user_invalid)
+            else -> APP_ACTIVITY.getString(R.string.something_going_wrong)
         }
-
-    showToast(toastText)
+    showToast(text)
 }
 
-
+fun exceptionEmailRegistrationToast(exText: String) {
+    val toastText =
+        when {
+            exText.contains("The email address is badly formatted") -> APP_ACTIVITY.getString(R.string.exception_check_email)
+            exText.contains("The given password is invalid") -> APP_ACTIVITY.getString(R.string.exception_pass_must_be_six_letters)
+            exText.contains("The email address is already in use by another account") -> APP_ACTIVITY.getString(
+                R.string.exception_email_busy
+            )
+            else -> APP_ACTIVITY.getString(R.string.something_going_wrong)
+        }
+showToast(toastText)
+}

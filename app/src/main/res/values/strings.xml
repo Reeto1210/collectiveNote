@@ -3,11 +3,11 @@
     <string name="app_name">Collective note</string>
     <string name="common_app_name">Рабочее название</string>
     <string name="add_info">Заполните все поля</string>
-    <string name="total_sum_payed">Всего потрачено: %1$d₽</string>
+    <string name="total_sum_payed">Всего потрачено: %1$d%2$s</string>
     <string name="list_of_payments_is_empty">Список платежей пуст</string>
     <string name="error_in_download">Произошёл сбой при скачивании файла</string>
     <string name="trouble_with_download">Ошибка загрузки</string>
-    <string name="sum_currency">%1$s₽</string>
+    <string name="sum_currency">%1$s%2$s</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="loading_main">Название загрузки</string>
 
@@ -26,6 +26,7 @@
     <string name="login_register_email">У меня нет аккаунта</string>
 
     <!-- roomChoose -->
+    <string name="choose_currency">Выберите валюту</string>
     <string name="room_enter_title_text">Введите данные комнаты</string>
     <string name="choose_room_alert_dialog_text">В этом окне вы можете создать свою комнату и пригласить туда друзей, либо присоединиться к уже созданой комнате</string>
     <string name="choose_room_alert_dialog_title">Выберите действие</string>
@@ -37,6 +38,13 @@
     <string name="check_room_acc">Проверьте данные комнаты</string>
     <string name="toast_join_room">Вы присоедились к комнате %1$s"</string>
     <string name="toast_create_room">Вы создали комнату %1$s"</string>
+    <string-array name="currency_array">
+        <item>Валюта</item>
+        <item>RUB - ₽</item>
+        <item>USD - $</item>
+        <item>EUR - €</item>
+    </string-array>
+
 
     <!-- navDrawer -->
     <string name="bottom_sheet_history">История вложений</string>
@@ -59,21 +67,21 @@
     <string name="room_name">Комната: %1$s</string>
     <string name="total_members_ar_room">Пользователей в комнате: %1$d</string>
     <string name="total_value_of_payments">Всего платежей: %1$d</string>
-    <string name="total_user_payed">Ваши траты: %1$s₽</string>
+    <string name="total_user_payed">Ваши траты: %1$s%2$s</string>
     <string name="room_info">Информация о комнате</string>
     <string name="room_pass">Пароль: %1$s</string>
     <string name="timeless_currency">Текущая валюта: рубли(₽)</string>
-
-    <!-- Info -->
-    <string name="info_password_btn">Напомнить пароль</string>
-    <string name="exit_room">Выйти из комнаты</string>
-    <string name="Change_acc">Сменить аккаунт</string>
+     <string name="info_password_btn">Напомнить пароль</string>
+    <string name="room_current">Текущая валюта:%1$s</string>
 
     <!-- settings -->
     <string name="user_name">Имя пользователя : %1$s</string>
     <string name="edit">Редактировать</string>
     <string name="name_changed">Имя изменено</string>
     <string name="name_cant_be_empty_toast">Имя не может быть пустым</string>
+    <string name="exit_room">Выйти из комнаты</string>
+    <string name="Change_acc">Сменить аккаунт</string>
+
 
     <!-- help -->
     <string name="my_email">E-mail для связи: mudryakov21@mail.ru</string>
@@ -89,6 +97,19 @@
     <string name="new_account_register">Создать аккаунт</string>
     <string name="title_email_registration">Введите e-mail и пароль</string>
 
+    <!-- exeptionTexts -->
+    <string name="invalid_password">Неверный пароль</string>
+    <string name="exception_check_credentials">Проверьте правильность данных</string>
+    <string name="exception_login_user_invalid">Такого пользователя не существует</string>
+    <string name="something_going_wrong">Что то пошло не так</string>
+    <string name="exception_check_email">Проверьте правильность e-mail адреса</string>
+    <string name="exception_pass_must_be_six_letters">Длинна пароля должна быть не меннее 6 символов</string>
+    <string name="exception_email_busy">Этот e-mail адрес занят</string>
 
+    <!-- currency -->
+    <string name="RUB">₽</string>
+    <string name="USD">$</string>
+    <string name="EUR">€</string>
 
+€
 </resources>

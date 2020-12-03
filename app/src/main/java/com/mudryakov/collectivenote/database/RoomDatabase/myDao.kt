@@ -7,7 +7,7 @@ import com.mudryakov.collectivenote.models.PaymentModel
 @Dao
 interface myDao {
     @Query("SELECT *FROM allPayments ORDER BY time DESC")
-    fun getallPayments():LiveData<List<PaymentModel>>
+    fun getAllPayments():LiveData<List<PaymentModel>>
 
     @Query("DELETE FROM allPayments")
    suspend fun deleteAll()

@@ -31,7 +31,7 @@ class SettingsFragment : BaseFragmentBack() {
 
     private fun initialization() {
         APP_ACTIVITY.title = getString(R.string.settings)
-        mBinding.settingsName.text = getString(R.string.user_name, appPreference.getUserName())
+        mBinding.settingsName.text = getString(R.string.user_name, AppPreference.getUserName())
         setHasOptionsMenu(true)
         mViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
         initBehaivor()
@@ -69,14 +69,15 @@ class SettingsFragment : BaseFragmentBack() {
 
     private fun changeUser() {
         mViewModel.signOut()
-        appPreference.clear()
+        AppPreference.clear()
         restartActivity()
     }
 
     private fun changeRoom() {
-        appPreference.setRoomId("fail")
-        appPreference.setSignInRoom(false)
-        appPreference.setTotalSumm("0")
+        AppPreference.setCurrency("fail")
+        AppPreference.setRoomId("fail")
+        AppPreference.setSignInRoom(false)
+        AppPreference.setTotalSumm("0")
         restartActivity()
     }
 }

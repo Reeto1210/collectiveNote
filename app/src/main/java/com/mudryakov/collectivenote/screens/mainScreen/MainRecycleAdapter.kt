@@ -9,7 +9,8 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
-import com.mudryakov.collectivenote.utilits.appPreference
+import com.mudryakov.collectivenote.utilits.ROOM_CURRENCY
+import com.mudryakov.collectivenote.utilits.AppPreference
 import kotlinx.android.synthetic.main.main_fragment_recycle_item.view.*
 
 class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>() {
@@ -33,7 +34,8 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>
         val currentUser = list[position]
          holder.divider.visibility = if (position == 0) View.GONE else View.VISIBLE
         holder.totalPayd.text =
-            if (currentUser.totalPayAtCurrentRoom.isNotEmpty()) APP_ACTIVITY.getString(R.string.sum_currency, currentUser.totalPayAtCurrentRoom) else "0"
+            if (currentUser.totalPayAtCurrentRoom.isNotEmpty()) APP_ACTIVITY.getString(R.string.sum_currency, currentUser.totalPayAtCurrentRoom,
+                ROOM_CURRENCY) else "0"
         holder.username.text = currentUser.name
 
     }
@@ -60,7 +62,7 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>
     private fun addUserToRecycle(user: UserModel) {
         list.add(user)
         if (user.firebaseId == CURRENT_UID) {
-           list.last().name = appPreference.getUserName()
+           list.last().name = AppPreference.getUserName()
             list.reverse()
                 }
         notifyItemInserted(list.indexOf(user))

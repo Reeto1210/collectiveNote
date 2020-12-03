@@ -28,6 +28,7 @@ class FireBaseRepository : AppDatabaseRepository {
     override fun createNewRoom(
         roomName: String,
         roomPass: String,
+        currencySign:String,
         onFail: () -> Unit,
         onSucces: () -> Unit
     ) {
@@ -35,15 +36,13 @@ class FireBaseRepository : AppDatabaseRepository {
             if (DataSnapshot.hasChild(roomName)) {
                 showToast(APP_ACTIVITY.getString(R.string.this_name_busy))
             } else {
-                pushRoomToFirebase(roomName, roomPass, onFail) {
+                pushRoomToFirebase(roomName, roomPass, currencySign, onFail) {
                     updateUserRoomId(it, onFail) {
                         onSucces()
                     }
                 }
             }
         }
-
-
     }
 
     override fun joinRoom(
@@ -66,9 +65,9 @@ class FireBaseRepository : AppDatabaseRepository {
                                     onSucces()
                                 }
                             }
-                                .addOnFailureListener { ex ->
+                                .addOnFailureListener {
                                     onFail()
-                                    showToast(ex.message.toString())
+                                    showToast(APP_ACTIVITY.getString(R.string.something_going_wrong))
                                 }
                         } else {
                             onFail()
@@ -81,7 +80,7 @@ class FireBaseRepository : AppDatabaseRepository {
 
 
     override fun addNewPayment(payment: PaymentModel, onSucces: () -> Unit) {
-        val totalSumm = (appPreference.getTotalSumm().toLong() + payment.summ.toLong()).toString()
+        val totalSumm = (AppPreference.getTotalSumm().toLong() + payment.summ.toLong()).toString()
         val currentRef = REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID)
         val key = currentRef.push().key.toString()
         payment.firebaseId = key
@@ -100,7 +99,7 @@ class FireBaseRepository : AppDatabaseRepository {
                             .addOnSuccessListener {
                                 REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID)
                                     .setValue(key)
-                                appPreference.setTotalSumm(totalSumm)
+                                AppPreference.setTotalSumm(totalSumm)
                                 onSucces()
                             }
                             .addOnFailureListener {
@@ -110,20 +109,20 @@ class FireBaseRepository : AppDatabaseRepository {
                             }
                     }
             }
-            .addOnFailureListener { showToast(it.message.toString()) }
+            .addOnFailureListener { showToast(APP_ACTIVITY.getString(R.string.something_going_wrong)) }
     }
 
 
     override fun changeName(name: String, onSucces: () -> Unit) {
-        CURRENT_UID = appPreference.getUserId()
+        CURRENT_UID = AppPreference.getUserId()
         REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_NAME).setValue(name)
             .addOnSuccessListener {
-                appPreference.setSignIn(true)
-                appPreference.setName(name)
+                AppPreference.setSignIn(true)
+                AppPreference.setName(name)
                 CoroutineScope(IO).launch { updateAllUserPayments() }
                 onSucces()
             }
-            .addOnFailureListener { showToast(it.message.toString()) }
+            .addOnFailureListener { showToast(APP_ACTIVITY.getString(R.string.something_going_wrong)) }
     }
 
 
@@ -134,7 +133,7 @@ class FireBaseRepository : AppDatabaseRepository {
             .addOnFailureListener { showToast(it.message.toString()) }
             .addOnCompleteListener { _ ->
                 path.downloadUrl
-                    .addOnFailureListener { ex -> showToast(ex.message.toString()) }
+                    .addOnFailureListener {showToast(APP_ACTIVITY.getString(R.string.something_going_wrong))}
                     .addOnSuccessListener { onSucces(it.toString()) }
             }
     }

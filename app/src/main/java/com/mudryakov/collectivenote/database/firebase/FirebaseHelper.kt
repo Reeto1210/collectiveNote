@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
+import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
 import com.mudryakov.collectivenote.database.RoomDatabase.AppRoomRepository
 import com.mudryakov.collectivenote.models.PaymentModel
@@ -36,6 +37,7 @@ const val NODE_PAYMENT_IMAGES = "paymentImages"
 const val NODE_ROOM_MEMBERS = "rooms_members"
 const val CHILD_TOTAL_PAY = "totalPay"
 const val CHILD_FROM_NAME = "fromName"
+const val CHILD_ROOM_CURRENCY = "roomCurrency"
 
 lateinit var CURRENT_ROOM_UID: String
 lateinit var REF_DATABASE_ROOT: DatabaseReference
@@ -63,11 +65,11 @@ fun logIn(type: String, onFail: () -> Unit, onCompelete: () -> Unit) {
 fun logInEmail() {
        AUTH.signInWithEmailAndPassword(EMAIL, PASSWORD)
         .addOnSuccessListener {
-            CURRENT_UID = AUTH.currentUser?.uid.toString()
+           AppPreference.setUserId( AUTH.currentUser?.uid.toString())
             ON_REGISTRATION_COMPLETE()
         }.addOnFailureListener { ex ->
            ON_REGISTRATION_FAIL()
-            showToast(ex.message.toString())
+           exceptionEmailLoginToast(ex)
         }
 }
 
@@ -75,12 +77,12 @@ fun createNewEmailUser(onFail: () -> Unit,onSuccess: () -> Unit) {
    ON_REGISTRATION_COMPLETE = onSuccess
     ON_REGISTRATION_FAIL = onFail
     AUTH.createUserWithEmailAndPassword(EMAIL, PASSWORD).addOnSuccessListener {
-        CURRENT_UID = AUTH.currentUser?.uid.toString()
+        AppPreference.setUserId( AUTH.currentUser?.uid.toString())
         pushUserToFirebase()
     }
-        .addOnFailureListener {
+        .addOnFailureListener {ex->
             ON_REGISTRATION_FAIL()
-            showToast(it.message.toString())
+                      exceptionEmailRegistrationToast(ex.message.toString())
         }
 }
 
@@ -92,30 +94,29 @@ fun logInGoogle() {
     val mGoogleSingInClient = GoogleSignIn.getClient(APP_ACTIVITY, gso)
     val intent: Intent = mGoogleSingInClient.signInIntent
     APP_ACTIVITY.startActivityForResult(intent, SIGN_CODE_REQUEST)
-
 }
 
 
-fun handleSignInresult(task: Task<GoogleSignInAccount>) {
+fun handleSignInResult(task: Task<GoogleSignInAccount>) {
     try {
         val account: GoogleSignInAccount = task.getResult(ApiException::class.java)!!
         USERNAME = account.displayName.toString()
-        CURRENT_UID = account.id.toString()
+        AppPreference.setUserId(account.id.toString())
         pushUserToFirebase()
     } catch (e: ApiException) {
         ON_REGISTRATION_FAIL()
-        showToast(e.message.toString())
+        showToast(APP_ACTIVITY.getString(R.string.something_going_wrong))
     }
 }
 
 fun pushUserToFirebase() {
-    appPreference.setUserId(CURRENT_UID)
+    CURRENT_UID = AppPreference.getUserId()
     USER = UserModel(CURRENT_UID, USERNAME)
     REF_DATABASE_ROOT.child(NODE_USERS).addMySingleListener {
         if (!it.hasChild(CURRENT_UID)) {
             REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).setValue(USER)
-                .addOnFailureListener { ex ->
-                    showToast(ex.message.toString())
+                .addOnFailureListener {
+                    showToast(APP_ACTIVITY.getString(R.string.something_going_wrong))
                     ON_REGISTRATION_FAIL()
                 }
                 .addOnSuccessListener {
@@ -123,56 +124,55 @@ fun pushUserToFirebase() {
                 }
         } else ON_REGISTRATION_COMPLETE()
     }
-
-
 }
 
 fun pushRoomToFirebase(
     roomName: String,
     roomPass: String,
+    currencySign:String,
     onFail: () -> Unit,
     function: (String) -> Unit
 ) {
     val mainHashMap = HashMap<String, Any>()
     val roomInfoHashMap = HashMap<String, Any>()
-    val roomkey = REF_DATABASE_ROOT.push().key.toString()
+    val roomKey = REF_DATABASE_ROOT.push().key.toString()
+    roomInfoHashMap[CHILD_ROOM_CURRENCY] = currencySign
     roomInfoHashMap[CHILD_NAME] = roomName
-    roomInfoHashMap[CHILD_ROOM_ID] = roomkey
+    roomInfoHashMap[CHILD_ROOM_ID] = roomKey
     roomInfoHashMap[CHILD_PASS] = roomPass
     roomInfoHashMap[CHILD_CREATOR] = CURRENT_UID
-    mainHashMap["$NODE_ROOM_DATA/$roomkey"] = roomInfoHashMap
-    mainHashMap["$NODE_ROOM_NAMES/$roomName"] = roomkey
+    mainHashMap["$NODE_ROOM_DATA/$roomKey"] = roomInfoHashMap
+    mainHashMap["$NODE_ROOM_NAMES/$roomName"] = roomKey
     REF_DATABASE_ROOT.updateChildren(mainHashMap)
         .addOnSuccessListener {
-            function(roomkey)
-            REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(roomkey).setValue("Created")
+            function(roomKey)
+            REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(roomKey).setValue("Created")
         }
-        .addOnFailureListener { problem ->
+        .addOnFailureListener {
             onFail()
-            showToast(problem.message.toString())
+            showToast(APP_ACTIVITY.getString(R.string.something_going_wrong))
         }
 }
 
-fun updateUserRoomId(roomkey: String, onFail: () -> Unit, onSuccess: () -> Unit) {
+fun updateUserRoomId(roomKey: String, onFail: () -> Unit, onSuccess: () -> Unit) {
 
-    REF_DATABASE_ROOT.child(NODE_USERS).child(appPreference.getUserId()).child(
+    REF_DATABASE_ROOT.child(NODE_USERS).child(AppPreference.getUserId()).child(
         CHILD_ROOM_ID
-    ).setValue(roomkey)
+    ).setValue(roomKey)
         .addOnFailureListener { problem ->
             onFail()
             showToast(problem.message.toString())
         }
         .addOnSuccessListener {
-            REF_DATABASE_ROOT.child(NODE_ROOM_MEMBERS).child(roomkey).child(CURRENT_UID)
+            REF_DATABASE_ROOT.child(NODE_ROOM_MEMBERS).child(roomKey).child(CURRENT_UID)
                 .setValue(CURRENT_UID)
                 .addOnSuccessListener {
-                    appPreference.setRoomId(roomkey)
-                    CURRENT_ROOM_UID = roomkey
+                    AppPreference.setRoomId(roomKey)
+                    CURRENT_ROOM_UID = roomKey
                     updatePreferenceCurrentPay { onSuccess() }
-
                 }
-                .addOnFailureListener { prob ->
-                    showToast(prob.message.toString())
+                .addOnFailureListener {
+                   showToast(APP_ACTIVITY.getString(R.string.something_going_wrong))
                     onFail()
                 }
         }
@@ -182,14 +182,14 @@ fun updatePreferenceCurrentPay(function: () -> Unit) {
     REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_TOTAL_PAY)
         .child(CURRENT_ROOM_UID).addMySingleListener {
             val totalPay = if (it.value.toString() == "null") "0" else it.value.toString()
-            appPreference.setTotalSumm(totalPay)
+            AppPreference.setTotalSumm(totalPay)
 
             REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
                 .child(CHILD_TOTALPAY_AT_CURRENT_ROOM)
                 .setValue(totalPay)
                 .addOnSuccessListener { function() }
-                .addOnFailureListener { ex ->
-                    showToast(ex.message.toString())
+                .addOnFailureListener {
+                    showToast(APP_ACTIVITY.getString(R.string.something_going_wrong))
                     ON_REGISTRATION_FAIL()
                 }
         }
@@ -206,7 +206,7 @@ fun updateAllUserPayments() {
 
 fun changePaymentFromName(roomId: String, paymentId: String) {
     REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(roomId).child(paymentId)
-        .child(CHILD_FROM_NAME).setValue(appPreference.getUserName())
+        .child(CHILD_FROM_NAME).setValue(AppPreference.getUserName())
 }
 
 fun findAllUsersPayments(
@@ -227,11 +227,11 @@ fun findAllUsersPayments(
 }
 
 
-fun findAllUsersRooms(onComlete: (List<String>) -> Unit) {
+fun findAllUsersRooms(onComplete: (List<String>) -> Unit) {
     REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_TOTAL_PAY)
         .addMySingleListener {
             val list = it.children.map { room -> room.key.toString() }
-            onComlete(list)
+            onComplete(list)
         }
 }
 

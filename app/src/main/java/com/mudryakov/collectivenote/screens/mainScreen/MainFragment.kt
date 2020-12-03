@@ -1,5 +1,7 @@
 package com.mudryakov.collectivenote.screens.mainScreen
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +13,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
-import com.mudryakov.collectivenote.database.firebase.CURRENT_ROOM_UID
+import com.mudryakov.collectivenote.database.firebase.*
 import com.mudryakov.collectivenote.databinding.FragmentMainBinding
 import com.mudryakov.collectivenote.models.UserModel
-import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
-import com.mudryakov.collectivenote.utilits.appPreference
-import com.mudryakov.collectivenote.utilits.fastNavigate
+import com.mudryakov.collectivenote.utilits.*
 
 
 class MainFragment : Fragment() {
@@ -38,8 +38,48 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        checkInternet()
+          }
+
+    private fun checkInternet() {
+      /* if (!checkConnectity()) {
+            val dialog = AlertDialog.Builder(APP_ACTIVITY)
+            dialog
+                .setCancelable(false)
+                .setIcon(R.drawable.ic_no_internet)
+                .setTitle(APP_ACTIVITY.getString(R.string.internet_alert_dialog_title))
+                .setMessage(APP_ACTIVITY.getString(R.string.internet_alert_dialog_message))
+                .setPositiveButton("Попробовать снова") { _: DialogInterface, _: Int -> checkInternet() }
+                .setNeutralButton("Продолжить без интернета") { _: DialogInterface, _: Int -> noInternetMode() }
+                .show()
+        } else {
+            initialization()
+            initObservers()
+            initCurrency()
+        }*/
         initialization()
         initObservers()
+        initCurrency()
+    }
+
+    private fun noInternetMode() {
+        REPOSITORY = ROOM_REPOSITORY
+        initialization()
+        initObservers()
+        initCurrency()
+    }
+
+
+    private fun initCurrency() {
+        if (AppPreference.getCurrency() == "fail") {
+            REF_DATABASE_ROOT.child(NODE_ROOM_DATA).child(CURRENT_ROOM_UID).child(
+                CHILD_ROOM_CURRENCY
+            ).addMySingleListener {
+                val currentCurrency = it.value.toString()
+                AppPreference.setCurrency(currentCurrency)
+                ROOM_CURRENCY = currentCurrency
+            }
+        } else ROOM_CURRENCY = AppPreference.getCurrency()
     }
 
     private fun initDrawer() {
@@ -57,7 +97,7 @@ class MainFragment : Fragment() {
             }
             mBinding.loadingLayout.visibility = View.GONE
             mBinding.mainFragmentTotalPaymentRoom.text =
-                getString(R.string.total_sum_payed, totalSum)
+                getString(R.string.total_sum_payed, totalSum, ROOM_CURRENCY)
             APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         }
         mViewModel.allMembers.observe(this, mObserver)
@@ -67,9 +107,9 @@ class MainFragment : Fragment() {
         initDrawer()
         APP_ACTIVITY.back = false
         APP_ACTIVITY.title = APP_ACTIVITY.getString(R.string.app_name)
-        CURRENT_ROOM_UID = appPreference.getRoomId()
+        CURRENT_ROOM_UID = AppPreference.getRoomId()
         mViewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
-                mBinding.mainAddNewPayment.setOnClickListener { fastNavigate(R.id.action_mainFragment_to_newPaymentFragment) }
+        mBinding.mainAddNewPayment.setOnClickListener { fastNavigate(R.id.action_mainFragment_to_newPaymentFragment) }
         initRecycle()
     }
 
@@ -80,8 +120,8 @@ class MainFragment : Fragment() {
         mLayoutManager = LinearLayoutManager(this.context)
         mRecycle.adapter = mAdapter
         mRecycle.layoutManager = mLayoutManager
-
     }
+
 
     override fun onDestroyView() {
         mAdapter = null

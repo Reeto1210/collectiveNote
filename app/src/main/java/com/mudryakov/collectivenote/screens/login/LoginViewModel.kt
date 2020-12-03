@@ -12,7 +12,7 @@ import com.mudryakov.collectivenote.database.firebase.*
 import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
 import com.mudryakov.collectivenote.utilits.TYPE_EMAIL
 import com.mudryakov.collectivenote.utilits.TYPE_GOOGLE_ACCOUNT
-import com.mudryakov.collectivenote.utilits.appPreference
+import com.mudryakov.collectivenote.utilits.AppPreference
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val mContext = application.applicationContext
@@ -37,7 +37,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun initCommons() {
-        appPreference.getPreference(APP_ACTIVITY)
+        AppPreference.getPreference(APP_ACTIVITY)
         val dao = MyRoomDatabase.getDatabase(mContext).getDao()
         ROOM_REPOSITORY = AppRoomRepository(dao)
         REPOSITORY = FireBaseRepository()

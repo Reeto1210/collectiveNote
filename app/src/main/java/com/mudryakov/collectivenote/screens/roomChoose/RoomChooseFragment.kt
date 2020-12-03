@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.mudryakov.collectivenote.R
@@ -20,6 +22,7 @@ class RoomChooseFragment : Fragment() {
     val mBinding get() = _Binding!!
     lateinit var mViewModel: RoomChooseViewModel
     var messageText = ""
+    var currencySign = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,17 +34,41 @@ class RoomChooseFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         initialization()
-
-        if (appPreference.getSignInRoom()) {
-            CURRENT_UID = appPreference.getUserId()
+        if (AppPreference.getSignInRoom()) {
+            CURRENT_UID = AppPreference.getUserId()
             navNext()
         } else {
             startJoin()
         }
     }
 
-    private fun startJoin() {
+    private fun initSpinner() {
+        val spinner = mBinding.roomChooseSpinner
+        val currency = resources.getStringArray(R.array.currency_array)
+        val adapter = MyArrayAdapter(APP_ACTIVITY, R.layout.spinner_item, currency)
+        spinner.adapter = adapter
+        spinner.makeVisible()
+        spinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                currencySign = when (position) {
+                    1 -> getString(R.string.RUB)
+                    2 -> getString(R.string.USD)
+                    3 -> getString(R.string.EUR)
+                    else -> ""
+                }
+            }
 
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
+    }
+
+    private fun startJoin() {
         if (checkConnectity()) {
             val builder = AlertDialog.Builder(this.context)
             builder.setTitle(getString(R.string.choose_room_alert_dialog_title))
@@ -58,7 +85,7 @@ class RoomChooseFragment : Fragment() {
     }
 
     private fun initialization() {
-        APP_ACTIVITY.title = appPreference.getUserName()
+        APP_ACTIVITY.title = AppPreference.getUserName()
         mViewModel = ViewModelProvider(APP_ACTIVITY).get(RoomChooseViewModel::class.java)
     }
 
@@ -69,31 +96,37 @@ class RoomChooseFragment : Fragment() {
         }
     }
 
-
     private fun createRoom() {
+        initSpinner()
         APP_ACTIVITY.title = getString(R.string.create_room)
         mBinding.roomChooseContinue.setOnClickListener {
-            showProgressBar()
-            val roomName = mBinding.roomChooseName.text.toString()
+                      val roomName = mBinding.roomChooseName.text.toString()
             val roomPass = mBinding.roomChoosePassword.text.toString()
-            mViewModel.createRoom(roomName, roomPass, { onFail() }) {
-                appPreference.setRoomName(roomName)
-                messageText = getString(R.string.toast_create_room, roomName)
-                navNext()
+            when {
+                roomName.isEmpty() || roomPass.isEmpty() -> showToast(getString(R.string.add_info))
+                currencySign == "" -> showToast(getString(R.string.choose_currency))
+                else -> {
+                    showProgressBar()
+                    mViewModel.createRoom(roomName, roomPass, currencySign, { onFail() }) {
+                        AppPreference.setRoomName(roomName)
+                        AppPreference.setCurrency(currencySign)
+                        messageText = getString(R.string.toast_create_room, roomName)
+                        navNext()
+                    }
+                }
             }
         }
     }
 
-
     private fun joinRoom() {
+        mBinding.roomChooseSpinner.makeGone()
         APP_ACTIVITY.title = getString(R.string.join_room)
         mBinding.roomChooseContinue.setOnClickListener {
-
             showProgressBar()
             val roomName = mBinding.roomChooseName.text.toString()
             val roomPass = mBinding.roomChoosePassword.text.toString()
             mViewModel.joinRoom(roomName, roomPass, { onFail() }) {
-                appPreference.setRoomName(roomName)
+                AppPreference.setRoomName(roomName)
                 messageText = getString(R.string.toast_join_room, roomName)
                 navNext()
             }
@@ -102,8 +135,8 @@ class RoomChooseFragment : Fragment() {
 
     private fun navNext() {
         hideKeyboard(APP_ACTIVITY)
-        if (!appPreference.getSignInRoom()) showToast(messageText)
-        appPreference.setSignInRoom(true)
+        if (!AppPreference.getSignInRoom()) showToast(messageText)
+        AppPreference.setSignInRoom(true)
         fastNavigate(R.id.action_roomChooseFragment_to_mainFragment)
     }
 

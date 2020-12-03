@@ -11,7 +11,7 @@ class FirebaseGroupMembers : LiveData<List<UserModel>>() {
     val mutableListOFUsers = mutableListOf<UserModel>()
     lateinit var list: List<String>
 
-    val listener = AppValueEventListener {
+    private val listener = AppValueEventListener {
         mutableListOFUsers.clear()
         REF_DATABASE_ROOT.child(NODE_ROOM_MEMBERS).child(CURRENT_ROOM_UID)
             .addMySingleListener{DataSnapShot ->

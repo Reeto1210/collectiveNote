@@ -1,8 +1,6 @@
 package com.mudryakov.collectivenote
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
@@ -13,16 +11,16 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.navigation.NavigationView
-import com.mudryakov.collectivenote.database.firebase.handleSignInresult
+import com.mudryakov.collectivenote.database.RoomDatabase.AppRoomRepository
+import com.mudryakov.collectivenote.database.RoomDatabase.myDao
+import com.mudryakov.collectivenote.database.firebase.ROOM_REPOSITORY
+import com.mudryakov.collectivenote.database.firebase.handleSignInResult
 import com.mudryakov.collectivenote.databinding.ActivityMainBinding
 import com.mudryakov.collectivenote.utilits.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.net.InetAddress
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -52,7 +50,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onStart() {
         super.onStart()
-        appPreference.getPreference(APP_ACTIVITY)
+        AppPreference.getPreference(APP_ACTIVITY)
         setDrawerEdge()
         mNavView.setNavigationItemSelectedListener(this)
 
@@ -80,7 +78,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if (requestCode == SIGN_CODE_REQUEST) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInresult(task)
+            handleSignInResult(task)
         }
 
     }
@@ -121,5 +119,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    override fun onDestroy() {
+
+
+
+        super.onDestroy()
+        }
 
 }

@@ -16,7 +16,6 @@ import com.mudryakov.collectivenote.databinding.FragmentLoginBinding
 import com.mudryakov.collectivenote.utilits.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
-import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 
 
 class LoginFragment : Fragment() {
@@ -53,8 +52,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun internetCheck() {
-        if (appPreference.getSignIn()) {
-            CURRENT_UID = appPreference.getUserId()
+        if (AppPreference.getSignIn()) {
+            CURRENT_UID = AppPreference.getUserId()
             fastNavigate(R.id.action_loginFragment_to_roomChooseFragment)
         } else {
             if (!checkConnectity()) {
@@ -65,7 +64,7 @@ class LoginFragment : Fragment() {
                 }
                 mBinding.loginNoAccount.setOnClickListener { fastNavigate(R.id.action_loginFragment_to_emailRegistrationFragment) }
                 emailBtnClick()
-                googleSighbtnClick()
+                googleSigninBtnClick()
             }
         }
     }
@@ -127,7 +126,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun googleSighbtnClick() {
+    private fun googleSigninBtnClick() {
         mBinding.loginBtnSignInGoogle.setOnClickListener {
             if (!isLoading) {
                 showProgressBar()
@@ -141,7 +140,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun onRegisterSuccess() {
-        hideKeyboard(APP_ACTIVITY)
         onloginFail()
         changeName {
             fastNavigate(R.id.action_loginFragment_to_roomChooseFragment)
@@ -170,7 +168,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun showProgressBar() {
-        hideKeyboard(APP_ACTIVITY)
+
         isLoading = true
         mBinding.fragmentLoginProgressBar.makeVisible()
     }

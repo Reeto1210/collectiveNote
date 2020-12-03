@@ -3,7 +3,7 @@ package com.mudryakov.collectivenote.utilits
 import android.content.Context
 import android.content.SharedPreferences
 
-object appPreference {
+object AppPreference {
     private const val FAIL = "fail"
     private const val namePref = "preference"
     private const val USER_ID = "userId"
@@ -12,14 +12,14 @@ object appPreference {
     private const val IS_SIGN_IN_ROOM = "isSignInRoom"
     private const val ROOM_ID = "roomId"
     private const val TOTAL_PAY = "totalPay"
-    private const val ROOM_NAME= "roomName"
-
+    private const val ROOM_NAME = "roomName"
+    private const val ROOM_CURRENCY = "roomCurrency"
     private lateinit var mPreference: SharedPreferences
 
-   fun clear(){
-      mPreference.edit().clear()
-          .apply()
-   }
+    fun clear() {
+        mPreference.edit().clear()
+            .apply()
+    }
 
     fun getPreference(context: Context): SharedPreferences {
         mPreference = context.getSharedPreferences(namePref, Context.MODE_PRIVATE)
@@ -31,6 +31,19 @@ object appPreference {
             .putString(USER_ID, id)
             .apply()
     }
+
+    fun setCurrency(currency: String) {
+        mPreference.edit()
+            .putString(ROOM_CURRENCY, currency)
+            .apply()
+    }
+
+    fun getCurrency(): String {
+        return mPreference.getString(ROOM_CURRENCY, FAIL).toString()
+    }
+
+
+
 
     fun setName(userName: String) {
         mPreference.edit()
@@ -54,6 +67,7 @@ object appPreference {
     fun getSignIn(): Boolean {
         return mPreference.getBoolean(IS_SIGN_IN, false)
     }
+
     fun setSignInRoom(sign: Boolean) {
         mPreference.edit()
             .putBoolean(IS_SIGN_IN_ROOM, sign)
@@ -64,9 +78,6 @@ object appPreference {
 
         return mPreference.getBoolean(IS_SIGN_IN_ROOM, false)
     }
-
-
-
 
 
     fun getUserId(): String {
@@ -91,14 +102,15 @@ object appPreference {
         return mPreference.getString(TOTAL_PAY, "0").toString()
     }
 
-fun setRoomName(name:String){
-    mPreference.edit().putString(ROOM_NAME, name)
-        .apply()
-}
-fun getRoomName():String{
-    return mPreference.getString(ROOM_NAME, FAIL).toString()
+    fun setRoomName(name: String) {
+        mPreference.edit().putString(ROOM_NAME, name)
+            .apply()
+    }
 
-}
+    fun getRoomName(): String {
+        return mPreference.getString(ROOM_NAME, FAIL).toString()
+
+    }
 
 
 }

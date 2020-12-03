@@ -14,5 +14,5 @@ const val TYPE_EMAIL = "emailAcc"
 
 
 lateinit var USER: UserModel
-
+var ROOM_CURRENCY = ""
 lateinit var APP_ACTIVITY:MainActivity

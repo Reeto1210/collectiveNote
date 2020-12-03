@@ -37,6 +37,7 @@ class EmailRegistrationFragment : BaseFragmentBack() {
                 if (email.isNotEmpty() && pass.isNotEmpty()) {
                     showProgressbar()
                     mViewModel.createEmailAccount(email, pass, { onFail() }) {
+                        hideKeyboard(APP_ACTIVITY)
                         fastNavigate(R.id.action_emailRegistrationFragment_to_loginFragment)
                     }
                 } else showToast(getString(R.string.add_info))
@@ -52,7 +53,6 @@ class EmailRegistrationFragment : BaseFragmentBack() {
     }
 
     private fun showProgressbar() {
-        hideKeyboard(APP_ACTIVITY)
         mBinding.registrationEmailBtn.makeGone()
         mBinding.emailRegistrationProgressBar.makeVisible()
     }
