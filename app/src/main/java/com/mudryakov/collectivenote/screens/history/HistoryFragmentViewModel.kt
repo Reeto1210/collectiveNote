@@ -5,8 +5,10 @@ import androidx.lifecycle.AndroidViewModel
 import com.mudryakov.collectivenote.database.firebase.REPOSITORY
 
 
-class HistoryFragmentViewModel(application: Application):AndroidViewModel(application) {
+class HistoryFragmentViewModel(application: Application) : AndroidViewModel(application) {
+    val paymentList = REPOSITORY.allPayments
 
-   val paymentList = REPOSITORY.allPayments
+
+
 }
 

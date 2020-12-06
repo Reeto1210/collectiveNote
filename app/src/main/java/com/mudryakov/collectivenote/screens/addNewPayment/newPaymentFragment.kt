@@ -11,9 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.databinding.FragmentNewPaymentBinding
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
-import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
-import com.mudryakov.collectivenote.utilits.fastNavigate
-import com.mudryakov.collectivenote.utilits.showToast
+import com.mudryakov.collectivenote.utilits.*
 import com.theartofdev.edmodo.cropper.CropImage
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 
@@ -41,24 +39,28 @@ class newPaymentFragment : BaseFragmentBack() {
     private fun initialization() {
         mViewModel = ViewModelProvider(this).get(AddNewPaymentViewModel::class.java)
         mBinding.addNewPaymentConfirm.setOnClickListener {
-            val sum = mBinding.addNewPaymentSumm.text.toString().replace(',','.')
-            val description = mBinding.addNewPaymentDescription.text.toString()
+            if (checkConnectity()) {
+                val sum = mBinding.addNewPaymentSumm.text.toString().replace(',', '.')
+                val description = mBinding.addNewPaymentDescription.text.toString()
 
-            try {
-                sum.toLong()
-                if (sum.isNotEmpty() && description.isNotEmpty())
-                    mViewModel.addNewPayment(sum, description, imageUri) {
-                        showToast(APP_ACTIVITY.getString(R.string.toast_payment_added))
+                try {
+                    sum.toLong()
+                    if (sum.isNotEmpty() && description.isNotEmpty())
+                        mViewModel.addNewPayment(sum, description, imageUri) {
+                            showToast(APP_ACTIVITY.getString(R.string.toast_payment_added))
 
+                        }
+                    else showToast(getString(R.string.add_info))
+                    if (sum.isNotEmpty() && description.isNotEmpty()) {
+                        hideKeyboard(APP_ACTIVITY)
+                        fastNavigate(R.id.action_newPaymentFragment_to_mainFragment)
                     }
-                else showToast(getString(R.string.add_info))
-                if (sum.isNotEmpty() && description.isNotEmpty()) {
-                    hideKeyboard(APP_ACTIVITY)
-                 fastNavigate(R.id.action_newPaymentFragment_to_mainFragment)
+                } catch (e: Exception) {
+                    mBinding.addNewPaymentSumm.setText("")
+                    showToast(getString(R.string.catch_payment_sum))
                 }
-            } catch (e: Exception) {
-                mBinding.addNewPaymentSumm.setText("")
-                showToast(getString(R.string.catch_payment_sum))
+            } else {
+                restartActivity()
             }
         }
         mBinding.addPaymentAttachImage.setOnClickListener {

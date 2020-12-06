@@ -10,8 +10,7 @@ import com.mudryakov.collectivenote.database.RoomDatabase.RoomtimeConverter
 @Entity(tableName = "AllPayments")
 @TypeConverters(RoomtimeConverter::class)
 data class PaymentModel(
-    @PrimaryKey(autoGenerate = true) val roomkey:Int = 0,
-    @ColumnInfo var firebaseId: String = "",
+    @PrimaryKey var firebaseId: String = "",
     @ColumnInfo val summ: String = "",
     @ColumnInfo val description: String = "",
     @ColumnInfo var time: Any = "",

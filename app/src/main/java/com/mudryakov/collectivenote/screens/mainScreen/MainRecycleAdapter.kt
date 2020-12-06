@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
@@ -13,27 +15,27 @@ import com.mudryakov.collectivenote.utilits.ROOM_CURRENCY
 import com.mudryakov.collectivenote.utilits.AppPreference
 import kotlinx.android.synthetic.main.main_fragment_recycle_item.view.*
 
-class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>() {
+class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>() {
     val list = mutableListOf<UserModel>()
 
-    class myViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val username = view.main_recycle_item_username
-        val totalPayd = view.main_recycle_item_total_summ
-        val layout = view.recycle_main_layout
-        val divider = view.divider
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val username: TextView = view.main_recycle_item_username
+        val totalPayed: TextView = view.main_recycle_item_total_summ
+        val layout: ConstraintLayout = view.recycle_main_layout
+        val divider: View = view.divider
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.main_fragment_recycle_item, parent, false)
-               return myViewHolder(view)
+               return MyViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: myViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentUser = list[position]
          holder.divider.visibility = if (position == 0) View.GONE else View.VISIBLE
-        holder.totalPayd.text =
+        holder.totalPayed.text =
             if (currentUser.totalPayAtCurrentRoom.isNotEmpty()) APP_ACTIVITY.getString(R.string.sum_currency, currentUser.totalPayAtCurrentRoom,
                 ROOM_CURRENCY) else "0"
         holder.username.text = currentUser.name
@@ -68,13 +70,13 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>
         notifyItemInserted(list.indexOf(user))
     }
 
-    override fun onViewAttachedToWindow(holder: myViewHolder) {
+    override fun onViewAttachedToWindow(holder: MyViewHolder) {
         val curUser = list[holder.adapterPosition]
         holder.layout.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("userId", curUser.firebaseId)
             bundle.putString("userName", curUser.name)
-            APP_ACTIVITY.navConroller.navigate(
+            APP_ACTIVITY.navController.navigate(
                 R.id.action_mainFragment_to_singleUserPayments,
                 bundle
             )
@@ -83,7 +85,7 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.myViewHolder>
         super.onViewAttachedToWindow(holder)
     }
 
-    override fun onViewDetachedFromWindow(holder: myViewHolder) {
+    override fun onViewDetachedFromWindow(holder: MyViewHolder) {
         holder.layout.setOnClickListener { }
         super.onViewDetachedFromWindow(holder)
     }

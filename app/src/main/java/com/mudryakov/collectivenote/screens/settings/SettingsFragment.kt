@@ -34,16 +34,17 @@ class SettingsFragment : BaseFragmentBack() {
         mBinding.settingsName.text = getString(R.string.user_name, AppPreference.getUserName())
         setHasOptionsMenu(true)
         mViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
-        initBehaivor()
+        initBehaviour()
     }
 
-    private fun initBehaivor() {
+    private fun initBehaviour() {
         mBinding.settongsChangeNameBtn.setOnClickListener {
             mBinding.settongsChangeNameBtn.makeGone()
             mBinding.settingsEditNameEditText.makeVisible()
             mBinding.settingsBtnContinue.makeVisible()
         }
         mBinding.settingsBtnContinue.setOnClickListener {
+            if (checkConnectity()){
             val newName = mBinding.settingsEditNameEditText.text.toString()
             if (newName.isNotEmpty()) {
                 mViewModel.changeName(newName) {
@@ -52,8 +53,9 @@ class SettingsFragment : BaseFragmentBack() {
                     fastNavigate(R.id.action_settingsFragment_to_mainFragment)
                 }
             } else showToast(getString(R.string.name_cant_be_empty_toast))
-        }
+        }else restartActivity()
     }
+}
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         activity?.menuInflater?.inflate(R.menu.settings_menu, menu)
@@ -68,16 +70,20 @@ class SettingsFragment : BaseFragmentBack() {
     }
 
     private fun changeUser() {
-        mViewModel.signOut()
-        AppPreference.clear()
-        restartActivity()
+        if (checkConnectity()) {
+            mViewModel.signOut()
+            AppPreference.clear()
+            restartActivity()
+        }else restartActivity()
     }
 
     private fun changeRoom() {
-        AppPreference.setCurrency("fail")
-        AppPreference.setRoomId("fail")
-        AppPreference.setSignInRoom(false)
-        AppPreference.setTotalSumm("0")
-        restartActivity()
+        if (checkConnectity()) {
+            AppPreference.setCurrency("fail")
+            AppPreference.setRoomId("fail")
+            AppPreference.setSignInRoom(false)
+            AppPreference.setTotalSumm("0")
+            restartActivity()
+        }else restartActivity()
     }
 }

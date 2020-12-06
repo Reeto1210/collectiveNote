@@ -30,22 +30,22 @@ class EmailRegistrationFragment : BaseFragmentBack() {
     }
 
     private fun registerClick() {
-        if (checkConnectity()) {
-            mBinding.registrationEmailBtn.setOnClickListener {
-                val email = mBinding.registrationInputEmail.text.toString()
-                val pass = mBinding.registrationInputPassword.text.toString()
-                if (email.isNotEmpty() && pass.isNotEmpty()) {
-                    showProgressbar()
+        mBinding.registrationEmailBtn.setOnClickListener {
+            val email = mBinding.registrationInputEmail.text.toString()
+            val pass = mBinding.registrationInputPassword.text.toString()
+            if (email.isNotEmpty() && pass.isNotEmpty()) {
+                showProgressbar()
+                checkInternetAtAuth({onFail()}) {
                     mViewModel.createEmailAccount(email, pass, { onFail() }) {
                         hideKeyboard(APP_ACTIVITY)
                         fastNavigate(R.id.action_emailRegistrationFragment_to_loginFragment)
                     }
-                } else showToast(getString(R.string.add_info))
-            }
-        } else {
-            buildNoInternetDialog { registerClick() }
+                }
+            } else showToast(getString(R.string.add_info))
         }
+
     }
+
 
     private fun onFail() {
         mBinding.registrationEmailBtn.makeVisible()

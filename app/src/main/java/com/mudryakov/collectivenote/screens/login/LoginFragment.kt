@@ -43,7 +43,18 @@ class LoginFragment : Fragment() {
         initialization()
         initHomeUp()
         animateButtons()
-        internetCheck()
+        checkSignIn()
+
+    }
+
+    private fun checkSignIn() {
+        if (AppPreference.getSignIn()) {
+            CURRENT_UID = AppPreference.getUserId()
+            fastNavigate(R.id.action_loginFragment_to_roomChooseFragment)
+        }
+        if (AUTH.currentUser != null) {
+            showChangeNameLayout()
+        }
     }
 
     private fun initHomeUp() {
@@ -51,60 +62,46 @@ class LoginFragment : Fragment() {
         APP_ACTIVITY.back = false
     }
 
-    private fun internetCheck() {
-        if (AppPreference.getSignIn()) {
-            CURRENT_UID = AppPreference.getUserId()
-            fastNavigate(R.id.action_loginFragment_to_roomChooseFragment)
-        } else {
-            if (!checkConnectity()) {
-                buildNoInternetDialog { internetCheck() }
-            } else {
-                if (AUTH.currentUser != null) {
-                   showChangeNameLayout()
-                }
-                mBinding.loginNoAccount.setOnClickListener { fastNavigate(R.id.action_loginFragment_to_emailRegistrationFragment) }
-                emailBtnClick()
-                googleSigninBtnClick()
-            }
-        }
-    }
 
     private fun showChangeNameLayout() {
         mBinding.firstLogin.makeGone()
-        changeName { fastNavigate(R.id.action_loginFragment_to_roomChooseFragment)}
+        changeName { fastNavigate(R.id.action_loginFragment_to_roomChooseFragment) }
     }
 
     private fun animateButtons() {
-         if (AUTH.currentUser == null) {
-             mBinding.loginEmailBtn.startRegisterAnimation(false)
-             mBinding.loginChangeName.startRegisterAnimation(false)
-             val keyBoardListener =
-                 object : KeyboardVisibilityEventListener {
-                     override fun onVisibilityChanged(isOpen: Boolean) {
-                         if (isOpen) {
-                             mBinding.loginBtnSignInGoogle.startRegisterAnimation(false)
-                             mBinding.loginTip.startRegisterAnimation(false)
-                             mBinding.loginEmailBtn.startRegisterAnimation(true)
-                             mBinding.loginNoAccount.startRegisterAnimation(false)
-                         } else {
-                             mBinding.loginBtnSignInGoogle.startRegisterAnimation(true)
-                             mBinding.loginTip.startRegisterAnimation(true)
-                             mBinding.loginEmailBtn.startRegisterAnimation(false)
-                             mBinding.loginNoAccount.startRegisterAnimation(true)
-                         }
-                     }
-                 }
-             KeyboardVisibilityEvent.setEventListener(
-                 APP_ACTIVITY,
-                 viewLifecycleOwner,
-                 keyBoardListener
-             )
-         }
+        if (AUTH.currentUser == null) {
+            mBinding.loginEmailBtn.startRegisterAnimation(false)
+            mBinding.loginChangeName.startRegisterAnimation(false)
+            val keyBoardListener =
+                object : KeyboardVisibilityEventListener {
+                    override fun onVisibilityChanged(isOpen: Boolean) {
+                        if (isOpen) {
+                            mBinding.loginBtnSignInGoogle.startRegisterAnimation(false)
+                            mBinding.loginTip.startRegisterAnimation(false)
+                            mBinding.loginEmailBtn.startRegisterAnimation(true)
+                            mBinding.loginNoAccount.startRegisterAnimation(false)
+                        } else {
+                            mBinding.loginBtnSignInGoogle.startRegisterAnimation(true)
+                            mBinding.loginTip.startRegisterAnimation(true)
+                            mBinding.loginEmailBtn.startRegisterAnimation(false)
+                            mBinding.loginNoAccount.startRegisterAnimation(true)
+                        }
+                    }
+                }
+            KeyboardVisibilityEvent.setEventListener(
+                APP_ACTIVITY,
+                viewLifecycleOwner,
+                keyBoardListener
+            )
+        }
     }
 
     private fun initialization() {
         mViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         mViewModel.initCommons()
+        mBinding.loginNoAccount.setOnClickListener { fastNavigate(R.id.action_loginFragment_to_emailRegistrationFragment) }
+        emailBtnClick()
+        googleSignInBtnClick()
     }
 
     private fun emailBtnClick() {
@@ -114,27 +111,33 @@ class LoginFragment : Fragment() {
                 val pass = mBinding.loginInputPassword.text.toString()
                 if (email.isNotEmpty() && pass.isNotEmpty()) {
                     showProgressBar()
-                    mViewModel.login(
-                        TYPE_EMAIL,
-                        email,
-                        pass,
-                        { onloginFail() }) {
-                        onRegisterSuccess()
+                    checkInternetAtAuth({onloginFail()}) {
+                        mViewModel.login(
+                            TYPE_EMAIL,
+                            email,
+                            pass,
+                            { onloginFail() }) {
+                            onRegisterSuccess()
+                        }
                     }
                 } else showToast(getString(R.string.add_info))
             }
         }
     }
 
-    private fun googleSigninBtnClick() {
+    private fun googleSignInBtnClick() {
         mBinding.loginBtnSignInGoogle.setOnClickListener {
             if (!isLoading) {
                 showProgressBar()
-                mViewModel.login(
-                    TYPE_GOOGLE_ACCOUNT,
-                    onFail = { onloginFail() }) {
-                    onRegisterSuccess()
+                checkInternetAtAuth({onloginFail()})
+                {
+                    mViewModel.login(
+                        TYPE_GOOGLE_ACCOUNT,
+                        onFail = { onloginFail() }) {
+                        onRegisterSuccess()
+                    }
                 }
+
             }
         }
     }
@@ -155,7 +158,10 @@ class LoginFragment : Fragment() {
             if (newName.isNotEmpty()) {
                 if (!isLoading) {
                     showProgressBar()
-                    mViewModel.changeName(newName) { onConfirm() }
+                    checkInternetAtAuth({onloginFail()})
+                    {
+                        mViewModel.changeName(newName) { onConfirm() }
+                    }
                 }
             } else
                 showToast(getString(R.string.name_cant_be_empty_toast))

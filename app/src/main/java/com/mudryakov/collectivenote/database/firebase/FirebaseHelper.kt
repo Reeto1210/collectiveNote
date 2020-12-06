@@ -19,7 +19,6 @@ import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utilits.*
 
 const val CHILD_NAME = "name"
-const val CHILD_FIREBASE_ID = "firebaseId"
 const val CHILD_ROOM_ID = "roomId"
 var USERNAME: String = ""
 lateinit var EMAIL: String

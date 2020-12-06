@@ -8,8 +8,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 import com.mudryakov.collectivenote.models.PaymentModel
+import com.mudryakov.collectivenote.models.UserModel
 
-@Database(entities = [PaymentModel::class], version = 1)
+@Database(entities = [PaymentModel::class, UserModel::class], version = 1)
 
 abstract class MyRoomDatabase : RoomDatabase() {
     abstract fun getDao(): myDao

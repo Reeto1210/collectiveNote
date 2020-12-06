@@ -5,15 +5,13 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.customview.widget.ViewDragHelper
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.navigation.NavigationView
-import com.mudryakov.collectivenote.database.RoomDatabase.AppRoomRepository
-import com.mudryakov.collectivenote.database.RoomDatabase.myDao
-import com.mudryakov.collectivenote.database.firebase.ROOM_REPOSITORY
 import com.mudryakov.collectivenote.database.firebase.handleSignInResult
 import com.mudryakov.collectivenote.databinding.ActivityMainBinding
 import com.mudryakov.collectivenote.utilits.*
@@ -26,7 +24,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var _Binding: ActivityMainBinding? = null
     val mBinding get() = _Binding!!
-    lateinit var navConroller: NavController
+    lateinit var navController: NavController
     var actionBar: ActionBar? = null
     lateinit var mDrawer: DrawerLayout
     lateinit var mNavView: NavigationView
@@ -40,12 +38,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(mBinding.root)
         setSupportActionBar(mBinding.mainToolbar)
         APP_ACTIVITY = this
-        navConroller = Navigation.findNavController(APP_ACTIVITY, R.id.container)
+        navController = Navigation.findNavController(APP_ACTIVITY, R.id.container)
         actionBar = supportActionBar
         mDrawer = mBinding.myDrawer
         mNavView = mBinding.myNavView
         mNavView.itemIconTintList = null
-           }
+    }
 
 
     override fun onStart() {
@@ -95,7 +93,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.drawer_history -> fastNavigate(R.id.action_mainFragment_to_historyFragment)
             R.id.drawer_info -> fastNavigate(R.id.action_mainFragment_to_roomInfoFragment)
-            R.id.drawer_settings -> fastNavigate(R.id.action_mainFragment_to_settingsFragment)
+            R.id.drawer_settings -> {
+                if (INTERNET) fastNavigate(R.id.action_mainFragment_to_settingsFragment)
+                else showNoInternetToast()
+            }
+
             R.id.drawer_help -> fastNavigate(R.id.action_mainFragment_to_helpFragment)
         }
 
@@ -119,11 +121,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onDestroy() {
-
-
-
-        super.onDestroy()
+    override fun onStop() {
+        try {
+            fastNavigate(R.id.action_settingsFragment_to_mainFragment)
+        } catch (e: Exception) {
         }
+        super.onStop()
+    }
 
+    override fun onResume() {
+        if (!INTERNET && checkConnectity()) {
+            INTERNET = true
+            restartActivity()
+        }
+        super.onResume()
+    }
+
+    fun startNoInternetAnimation() {
+        ViewCompat.animate(mBinding.noInternetIndicatorBtn)
+            .alpha(1.0F)
+            .setDuration(1000)
+            .withEndAction {
+                ViewCompat.animate(mBinding.noInternetIndicatorBtn)
+                    .alpha(0.0f)
+                    .setDuration(1000)
+                    .withEndAction { startNoInternetAnimation() }
+            }
+    }
 }

@@ -4,18 +4,21 @@ import androidx.lifecycle.LiveData
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utilits.AppValueEventListener
 import com.mudryakov.collectivenote.utilits.addMySingleListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class FirebaseGroupMembers : LiveData<List<UserModel>>() {
 
-    val mutableListOFUsers = mutableListOf<UserModel>()
+    private val mutableListOFUsers = mutableListOf<UserModel>()
     lateinit var list: List<String>
 
     private val listener = AppValueEventListener {
         mutableListOFUsers.clear()
         REF_DATABASE_ROOT.child(NODE_ROOM_MEMBERS).child(CURRENT_ROOM_UID)
-            .addMySingleListener{DataSnapShot ->
-                list = DataSnapShot.children.map { sn-> sn.value.toString() }
+            .addMySingleListener { DataSnapShot ->
+                list = DataSnapShot.children.map { sn -> sn.value.toString() }
                 list.forEach { id ->
                     getUserFromId(id)
                 }
@@ -28,19 +31,27 @@ class FirebaseGroupMembers : LiveData<List<UserModel>>() {
                 val currentUser = (userSnap.getValue(UserModel::class.java) ?: UserModel())
                 mutableListOFUsers.remove(currentUser)
                 REF_DATABASE_ROOT.child(NODE_USERS).child(currentUser.firebaseId).child(
-                    CHILD_TOTAL_PAY).child(
-                   CURRENT_ROOM_UID
+                    CHILD_TOTAL_PAY
+                ).child(
+                    CURRENT_ROOM_UID
                 ).addMySingleListener {
-                   currentUser.totalPayAtCurrentRoom = if (it.value != null) it.value.toString() else "0"
+                    currentUser.totalPayAtCurrentRoom =
+                        if (it.value != null) it.value.toString() else "0"
                     mutableListOFUsers.add(currentUser)
-                    if (mutableListOFUsers.size == list.size){ value = mutableListOFUsers}
+                    if (mutableListOFUsers.size == list.size) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            ROOM_REPOSITORY.updateAllUsersRoomDatabase(mutableListOFUsers)
+                        }
+                        value = mutableListOFUsers
+                    }
                 }
-                }
-       }
+            }
+    }
 
 
     override fun onActive() {
-      REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID).addValueEventListener(listener)
+        REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID)
+            .addValueEventListener(listener)
         super.onActive()
     }
 

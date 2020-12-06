@@ -1,9 +1,7 @@
 package com.mudryakov.collectivenote.utilits
 
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.Uri
@@ -78,7 +76,7 @@ fun restartActivity() {
 }
 
 fun fastNavigate(id: Int) {
-    APP_ACTIVITY.navConroller.navigate(id)
+    APP_ACTIVITY.navController.navigate(id)
 }
 
 fun View.makeVisible() {
@@ -93,24 +91,7 @@ fun View.makeGone() {
     this.visibility = View.GONE
 }
 
-fun checkConnectity(): Boolean {
-    val connectivityManager = APP_ACTIVITY.getSystemService(Context.CONNECTIVITY_SERVICE)
-    return if (connectivityManager is ConnectivityManager) {
-        val networkInfo = connectivityManager.activeNetworkInfo
-        return networkInfo?.isConnected ?: false
-    } else false
-}
 
-fun buildNoInternetDialog(onClickPositiveButtonFunction: () -> Unit) {
-    val dialog = AlertDialog.Builder(APP_ACTIVITY)
-    dialog
-        .setCancelable(false)
-        .setIcon(R.drawable.ic_no_internet)
-        .setTitle(APP_ACTIVITY.getString(R.string.internet_alert_dialog_title))
-        .setMessage(APP_ACTIVITY.getString(R.string.internet_alert_dialog_message))
-        .setPositiveButton(APP_ACTIVITY.getString(R.string.ok)) { _: DialogInterface, _: Int -> onClickPositiveButtonFunction() }
-        .show()
-}
 
 fun exceptionEmailLoginToast(ex: Any) {
     val text =
@@ -132,5 +113,7 @@ fun exceptionEmailRegistrationToast(exText: String) {
             )
             else -> APP_ACTIVITY.getString(R.string.something_going_wrong)
         }
-showToast(toastText)
+    showToast(toastText)
 }
+
+

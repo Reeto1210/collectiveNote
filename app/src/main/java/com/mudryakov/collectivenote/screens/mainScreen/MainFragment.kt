@@ -19,6 +19,7 @@ import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utilits.*
 
 
+@Suppress("DEPRECATION")
 class MainFragment : Fragment() {
     var _Binding: FragmentMainBinding? = null
     val mBinding get() = _Binding!!
@@ -39,30 +40,37 @@ class MainFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         checkInternet()
-          }
+
+    }
 
     private fun checkInternet() {
-      /* if (!checkConnectity()) {
-            val dialog = AlertDialog.Builder(APP_ACTIVITY)
-            dialog
-                .setCancelable(false)
-                .setIcon(R.drawable.ic_no_internet)
-                .setTitle(APP_ACTIVITY.getString(R.string.internet_alert_dialog_title))
-                .setMessage(APP_ACTIVITY.getString(R.string.internet_alert_dialog_message))
-                .setPositiveButton("Попробовать снова") { _: DialogInterface, _: Int -> checkInternet() }
-                .setNeutralButton("Продолжить без интернета") { _: DialogInterface, _: Int -> noInternetMode() }
-                .show()
-        } else {
+        checkInternetConnection({buildMainNoInternetDialog()}) {
             initialization()
             initObservers()
             initCurrency()
-        }*/
-        initialization()
-        initObservers()
-        initCurrency()
+        }
+
+    }
+
+    private fun buildMainNoInternetDialog() {
+        val dialog = AlertDialog.Builder(APP_ACTIVITY)
+        dialog
+            .setCancelable(false)
+            .setIcon(R.drawable.ic_no_internet)
+            .setTitle(APP_ACTIVITY.getString(R.string.internet_alert_dialog_title))
+            .setMessage(APP_ACTIVITY.getString(R.string.internet_alert_dialog_message))
+            .setPositiveButton("Попробовать снова") { _: DialogInterface, _: Int -> checkInternet() }
+            .setNeutralButton("Продолжить без интернета") { _: DialogInterface, _: Int -> noInternetMode() }
+            .show()
     }
 
     private fun noInternetMode() {
+        INTERNET = false
+        APP_ACTIVITY.startNoInternetAnimation()
+        APP_ACTIVITY.mBinding.noInternetIndicatorBtn.setOnClickListener {
+            if (checkConnectity()) restartActivity()
+            else showNoInternetToast()
+        }
         REPOSITORY = ROOM_REPOSITORY
         initialization()
         initObservers()
@@ -99,6 +107,7 @@ class MainFragment : Fragment() {
             mBinding.mainFragmentTotalPaymentRoom.text =
                 getString(R.string.total_sum_payed, totalSum, ROOM_CURRENCY)
             APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+
         }
         mViewModel.allMembers.observe(this, mObserver)
     }
@@ -109,10 +118,17 @@ class MainFragment : Fragment() {
         APP_ACTIVITY.title = APP_ACTIVITY.getString(R.string.app_name)
         CURRENT_ROOM_UID = AppPreference.getRoomId()
         mViewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
-        mBinding.mainAddNewPayment.setOnClickListener { fastNavigate(R.id.action_mainFragment_to_newPaymentFragment) }
+        initFabNewPayment()
         initRecycle()
     }
 
+    private fun initFabNewPayment() {
+        if (INTERNET) {
+            mBinding.mainAddNewPayment.setOnClickListener {
+                fastNavigate(R.id.action_mainFragment_to_newPaymentFragment)
+            }
+        } else mBinding.mainAddNewPayment.makeGone()
+    }
 
     private fun initRecycle() {
         mRecycle = mBinding.fragmentMainRecycle

@@ -9,24 +9,22 @@ import com.mudryakov.collectivenote.utilits.showToast
 
 class AppRoomRepository(private val dao: myDao):AppDatabaseRepository {
 
-    private val roomAllNotes: LiveData<List<PaymentModel>> get() = dao.getAllPayments()
 
-    suspend fun deleteAllNotesFromRoom() = dao.deleteAll()
-    suspend fun addAllNotesToRoom(list: List<PaymentModel>) = dao.insertAll(list)
+
+    suspend fun updateAllPaymentsRoomDatabase(list: List<PaymentModel>) = dao.updateAllPayments(list)
+    suspend fun updateAllUsersRoomDatabase(list: List<UserModel>) = dao.updateAllUsers(list)
 
     override val allPayments: LiveData<List<PaymentModel>>
-        get() = roomAllNotes
+        get() =dao.getAllPayments()
 
     override val groupMembers: LiveData<List<UserModel>>
-        get() = TODO("Not yet implemented")
+        get() = dao.getAllUsers()
 
     override fun login(type: String, onFail: () -> Unit, onSucces: () -> Unit) {
-        showToast("no internet")
-    }
+          }
 
     override fun emailRegistration(onFail: () -> Unit, onSucces: () -> Unit) {
-        showToast("no internet")
-    }
+          }
 
     override fun createNewRoom(
         roomName: String,
@@ -34,37 +32,23 @@ class AppRoomRepository(private val dao: myDao):AppDatabaseRepository {
         currencySign: String,
         onFail: () -> Unit,
         onSucces: () -> Unit
-    ) {
-        showToast("no internet")
-    }
+    ) {}
 
     override fun joinRoom(
         roomName: String,
         roomPass: String,
         onFail: () -> Unit,
         onSucces: () -> Unit
-    ) {
-        showToast("no internet")
-    }
+    ) {}
 
-    override fun addNewPayment(payment: PaymentModel, onSucces: () -> Unit) {
-        showToast("no internet")
-    }
+    override fun addNewPayment(payment: PaymentModel, onSucces: () -> Unit) {}
 
-    override fun changeName(name: String, onSucces: () -> Unit) {
-        showToast("no internet")
-    }
+    override fun changeName(name: String, onSucces: () -> Unit) {}
 
-    override fun pushFileToBase(imageUri: Uri, onSucces: (String) -> Unit) {
-        showToast("no internet")
-    }
+    override fun pushFileToBase(imageUri: Uri, onSucces: (String) -> Unit) {}
 
-    override fun signOut() {
-        showToast("no internet")
-    }
+    override fun signOut() {}
 
-    override fun remindPassword(onSuccess: (String) -> Unit) {
-       showToast("no internet")
-    }
+    override fun remindPassword(onSuccess: (String) -> Unit) { }
 
 }

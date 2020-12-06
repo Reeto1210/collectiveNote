@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.databinding.FragmentRoomChooseBinding
@@ -69,19 +70,18 @@ class RoomChooseFragment : Fragment() {
     }
 
     private fun startJoin() {
-        if (checkConnectity()) {
-            val builder = AlertDialog.Builder(this.context)
-            builder.setTitle(getString(R.string.choose_room_alert_dialog_title))
-                .setMessage(getString(R.string.choose_room_alert_dialog_text))
-                .setPositiveButton(getString(R.string.choose_room_alert_dialog_positive_button)) { _: DialogInterface, _: Int ->
-                    enterRoom(CREATOR)
-                }
-                .setNeutralButton(getString(R.string.choose_room_alert_dialog_negative_button)) { _: DialogInterface, _: Int ->
-                    enterRoom(MEMBER)
-                }
-                .setCancelable(false)
-                .show()
-        } else buildNoInternetDialog { startJoin() }
+        val builder = AlertDialog.Builder(APP_ACTIVITY)
+        builder.setTitle(getString(R.string.choose_room_alert_dialog_title))
+            .setMessage(getString(R.string.choose_room_alert_dialog_text))
+            .setPositiveButton(getString(R.string.choose_room_alert_dialog_positive_button)) { _: DialogInterface, _: Int ->
+                enterRoom(CREATOR)
+            }
+            .setNeutralButton(getString(R.string.choose_room_alert_dialog_negative_button)) { _: DialogInterface, _: Int ->
+                enterRoom(MEMBER)
+            }
+            .setCancelable(false)
+            .show()
+
     }
 
     private fun initialization() {
@@ -100,18 +100,20 @@ class RoomChooseFragment : Fragment() {
         initSpinner()
         APP_ACTIVITY.title = getString(R.string.create_room)
         mBinding.roomChooseContinue.setOnClickListener {
-                      val roomName = mBinding.roomChooseName.text.toString()
+            val roomName = mBinding.roomChooseName.text.toString()
             val roomPass = mBinding.roomChoosePassword.text.toString()
             when {
                 roomName.isEmpty() || roomPass.isEmpty() -> showToast(getString(R.string.add_info))
                 currencySign == "" -> showToast(getString(R.string.choose_currency))
                 else -> {
                     showProgressBar()
-                    mViewModel.createRoom(roomName, roomPass, currencySign, { onFail() }) {
-                        AppPreference.setRoomName(roomName)
-                        AppPreference.setCurrency(currencySign)
-                        messageText = getString(R.string.toast_create_room, roomName)
-                        navNext()
+                    checkInternetAtAuth({onFail()}) {
+                        mViewModel.createRoom(roomName, roomPass, currencySign, { onFail() }) {
+                            AppPreference.setRoomName(roomName)
+                            AppPreference.setCurrency(currencySign)
+                            messageText = getString(R.string.toast_create_room, roomName)
+                            navNext()
+                        }
                     }
                 }
             }
@@ -125,10 +127,12 @@ class RoomChooseFragment : Fragment() {
             showProgressBar()
             val roomName = mBinding.roomChooseName.text.toString()
             val roomPass = mBinding.roomChoosePassword.text.toString()
-            mViewModel.joinRoom(roomName, roomPass, { onFail() }) {
-                AppPreference.setRoomName(roomName)
-                messageText = getString(R.string.toast_join_room, roomName)
-                navNext()
+            checkInternetAtAuth({onFail()}){
+                mViewModel.joinRoom(roomName, roomPass, { onFail() }) {
+                    AppPreference.setRoomName(roomName)
+                    messageText = getString(R.string.toast_join_room, roomName)
+                    navNext()
+                }
             }
         }
     }

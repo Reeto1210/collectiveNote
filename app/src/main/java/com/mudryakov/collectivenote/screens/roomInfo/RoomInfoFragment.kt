@@ -31,7 +31,7 @@ class RoomInfoFragment : BaseFragmentBack() {
         savedInstanceState: Bundle?
     ): View {
         _Binding = FragmentRoomInfoBinding.inflate(layoutInflater)
-                return mBinding.root
+        return mBinding.root
     }
 
     override fun onStart() {
@@ -68,17 +68,20 @@ class RoomInfoFragment : BaseFragmentBack() {
         mBinding.infoIconPass.setImageResource(R.drawable.info_pass_icon)
         mBinding.infoIconPass.makeVisible()
         mBinding.infoIconPass.setOnClickListener {
-            mBinding.infoIconPass.setImageResource(R.drawable.loading_pass)
+            if (INTERNET){
+                mBinding.infoIconPass.setImageResource(R.drawable.loading_pass)
             mViewModel.remindRoomPassword {
                 mBinding.settingsRoomPass.text = getString(R.string.room_pass, it)
                 mBinding.infoIconPass.makeInvisible()
             }
+            }else showNoInternetToast()
         }
     }
 
     private fun updateInfo() {
         if (callback1 == callback2) {
-            mBinding.settingsRoomTotalPayed.text = getString(R.string.total_sum_payed, totalSumm,ROOM_CURRENCY )
+            mBinding.settingsRoomTotalPayed.text =
+                getString(R.string.total_sum_payed, totalSumm, ROOM_CURRENCY)
             mBinding.settingsRoomName.text =
                 getString(R.string.room_name, AppPreference.getRoomName())
             mBinding.settingsRoomMembersValue.text =
@@ -88,7 +91,7 @@ class RoomInfoFragment : BaseFragmentBack() {
             mBinding.settingsUserTotalPayment.text =
                 getString(R.string.total_user_payed, AppPreference.getTotalSumm(), ROOM_CURRENCY)
             mBinding.settingsRoomPass.text = getString(R.string.room_pass, "")
-           mBinding.settingsCurrency.text  = getString(R.string.room_current, ROOM_CURRENCY)
+            mBinding.settingsCurrency.text = getString(R.string.room_current, ROOM_CURRENCY)
             mBinding.progressBar.makeInvisible()
             mBinding.settingsInfoLayout.makeVisible()
         }

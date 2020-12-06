@@ -58,7 +58,7 @@
             android:layout_height="match_parent"
             android:alpha="0"
             android:background="@color/color_for_main_on_bottom_open"
-            android:elevation="@dimen/elevation_for_dask"
+            android:elevation="@dimen/elevation_for_no_internet_icon"
             tools:ignore="ContentDescription"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
@@ -79,7 +79,7 @@
             android:id="@+id/main_text_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Название загрузки"
+            android:text="@string/loading_main"
             android:textColor="@color/design_default_color_secondary_variant"
             android:textSize="@dimen/Large_text"
             app:layout_constraintBottom_toBottomOf="parent"
