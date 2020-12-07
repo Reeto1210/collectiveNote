@@ -1,0 +1,108 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "c2639ba14ab8d1c7988c45008c480a75",
+    "entities": [
+      {
+        "tableName": "AllPayments",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`firebaseId` TEXT NOT NULL, `summ` TEXT NOT NULL, `description` TEXT NOT NULL, `time` TEXT NOT NULL, `fromId` TEXT NOT NULL, `imageUrl` TEXT NOT NULL, `fromName` TEXT NOT NULL, PRIMARY KEY(`firebaseId`))",
+        "fields": [
+          {
+            "fieldPath": "firebaseId",
+            "columnName": "firebaseId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "summ",
+            "columnName": "summ",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fromId",
+            "columnName": "fromId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "imageUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fromName",
+            "columnName": "fromName",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "firebaseId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "AllUsers",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`firebaseId` TEXT NOT NULL, `name` TEXT NOT NULL, `roomId` TEXT NOT NULL, `totalPayAtCurrentRoom` TEXT NOT NULL, PRIMARY KEY(`firebaseId`))",
+        "fields": [
+          {
+            "fieldPath": "firebaseId",
+            "columnName": "firebaseId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "roomId",
+            "columnName": "roomId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalPayAtCurrentRoom",
+            "columnName": "totalPayAtCurrentRoom",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "firebaseId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c2639ba14ab8d1c7988c45008c480a75')"
+    ]
+  }
+}
