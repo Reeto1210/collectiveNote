@@ -12,8 +12,8 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.databinding.FragmentHistoryBinding
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
-import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
-import com.mudryakov.collectivenote.utilits.makeInvisible
+import com.mudryakov.collectivenote.utility.APP_ACTIVITY
+import com.mudryakov.collectivenote.utility.makeInvisible
 
 
 class HistoryFragment : BaseFragmentBack() {

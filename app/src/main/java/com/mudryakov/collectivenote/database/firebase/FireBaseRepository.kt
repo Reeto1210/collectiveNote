@@ -7,7 +7,7 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
-import com.mudryakov.collectivenote.utilits.*
+import com.mudryakov.collectivenote.utility.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch

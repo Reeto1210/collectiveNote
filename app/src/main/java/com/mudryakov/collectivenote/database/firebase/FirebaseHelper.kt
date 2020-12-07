@@ -16,7 +16,7 @@ import com.mudryakov.collectivenote.database.AppDatabaseRepository
 import com.mudryakov.collectivenote.database.RoomDatabase.AppRoomRepository
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
-import com.mudryakov.collectivenote.utilits.*
+import com.mudryakov.collectivenote.utility.*
 
 const val CHILD_NAME = "name"
 const val CHILD_ROOM_ID = "roomId"

@@ -3,9 +3,10 @@
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/d042240970c5106db752d96f24276ee7/jetified-play-services-tasks-17.0.0/res" />
       <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/1971036d44b02814e0aa0eaa41b8914e/jetified-play-services-tasks-17.0.0/res" />
-      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/d2f2e79bc58b10730d83dec02ad9527d/jetified-play-services-tasks-17.0.0/AndroidManifest.xml" />
       <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/d2f2e79bc58b10730d83dec02ad9527d/jetified-play-services-tasks-17.0.0/res" />
-      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/d2f2e79bc58b10730d83dec02ad9527d/jetified-play-services-tasks-17.0.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/a977e5fefde8eab5f345760c81d7f223/jetified-play-services-tasks-17.0.0/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/a977e5fefde8eab5f345760c81d7f223/jetified-play-services-tasks-17.0.0/res" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/a977e5fefde8eab5f345760c81d7f223/jetified-play-services-tasks-17.0.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

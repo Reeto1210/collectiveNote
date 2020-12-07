@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/newPaymentFragment"
-        android:name="com.mudryakov.collectivenote.screens.addNewPayment.newPaymentFragment"
+        android:name="com.mudryakov.collectivenote.screens.addNewPayment.NewPaymentFragment"
         android:label="fragment_new_payment"
         tools:layout="@layout/fragment_new_payment" >
         <action

@@ -13,7 +13,7 @@ import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.database.firebase.USERNAME
 import com.mudryakov.collectivenote.databinding.FragmentLoginBinding
 
-import com.mudryakov.collectivenote.utilits.*
+import com.mudryakov.collectivenote.utility.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 

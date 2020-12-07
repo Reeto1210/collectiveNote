@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.databinding.SinglePaymentFragmentBinding
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
-import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
+import com.mudryakov.collectivenote.utility.APP_ACTIVITY
 
 class SingleUserPayments : BaseFragmentBack() {
     private var _Binding: SinglePaymentFragmentBinding? = null

@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.models.UserModel
-import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
-import com.mudryakov.collectivenote.utilits.ROOM_CURRENCY
-import com.mudryakov.collectivenote.utilits.AppPreference
+import com.mudryakov.collectivenote.utility.APP_ACTIVITY
+import com.mudryakov.collectivenote.utility.ROOM_CURRENCY
+import com.mudryakov.collectivenote.utility.AppPreference
 import kotlinx.android.synthetic.main.main_fragment_recycle_item.view.*
 
 class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>() {

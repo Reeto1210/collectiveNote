@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.addNewPayment.newPaymentFragment">
+    tools:context=".screens.addNewPayment.NewPaymentFragment">
 
     <EditText
         android:id="@+id/add_new_payment_summ"
@@ -13,7 +13,8 @@
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="Autofill" />
 
     <EditText
         android:id="@+id/add_new_payment_description"
@@ -22,7 +23,8 @@
 
         app:layout_constraintEnd_toStartOf="@+id/add_payment_attach_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_new_payment_summ" />
+        app:layout_constraintTop_toBottomOf="@id/add_new_payment_summ"
+        tools:ignore="Autofill,TextFields" />
 
     <TextView
         android:id="@+id/add_new_payment_confirm"
@@ -33,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@id/add_new_payment_description" />
 
     <ImageView
-       android:padding="@dimen/small_padding"
+       android:padding="@dimen/very_small_padding"
         android:id="@+id/add_payment_attach_image"
         android:layout_width="@dimen/add_payment_image_size"
         android:layout_height="@dimen/add_payment_image_size"
@@ -42,7 +44,8 @@
         android:src="@drawable/ic_add_photo"
         app:layout_constraintBottom_toBottomOf="@+id/add_new_payment_description"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/add_new_payment_description" />
+        app:layout_constraintTop_toTopOf="@+id/add_new_payment_description"
+        tools:ignore="ContentDescription" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

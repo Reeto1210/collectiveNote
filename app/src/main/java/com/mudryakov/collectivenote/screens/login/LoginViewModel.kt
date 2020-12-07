@@ -9,10 +9,10 @@ import com.mudryakov.collectivenote.database.RoomDatabase.AppRoomRepository
 import com.mudryakov.collectivenote.database.RoomDatabase.MyRoomDatabase
 //import com.mudryakov.collectivenote.database.RoomDatabase.MyRoomDatabase
 import com.mudryakov.collectivenote.database.firebase.*
-import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
-import com.mudryakov.collectivenote.utilits.TYPE_EMAIL
-import com.mudryakov.collectivenote.utilits.TYPE_GOOGLE_ACCOUNT
-import com.mudryakov.collectivenote.utilits.AppPreference
+import com.mudryakov.collectivenote.utility.APP_ACTIVITY
+import com.mudryakov.collectivenote.utility.TYPE_EMAIL
+import com.mudryakov.collectivenote.utility.TYPE_GOOGLE_ACCOUNT
+import com.mudryakov.collectivenote.utility.AppPreference
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val mContext = application.applicationContext

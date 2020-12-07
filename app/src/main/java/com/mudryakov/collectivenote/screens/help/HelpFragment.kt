@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.databinding.FragmentHelpBinding
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
-import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
+import com.mudryakov.collectivenote.utility.APP_ACTIVITY
 
 
 class HelpFragment : BaseFragmentBack() {

@@ -1,7 +1,5 @@
 package com.mudryakov.collectivenote.screens.mainScreen
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +14,7 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.*
 import com.mudryakov.collectivenote.databinding.FragmentMainBinding
 import com.mudryakov.collectivenote.models.UserModel
-import com.mudryakov.collectivenote.utilits.*
+import com.mudryakov.collectivenote.utility.*
 
 
 @Suppress("DEPRECATION")

@@ -2,8 +2,8 @@ package com.mudryakov.collectivenote.database.firebase
 
 import androidx.lifecycle.LiveData
 import com.mudryakov.collectivenote.models.UserModel
-import com.mudryakov.collectivenote.utilits.AppValueEventListener
-import com.mudryakov.collectivenote.utilits.addMySingleListener
+import com.mudryakov.collectivenote.utility.AppValueEventListener
+import com.mudryakov.collectivenote.utility.addMySingleListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

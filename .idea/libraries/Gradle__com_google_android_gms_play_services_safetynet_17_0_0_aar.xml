@@ -3,9 +3,10 @@
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/f21825a5cc1ba5ef6d8633b61d775e0e/jetified-play-services-safetynet-17.0.0/res" />
       <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/f43befc427356d008e0c1729153dbafd/jetified-play-services-safetynet-17.0.0/res" />
-      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/23b2b92cf26de0d2e2dc16193d0bb2e6/jetified-play-services-safetynet-17.0.0/AndroidManifest.xml" />
       <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/23b2b92cf26de0d2e2dc16193d0bb2e6/jetified-play-services-safetynet-17.0.0/res" />
-      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/23b2b92cf26de0d2e2dc16193d0bb2e6/jetified-play-services-safetynet-17.0.0/jars/classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/511033f07c1b4df240b1a7eeccc44c43/jetified-play-services-safetynet-17.0.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/511033f07c1b4df240b1a7eeccc44c43/jetified-play-services-safetynet-17.0.0/res" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/511033f07c1b4df240b1a7eeccc44c43/jetified-play-services-safetynet-17.0.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

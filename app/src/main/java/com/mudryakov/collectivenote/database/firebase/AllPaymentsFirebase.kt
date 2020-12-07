@@ -2,7 +2,7 @@ package com.mudryakov.collectivenote.database.firebase
 
 import androidx.lifecycle.LiveData
 import com.mudryakov.collectivenote.models.PaymentModel
-import com.mudryakov.collectivenote.utilits.AppValueEventListener
+import com.mudryakov.collectivenote.utility.AppValueEventListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch

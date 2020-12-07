@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.ninenox.kotlinlocalemanager:kotlin-locale-manager:1.0.0@aar">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/c4ae9e8b1591c37d18032be6b69378bb/jetified-kotlin-locale-manager-1.0.0/res" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/c4ae9e8b1591c37d18032be6b69378bb/jetified-kotlin-locale-manager-1.0.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/c4ae9e8b1591c37d18032be6b69378bb/jetified-kotlin-locale-manager-1.0.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.ninenox.kotlinlocalemanager/kotlin-locale-manager/1.0.0/b3ec93f051ed545fa746d9a0eff1645b485b52a8/kotlin-locale-manager-1.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.ninenox.kotlinlocalemanager/kotlin-locale-manager/1.0.0/dc582bbb11bafc1a23a724550fa035a97f1ff357/kotlin-locale-manager-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

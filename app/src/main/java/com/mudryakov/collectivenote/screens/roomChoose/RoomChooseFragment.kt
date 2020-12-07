@@ -10,11 +10,10 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.databinding.FragmentRoomChooseBinding
-import com.mudryakov.collectivenote.utilits.*
+import com.mudryakov.collectivenote.utility.*
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 
 

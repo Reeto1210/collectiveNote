@@ -1,12 +1,14 @@
 package com.mudryakov.collectivenote.screens.settings
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.lifecycle.ViewModelProvider
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.databinding.FragmentSettingsBinding
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
-import com.mudryakov.collectivenote.utilits.*
+import com.mudryakov.collectivenote.utility.*
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 
 
@@ -35,6 +37,34 @@ class SettingsFragment : BaseFragmentBack() {
         setHasOptionsMenu(true)
         mViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
         initBehaviour()
+        initChangeLanguage()
+    }
+
+    private fun initChangeLanguage() {
+        mBinding.settingsChangeLanguage.setOnClickListener {
+            val languages =
+                arrayOf(getString(R.string.language_english), getString(R.string.language_russian))
+            val alertDialog = AlertDialog.Builder(APP_ACTIVITY)
+            alertDialog
+                .setTitle(getString(R.string.choose_ur_language))
+                .setItems(languages) { _: DialogInterface, i: Int ->
+                    changeLocale(i)
+
+                }
+                .setIcon(R.drawable.ic_baseline_language_24)
+                .show()
+        }
+    }
+
+    private fun changeLocale(position:Int) {
+       val language =
+        when (position){
+            0 -> ENGLISH
+            1-> RUSSIAN
+            else -> "Fail"
+        }
+      APP_ACTIVITY.changeLocale(language)
+
     }
 
     private fun initBehaviour() {

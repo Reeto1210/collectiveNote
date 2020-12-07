@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
-import com.mudryakov.collectivenote.utilits.showToast
 
 class AppRoomRepository(private val dao: myDao):AppDatabaseRepository {
 

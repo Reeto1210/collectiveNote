@@ -7,13 +7,13 @@
     tools:context=".screens.settings.SettingsFragment">
 
     <TextView
-       android:elevation="@dimen/app_elevation"
-        android:background="@color/white"
-        android:padding="@dimen/big_padding"
         android:id="@+id/settings_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/app_margin"
+        android:background="@color/white"
+        android:elevation="@dimen/app_elevation"
+        android:padding="@dimen/big_padding"
         android:textColor="@color/black"
         android:textSize="@dimen/normal_text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,44 +27,42 @@
         android:layout_height="wrap_content"
         android:text="@string/edit"
         android:textSize="@dimen/normal_text"
-        app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/settings_name" />
 
     <EditText
-       android:inputType="textPersonName"
         android:id="@+id/settings_edit_name_edit_text"
         style="@style/input_text_style"
         android:focusable="true"
         android:hint="@string/enter_your_name"
+        android:inputType="textPersonName"
         android:maxLength="30"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_name" />
+        app:layout_constraintTop_toBottomOf="@+id/settings_name"
+        tools:ignore="Autofill" />
 
     <TextView
         android:id="@+id/settings_btn_continue"
         style="@style/btn_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:text="@string/continue_it"
         android:textSize="@dimen/normal_text"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.554"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/settings_edit_name_edit_text" />
 
     <TextView
-        android:id="@+id/change_language"
+        android:id="@+id/settings_change_language"
         style="@style/btn_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Сменить язык"
-        android:textSize="@dimen/normal_text"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/settings_change_language_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/settings_change_name_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/settings_btn_continue" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,7 @@ import com.mudryakov.collectivenote.databinding.FragmentRoomInfoBinding
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
-import com.mudryakov.collectivenote.utilits.*
+import com.mudryakov.collectivenote.utility.*
 
 
 class RoomInfoFragment : BaseFragmentBack() {

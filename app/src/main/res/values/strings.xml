@@ -82,7 +82,7 @@
     <string name="name_cant_be_empty_toast">Имя не может быть пустым</string>
     <string name="exit_room">Выйти из комнаты</string>
     <string name="Change_acc">Сменить аккаунт</string>
-
+    <string name="settings_change_language_btn">Изменить язык</string>
 
     <!-- help -->
     <string name="my_email">E-mail для связи: mudryakov21@mail.ru</string>
@@ -111,6 +111,11 @@
     <string name="RUB">₽</string>
     <string name="USD">$</string>
     <string name="EUR">€</string>
+
+    <!-- languages -->
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_russian" translatable="false">Русский</string>
+    <string name="choose_ur_language">Выберите язык</string>
 
 
 </resources>

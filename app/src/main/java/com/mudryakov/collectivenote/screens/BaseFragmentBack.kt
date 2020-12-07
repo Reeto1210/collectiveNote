@@ -1,12 +1,8 @@
 package com.mudryakov.collectivenote.screens
 
-import android.app.DownloadManager
 import androidx.fragment.app.Fragment
 import com.mudryakov.collectivenote.R
-import com.mudryakov.collectivenote.utilits.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
+import com.mudryakov.collectivenote.utility.*
 
 open class BaseFragmentBack: Fragment() {
 

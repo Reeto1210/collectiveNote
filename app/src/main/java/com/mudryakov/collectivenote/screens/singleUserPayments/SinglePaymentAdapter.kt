@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.models.PaymentModel
-import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
-import com.mudryakov.collectivenote.utilits.ROOM_CURRENCY
-import com.mudryakov.collectivenote.utilits.setImage
-import com.mudryakov.collectivenote.utilits.transformToDate
+import com.mudryakov.collectivenote.utility.APP_ACTIVITY
+import com.mudryakov.collectivenote.utility.ROOM_CURRENCY
+import com.mudryakov.collectivenote.utility.setImage
+import com.mudryakov.collectivenote.utility.transformToDate
 import kotlinx.android.synthetic.main.single_user_payments_recycle_item.view.*
 
 class SinglePaymentAdapter : RecyclerView.Adapter<SinglePaymentAdapter.myViewHolder>() {

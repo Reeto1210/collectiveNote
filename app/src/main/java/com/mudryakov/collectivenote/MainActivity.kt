@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.customview.widget.ViewDragHelper
 import androidx.drawerlayout.widget.DrawerLayout
@@ -14,14 +13,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.navigation.NavigationView
 import com.mudryakov.collectivenote.database.firebase.handleSignInResult
 import com.mudryakov.collectivenote.databinding.ActivityMainBinding
-import com.mudryakov.collectivenote.utilits.*
+import com.mudryakov.collectivenote.utility.*
+import com.ninenox.kotlinlocalemanager.AppCompatActivityBase
+import com.ninenox.kotlinlocalemanager.ApplicationLocale
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSelectedListener {
     var _Binding: ActivityMainBinding? = null
     val mBinding get() = _Binding!!
     lateinit var navController: NavController
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         _Binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         setSupportActionBar(mBinding.mainToolbar)
@@ -51,7 +53,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         AppPreference.getPreference(APP_ACTIVITY)
         setDrawerEdge()
         mNavView.setNavigationItemSelectedListener(this)
-checkInternetConnection({ if (INTERNET) restartActivity()}){}
+        checkInternetConnection({ if (INTERNET) restartActivity() }) {}
     }
 
 
@@ -103,7 +105,7 @@ checkInternetConnection({ if (INTERNET) restartActivity()}){}
     }
 
     override fun onBackPressed() {
-       mDrawer.closeDrawer(mNavView)
+        mDrawer.closeDrawer(mNavView)
         if (back)
             super.onBackPressed()
         else {
@@ -139,5 +141,11 @@ checkInternetConnection({ if (INTERNET) restartActivity()}){}
                     .withEndAction { startNoInternetAnimation() }
             }
     }
+
+    fun changeLocale(language: String) {
+        ApplicationLocale.localeManager!!.setNewLocale(this, language)
+        restartActivity()
+    }
+
 
 }

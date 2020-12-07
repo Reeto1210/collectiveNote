@@ -9,7 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.models.PaymentModel
-import com.mudryakov.collectivenote.utilits.*
+import com.mudryakov.collectivenote.utility.*
 import kotlinx.android.synthetic.main.history_recycle_item.view.*
 
 class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.MyViewHolder>() {

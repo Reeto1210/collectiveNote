@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.database.firebase.REPOSITORY
 import com.mudryakov.collectivenote.models.PaymentModel
-import com.mudryakov.collectivenote.utilits.AppPreference
+import com.mudryakov.collectivenote.utility.AppPreference
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 

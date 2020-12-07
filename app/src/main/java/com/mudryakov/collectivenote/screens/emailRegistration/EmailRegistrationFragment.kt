@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.databinding.FragmentEmailRegistrationBinding
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
-import com.mudryakov.collectivenote.utilits.*
+import com.mudryakov.collectivenote.utility.*
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 
 class EmailRegistrationFragment : BaseFragmentBack() {
