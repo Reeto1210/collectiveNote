@@ -40,16 +40,23 @@ class MainFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         checkInternet()
-
     }
 
     private fun checkInternet() {
-        checkInternetConnection({buildMainNoInternetDialog()}) {
-            initialization()
-            initObservers()
-            initCurrency()
+        checkInternetConnection(onFail = {}) {
+            if (!INTERNET) {
+                restartActivity()
+            }
         }
-
+        if (INTERNET)
+            checkInternetConnection({ buildMainNoInternetDialog() }) {
+                initialization()
+                initObservers()
+                initCurrency()
+            }
+        else {
+            noInternetMode()
+        }
     }
 
     private fun buildMainNoInternetDialog() {
@@ -60,16 +67,21 @@ class MainFragment : Fragment() {
             .setTitle(APP_ACTIVITY.getString(R.string.internet_alert_dialog_title))
             .setMessage(APP_ACTIVITY.getString(R.string.internet_alert_dialog_message))
             .setPositiveButton("Попробовать снова") { _: DialogInterface, _: Int -> checkInternet() }
-            .setNeutralButton("Продолжить без интернета") { _: DialogInterface, _: Int -> noInternetMode() }
+            .setNeutralButton("Продолжить без интернета") { _: DialogInterface, _: Int ->
+                run {
+                    INTERNET = false
+                    APP_ACTIVITY.startNoInternetAnimation()
+                    noInternetMode()
+                }
+            }
             .show()
     }
 
     private fun noInternetMode() {
-        INTERNET = false
-        APP_ACTIVITY.startNoInternetAnimation()
         APP_ACTIVITY.mBinding.noInternetIndicatorBtn.setOnClickListener {
-            if (checkConnectity()) restartActivity()
-            else showNoInternetToast()
+            checkInternetConnection({ showNoInternetToast() }) {
+                restartActivity()
+            }
         }
         REPOSITORY = ROOM_REPOSITORY
         initialization()

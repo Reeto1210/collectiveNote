@@ -97,11 +97,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if (INTERNET) fastNavigate(R.id.action_mainFragment_to_settingsFragment)
                 else showNoInternetToast()
             }
-
             R.id.drawer_help -> fastNavigate(R.id.action_mainFragment_to_helpFragment)
         }
-
-
         return true
     }
 
@@ -129,13 +126,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onStop()
     }
 
-    override fun onResume() {
-        if (!INTERNET && checkConnectity()) {
-            INTERNET = true
-            restartActivity()
-        }
-        super.onResume()
-    }
 
     fun startNoInternetAnimation() {
         ViewCompat.animate(mBinding.noInternetIndicatorBtn)

@@ -1,9 +1,7 @@
 package com.mudryakov.collectivenote.utilits
 
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.net.Uri
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -71,6 +69,7 @@ fun ImageView.setImage(url: String) {
 
 fun restartActivity() {
     val intent = Intent(APP_ACTIVITY, MainActivity::class.java)
+    INTERNET = true
     APP_ACTIVITY.startActivity(intent)
     APP_ACTIVITY.finish()
 }
@@ -90,7 +89,6 @@ fun View.makeInvisible() {
 fun View.makeGone() {
     this.visibility = View.GONE
 }
-
 
 
 fun exceptionEmailLoginToast(ex: Any) {

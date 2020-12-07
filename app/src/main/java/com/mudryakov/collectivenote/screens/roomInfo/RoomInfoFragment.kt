@@ -68,13 +68,13 @@ class RoomInfoFragment : BaseFragmentBack() {
         mBinding.infoIconPass.setImageResource(R.drawable.info_pass_icon)
         mBinding.infoIconPass.makeVisible()
         mBinding.infoIconPass.setOnClickListener {
-            if (INTERNET){
+            checkInternetConnection({ showNoInternetToast() }) {
                 mBinding.infoIconPass.setImageResource(R.drawable.loading_pass)
-            mViewModel.remindRoomPassword {
-                mBinding.settingsRoomPass.text = getString(R.string.room_pass, it)
-                mBinding.infoIconPass.makeInvisible()
+                mViewModel.remindRoomPassword {
+                    mBinding.settingsRoomPass.text = getString(R.string.room_pass, it)
+                    mBinding.infoIconPass.makeInvisible()
+                }
             }
-            }else showNoInternetToast()
         }
     }
 

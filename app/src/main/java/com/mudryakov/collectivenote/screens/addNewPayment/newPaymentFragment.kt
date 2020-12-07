@@ -33,34 +33,26 @@ class newPaymentFragment : BaseFragmentBack() {
     override fun onStart() {
         super.onStart()
         initialization()
-
     }
 
     private fun initialization() {
         mViewModel = ViewModelProvider(this).get(AddNewPaymentViewModel::class.java)
         mBinding.addNewPaymentConfirm.setOnClickListener {
-            if (checkConnectity()) {
-                val sum = mBinding.addNewPaymentSumm.text.toString().replace(',', '.')
-                val description = mBinding.addNewPaymentDescription.text.toString()
-
-                try {
-                    sum.toLong()
-                    if (sum.isNotEmpty() && description.isNotEmpty())
-                        mViewModel.addNewPayment(sum, description, imageUri) {
-                            showToast(APP_ACTIVITY.getString(R.string.toast_payment_added))
-
-                        }
-                    else showToast(getString(R.string.add_info))
-                    if (sum.isNotEmpty() && description.isNotEmpty()) {
+            val sum = mBinding.addNewPaymentSumm.text.toString().replace(',', '.')
+            val description = mBinding.addNewPaymentDescription.text.toString()
+            try {
+                sum.toLong()
+                if (sum.isNotEmpty() && description.isNotEmpty())
+                    checkInternetConnection({ restartActivity() }) {
                         hideKeyboard(APP_ACTIVITY)
                         fastNavigate(R.id.action_newPaymentFragment_to_mainFragment)
+                        mViewModel.addNewPayment(sum, description, imageUri) {
+                            showToast(APP_ACTIVITY.getString(R.string.toast_payment_added))
+                        }
                     }
-                } catch (e: Exception) {
-                    mBinding.addNewPaymentSumm.setText("")
-                    showToast(getString(R.string.catch_payment_sum))
-                }
-            } else {
-                restartActivity()
+                           } catch (e: Exception) {
+                mBinding.addNewPaymentSumm.setText("")
+                showToast(getString(R.string.catch_payment_sum))
             }
         }
         mBinding.addPaymentAttachImage.setOnClickListener {

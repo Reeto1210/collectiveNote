@@ -44,18 +44,19 @@ class SettingsFragment : BaseFragmentBack() {
             mBinding.settingsBtnContinue.makeVisible()
         }
         mBinding.settingsBtnContinue.setOnClickListener {
-            if (checkConnectity()){
             val newName = mBinding.settingsEditNameEditText.text.toString()
             if (newName.isNotEmpty()) {
-                mViewModel.changeName(newName) {
-                    showToast(getString(R.string.name_changed))
-                    hideKeyboard(APP_ACTIVITY)
-                    fastNavigate(R.id.action_settingsFragment_to_mainFragment)
+                checkInternetConnection({ restartActivity() }) {
+                    mViewModel.changeName(newName) {
+                        showToast(getString(R.string.name_changed))
+                        hideKeyboard(APP_ACTIVITY)
+                        fastNavigate(R.id.action_settingsFragment_to_mainFragment)
+                    }
                 }
             } else showToast(getString(R.string.name_cant_be_empty_toast))
-        }else restartActivity()
+        }
+
     }
-}
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         activity?.menuInflater?.inflate(R.menu.settings_menu, menu)
@@ -70,20 +71,18 @@ class SettingsFragment : BaseFragmentBack() {
     }
 
     private fun changeUser() {
-        if (checkConnectity()) {
+        checkInternetConnection({ restartActivity() }) {
             mViewModel.signOut()
             AppPreference.clear()
             restartActivity()
-        }else restartActivity()
+        }
     }
 
     private fun changeRoom() {
-        if (checkConnectity()) {
-            AppPreference.setCurrency("fail")
-            AppPreference.setRoomId("fail")
-            AppPreference.setSignInRoom(false)
-            AppPreference.setTotalSumm("0")
-            restartActivity()
-        }else restartActivity()
+        AppPreference.setCurrency("fail")
+        AppPreference.setRoomId("fail")
+        AppPreference.setSignInRoom(false)
+        AppPreference.setTotalSumm("0")
+        restartActivity()
     }
 }
