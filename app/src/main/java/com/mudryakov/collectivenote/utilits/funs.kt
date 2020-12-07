@@ -69,7 +69,7 @@ fun ImageView.setImage(url: String) {
 
 fun restartActivity() {
     val intent = Intent(APP_ACTIVITY, MainActivity::class.java)
-    INTERNET = true
+    INTERNET = false
     APP_ACTIVITY.startActivity(intent)
     APP_ACTIVITY.finish()
 }

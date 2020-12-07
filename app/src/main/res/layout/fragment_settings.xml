@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/settongs_change_name_btn"
+        android:id="@+id/settings_change_name_btn"
         style="@style/btn_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         style="@style/btn_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="268dp"
+
         android:text="@string/continue_it"
         android:textSize="@dimen/normal_text"
         android:visibility="gone"
@@ -57,4 +57,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/settings_edit_name_edit_text" />
 
+    <TextView
+        android:id="@+id/change_language"
+        style="@style/btn_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Сменить язык"
+        android:textSize="@dimen/normal_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/settings_change_name_btn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

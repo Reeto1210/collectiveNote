@@ -38,15 +38,19 @@ class SettingsFragment : BaseFragmentBack() {
     }
 
     private fun initBehaviour() {
-        mBinding.settongsChangeNameBtn.setOnClickListener {
-            mBinding.settongsChangeNameBtn.makeGone()
+        mBinding.settingsChangeNameBtn.setOnClickListener {
+            mBinding.settingsChangeNameBtn.makeGone()
             mBinding.settingsEditNameEditText.makeVisible()
             mBinding.settingsBtnContinue.makeVisible()
         }
         mBinding.settingsBtnContinue.setOnClickListener {
             val newName = mBinding.settingsEditNameEditText.text.toString()
             if (newName.isNotEmpty()) {
-                checkInternetConnection({ restartActivity() }) {
+                checkInternetConnection({
+                    INTERNET = false
+                    showNoInternetToast()
+                    fastNavigate(R.id.action_settingsFragment_to_mainFragment)
+                }) {
                     mViewModel.changeName(newName) {
                         showToast(getString(R.string.name_changed))
                         hideKeyboard(APP_ACTIVITY)
@@ -71,7 +75,11 @@ class SettingsFragment : BaseFragmentBack() {
     }
 
     private fun changeUser() {
-        checkInternetConnection({ restartActivity() }) {
+        checkInternetConnection({
+            INTERNET = false
+            showNoInternetToast()
+            fastNavigate(R.id.action_settingsFragment_to_mainFragment)
+        }) {
             mViewModel.signOut()
             AppPreference.clear()
             restartActivity()

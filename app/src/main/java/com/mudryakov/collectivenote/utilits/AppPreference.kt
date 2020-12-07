@@ -14,7 +14,9 @@ object AppPreference {
     private const val TOTAL_PAY = "totalPay"
     private const val ROOM_NAME = "roomName"
     private const val ROOM_CURRENCY = "roomCurrency"
+    private const val LOCALE = "locale"
     private lateinit var mPreference: SharedPreferences
+
 
     fun clear() {
         mPreference.edit().clear()
@@ -24,6 +26,16 @@ object AppPreference {
     fun getPreference(context: Context): SharedPreferences {
         mPreference = context.getSharedPreferences(namePref, Context.MODE_PRIVATE)
         return mPreference
+    }
+
+    fun setLocale(locale: String) {
+        mPreference.edit()
+            .putString(LOCALE, locale)
+            .apply()
+    }
+
+    fun getLocale():String{
+        return mPreference.getString(LOCALE,FAIL).toString()
     }
 
     fun setUserId(id: String) {
@@ -41,8 +53,6 @@ object AppPreference {
     fun getCurrency(): String {
         return mPreference.getString(ROOM_CURRENCY, FAIL).toString()
     }
-
-
 
 
     fun setName(userName: String) {

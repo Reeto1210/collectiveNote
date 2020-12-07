@@ -38,10 +38,11 @@ class newPaymentFragment : BaseFragmentBack() {
     private fun initialization() {
         mViewModel = ViewModelProvider(this).get(AddNewPaymentViewModel::class.java)
         mBinding.addNewPaymentConfirm.setOnClickListener {
-            val sum = mBinding.addNewPaymentSumm.text.toString().replace(',', '.')
+            val sum = mBinding.addNewPaymentSumm.text.toString()
             val description = mBinding.addNewPaymentDescription.text.toString()
             try {
                 sum.toLong()
+                if (sum[0] == '-') throw Exception("")
                 if (sum.isNotEmpty() && description.isNotEmpty())
                     checkInternetConnection({ restartActivity() }) {
                         hideKeyboard(APP_ACTIVITY)
@@ -50,7 +51,7 @@ class newPaymentFragment : BaseFragmentBack() {
                             showToast(APP_ACTIVITY.getString(R.string.toast_payment_added))
                         }
                     }
-                           } catch (e: Exception) {
+            } catch (e: Exception) {
                 mBinding.addNewPaymentSumm.setText("")
                 showToast(getString(R.string.catch_payment_sum))
             }

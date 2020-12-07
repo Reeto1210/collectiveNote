@@ -39,43 +39,26 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        checkInternet()
+        if (!INTERNET)
+            checkInternet()
+        else {
+            initialization()
+            initObservers()
+            initCurrency()
+        }
     }
 
     private fun checkInternet() {
-        checkInternetConnection(onFail = {}) {
-            if (!INTERNET) {
-                restartActivity()
-            }
-        }
-        if (INTERNET)
-            checkInternetConnection({ buildMainNoInternetDialog() }) {
-                initialization()
-                initObservers()
-                initCurrency()
-            }
-        else {
-            noInternetMode()
+        checkInternetConnection({noInternetMode()}) {
+            REPOSITORY = FireBaseRepository()
+            INTERNET = true
+            APP_ACTIVITY.mBinding.noInternetIndicatorBtn.makeGone()
+            initialization()
+            initObservers()
+            initCurrency()
         }
     }
 
-    private fun buildMainNoInternetDialog() {
-        val dialog = AlertDialog.Builder(APP_ACTIVITY)
-        dialog
-            .setCancelable(false)
-            .setIcon(R.drawable.ic_no_internet)
-            .setTitle(APP_ACTIVITY.getString(R.string.internet_alert_dialog_title))
-            .setMessage(APP_ACTIVITY.getString(R.string.internet_alert_dialog_message))
-            .setPositiveButton("Попробовать снова") { _: DialogInterface, _: Int -> checkInternet() }
-            .setNeutralButton("Продолжить без интернета") { _: DialogInterface, _: Int ->
-                run {
-                    INTERNET = false
-                    APP_ACTIVITY.startNoInternetAnimation()
-                    noInternetMode()
-                }
-            }
-            .show()
-    }
 
     private fun noInternetMode() {
         APP_ACTIVITY.mBinding.noInternetIndicatorBtn.setOnClickListener {
@@ -83,6 +66,8 @@ class MainFragment : Fragment() {
                 restartActivity()
             }
         }
+        INTERNET = false
+        APP_ACTIVITY.startNoInternetAnimation()
         REPOSITORY = ROOM_REPOSITORY
         initialization()
         initObservers()
@@ -121,6 +106,7 @@ class MainFragment : Fragment() {
             APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
         }
+
         mViewModel.allMembers.observe(this, mObserver)
     }
 
@@ -136,6 +122,7 @@ class MainFragment : Fragment() {
 
     private fun initFabNewPayment() {
         if (INTERNET) {
+            mBinding.mainAddNewPayment.makeVisible()
             mBinding.mainAddNewPayment.setOnClickListener {
                 fastNavigate(R.id.action_mainFragment_to_newPaymentFragment)
             }
@@ -156,6 +143,9 @@ class MainFragment : Fragment() {
         _Binding = null
         mViewModel.allMembers.removeObserver(mObserver)
         APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        if (INTERNET){
+            checkInternetConnection({ restartActivity()}){}
+        }
         super.onDestroyView()
 
     }

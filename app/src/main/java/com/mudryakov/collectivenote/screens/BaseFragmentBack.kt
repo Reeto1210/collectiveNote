@@ -3,10 +3,7 @@ package com.mudryakov.collectivenote.screens
 import android.app.DownloadManager
 import androidx.fragment.app.Fragment
 import com.mudryakov.collectivenote.R
-import com.mudryakov.collectivenote.utilits.APP_ACTIVITY
-import com.mudryakov.collectivenote.utilits.INTERNET
-import com.mudryakov.collectivenote.utilits.checkInternetConnection
-import com.mudryakov.collectivenote.utilits.showToast
+import com.mudryakov.collectivenote.utilits.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch

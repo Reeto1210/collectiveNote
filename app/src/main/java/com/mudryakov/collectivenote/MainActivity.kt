@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         AppPreference.getPreference(APP_ACTIVITY)
         setDrawerEdge()
         mNavView.setNavigationItemSelectedListener(this)
-
+checkInternetConnection({ if (INTERNET) restartActivity()}){}
     }
 
 
@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onBackPressed() {
+       mDrawer.closeDrawer(mNavView)
         if (back)
             super.onBackPressed()
         else {
@@ -138,4 +139,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .withEndAction { startNoInternetAnimation() }
             }
     }
+
 }
