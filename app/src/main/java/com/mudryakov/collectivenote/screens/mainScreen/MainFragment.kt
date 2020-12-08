@@ -93,9 +93,9 @@ class MainFragment : Fragment() {
 
     private fun initObservers() {
         mObserver = Observer { list ->
-            var totalSum = 0L
+            var totalSum = ""
             list.forEach {
-                totalSum += it.totalPayAtCurrentRoom.toLong()
+                totalSum +=  calculate(totalSum,it.totalPayAtCurrentRoom)
                 mAdapter?.addItem(it)
             }
             mBinding.loadingLayout.visibility = View.GONE

@@ -14,6 +14,7 @@ import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
 import com.mudryakov.collectivenote.utility.APP_ACTIVITY
 import com.mudryakov.collectivenote.utility.makeInvisible
+import com.mudryakov.collectivenote.utility.makeVisible
 
 
 class HistoryFragment : BaseFragmentBack() {
@@ -47,8 +48,10 @@ class HistoryFragment : BaseFragmentBack() {
             }
             mRecyclerView.smoothScrollToPosition(0)
             mBinding.historyProgressBar.makeInvisible()
-            if (it.isEmpty()) mBinding.historyListIsEmpty.makeInvisible()
+            if (it.isEmpty()) mBinding.historyListIsEmpty.makeVisible()
             else mBinding.historyListIsEmpty.makeInvisible()
+
+
         }
         mViewModel.paymentList.observe(this, mPaymentObserver)
     }

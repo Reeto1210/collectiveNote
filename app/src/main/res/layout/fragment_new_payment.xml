@@ -7,6 +7,7 @@
     tools:context=".screens.addNewPayment.NewPaymentFragment">
 
     <EditText
+        android:maxLength="9"
         android:id="@+id/add_new_payment_summ"
         style="@style/input_text_style"
         android:hint="@string/sum"

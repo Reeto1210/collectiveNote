@@ -101,5 +101,6 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.ninenox.kotlinlocalemanager:kotlin-locale-manager:1.0.0'
 
+    implementation 'net.objecthunter:exp4j:0.4.8'
 
 }

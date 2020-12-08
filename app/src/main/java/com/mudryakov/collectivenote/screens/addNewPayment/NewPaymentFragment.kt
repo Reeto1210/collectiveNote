@@ -13,6 +13,7 @@ import com.mudryakov.collectivenote.databinding.FragmentNewPaymentBinding
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
 import com.mudryakov.collectivenote.utility.*
 import com.theartofdev.edmodo.cropper.CropImage
+import net.objecthunter.exp4j.ExpressionBuilder
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 
 
@@ -38,18 +39,21 @@ class NewPaymentFragment : BaseFragmentBack() {
     private fun initialization() {
         mViewModel = ViewModelProvider(this).get(AddNewPaymentViewModel::class.java)
         mBinding.addNewPaymentConfirm.setOnClickListener {
-            val sum = mBinding.addNewPaymentSumm.text.toString()
+            var sum = mBinding.addNewPaymentSumm.text.toString()
             val description = mBinding.addNewPaymentDescription.text.toString()
             try {
-                sum.toLong()
-                if (sum[0] == '-') throw Exception("")
+                sum = convertSum(sum)
+                if (sum[0] == '-' || sum[0] == '.') throw Exception("")
                 if (sum.isNotEmpty() && description.isNotEmpty())
                     checkInternetConnection({ restartActivity() }) {
                         hideKeyboard(APP_ACTIVITY)
                         fastNavigate(R.id.action_newPaymentFragment_to_mainFragment)
-                        mViewModel.addNewPayment(sum, description, imageUri) {
-                            showToast(APP_ACTIVITY.getString(R.string.toast_payment_added))
-                        }
+                      mViewModel.addNewPayment(sum, description, imageUri) {
+                        val exp = ExpressionBuilder(  "${AppPreference.getTotalSumm()} + ${sum}").build()
+                        val totalSum = exp.evaluate().toString()
+                         println(totalSum)
+                     showToast(APP_ACTIVITY.getString(R.string.toast_payment_added))
+                   }
                     }
             } catch (e: Exception) {
                 mBinding.addNewPaymentSumm.setText("")
@@ -61,6 +65,24 @@ class NewPaymentFragment : BaseFragmentBack() {
                 .setAspectRatio(1, 1)
                 .setRequestedSize(600, 600)
                 .start(APP_ACTIVITY, this)
+        }
+    }
+
+    private fun convertSum(sum: String): String {
+        sum.toDouble()
+        return if (ROOM_CURRENCY == getString(R.string.RUB)) {
+            sum.substringBefore(".")
+        } else {
+            if (!sum.contains('.')) {
+                "$sum.00"
+            } else {
+                val dotIndex = sum.indexOf(".")
+                try {
+                    sum.substring(0, dotIndex + 3)
+                } catch (e: Exception) {
+                    sum.substring(0, dotIndex + 2) + "0"
+                }
+            }
         }
     }
 

@@ -3,7 +3,7 @@
     <string name="app_name">Общий кошелёк</string>
     <string name="common_app_name">Рабочее название</string>
     <string name="add_info">Заполните все поля</string>
-    <string name="total_sum_payed">Всего потрачено: %1$d%2$s</string>
+    <string name="total_sum_payed">Всего потрачено: %1$s%2$s</string>
     <string name="list_of_payments_is_empty">Список платежей пуст</string>
     <string name="error_in_download">Произошёл сбой при скачивании файла</string>
     <string name="trouble_with_download">Ошибка загрузки</string>
@@ -71,7 +71,7 @@
     <string name="total_user_payed">Ваши траты: %1$s%2$s</string>
     <string name="room_info">Информация о комнате</string>
     <string name="room_pass">Пароль: %1$s</string>
-    <string name="timeless_currency">Текущая валюта: рубли(₽)</string>
+
      <string name="info_password_btn">Напомнить пароль</string>
     <string name="room_current">Текущая валюта:%1$s</string>
 
@@ -119,5 +119,6 @@
     <string name="no">Нет</string>
     <string name="alert_dialog_message_delete">Вы действительно хотите удалить платёж от %1$s?</string>
     <string name="payment_has_been_deleted_toast">Платёж удалён</string>
+    <string name="to_fast_delete">Нельзя удалять платежи так быстро</string>
 
 </resources>

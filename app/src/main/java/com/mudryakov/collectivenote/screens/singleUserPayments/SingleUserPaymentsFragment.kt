@@ -17,6 +17,10 @@ import com.mudryakov.collectivenote.databinding.SinglePaymentFragmentBinding
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
 import com.mudryakov.collectivenote.utility.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SingleUserPaymentsFragment : BaseFragmentBack() {
     private var _Binding: SinglePaymentFragmentBinding? = null
@@ -26,7 +30,7 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
     lateinit var mRecycle: RecyclerView
     lateinit var mPaymentObserver: Observer<List<PaymentModel>>
     var userId = ""
-
+    var canDelete = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +49,6 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
     }
 
     private fun initObserver() {
-
         mViewModel = ViewModelProvider(this).get(SingleUserPaymentViewModel::class.java)
         mPaymentObserver = Observer {
             var isEmpty = true
@@ -56,10 +59,9 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
                 }
                 mRecycle.smoothScrollToPosition(0)
             }
-            mBinding.singlePaymentProgressBar.visibility = View.GONE
-            if (isEmpty) mBinding.singlePaymentsEmpty.visibility = View.VISIBLE
-            else mBinding.singlePaymentsEmpty.visibility = View.GONE
-
+            mBinding.singlePaymentProgressBar.makeInvisible()
+            if (isEmpty) mBinding.singlePaymentsEmpty.makeVisible()
+            else mBinding.singlePaymentsEmpty.makeGone()
         }
         mViewModel.singleUserPayments.observe(this, mPaymentObserver)
     }
@@ -69,9 +71,7 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
         mRecycle = mBinding.singlePaymentsRecycle
         mRecycle.layoutManager = LinearLayoutManager(APP_ACTIVITY)
         mRecycle.adapter = mAdapter
-
         if (userId == CURRENT_UID) {
-
             val mItemTouchHelper = object :
                 ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
                 override fun onMove(
@@ -97,10 +97,13 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
                         )
                         .setPositiveButton(getString(R.string.yes)) { _: DialogInterface, _: Int ->
                             mAdapter?.deleteItem(position)
-                            if (currentPayment != null) {
+                            if (currentPayment != null && canDelete) {
                                 deletePaymentFromFirebase(currentPayment)
+                            }else {
+                                showToast(getString(R.string.to_fast_delete))
+                                mAdapter?.notifyItemChanged(position)
                             }
-                        }
+                            }
                         .setNegativeButton(getString(R.string.no)) { _: DialogInterface, _: Int ->
                             mAdapter?.notifyItemChanged(position)
                         }
@@ -130,13 +133,20 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
 
 
     private fun deletePaymentFromFirebase(payment: PaymentModel) {
+
         checkInternetConnection({
             INTERNET = false
             showNoInternetToast()
             fastNavigate(R.id.action_singleUserPayments_to_mainFragment)
         }) {
+            canDelete = false
             mViewModel.deletePayment(payment) {
+
                 showToast(getString(R.string.payment_has_been_deleted_toast))
+                CoroutineScope(IO).launch {
+                    delay(1000)
+                    canDelete = true
+                }
             }
         }
     }

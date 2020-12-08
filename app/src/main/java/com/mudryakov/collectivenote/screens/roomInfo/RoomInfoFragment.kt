@@ -20,7 +20,7 @@ class RoomInfoFragment : BaseFragmentBack() {
     private lateinit var mViewModel: RoomInfoViewModel
     private lateinit var mObserverPayments: Observer<List<PaymentModel>>
     private lateinit var mObserverMembers: Observer<List<UserModel>>
-    private var totalSumm = 0L
+    private var totalSum = ""
     private var totalMembers = 0
     private var totalValueOfPayments = 0
     var callback1 = false
@@ -44,7 +44,7 @@ class RoomInfoFragment : BaseFragmentBack() {
         mObserverMembers = Observer {
             mViewModel.allPayments.removeObserver { mObserverPayments }
             it.forEach { member ->
-                totalSumm += member.totalPayAtCurrentRoom.toLong()
+                totalSum += calculate(totalSum, member.totalPayAtCurrentRoom)
                 totalMembers++
                 callback2 = true
             }
@@ -81,7 +81,7 @@ class RoomInfoFragment : BaseFragmentBack() {
     private fun updateInfo() {
         if (callback1 == callback2) {
             mBinding.settingsRoomTotalPayed.text =
-                getString(R.string.total_sum_payed, totalSumm, ROOM_CURRENCY)
+                getString(R.string.total_sum_payed, totalSum, ROOM_CURRENCY)
             mBinding.settingsRoomName.text =
                 getString(R.string.room_name, AppPreference.getRoomName())
             mBinding.settingsRoomMembersValue.text =

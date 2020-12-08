@@ -16,6 +16,7 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.NODE_PAYMENT_IMAGES
 import com.mudryakov.collectivenote.database.firebase.REF_DATABASE_STORAGE
 import com.squareup.picasso.Picasso
+import net.objecthunter.exp4j.ExpressionBuilder
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -113,4 +114,11 @@ fun exceptionEmailRegistrationToast(exText: String) {
     showToast(toastText)
 }
 
+fun calculate(firstString: String, secondString: String, sign: String = " + "): String {
+    val exp = ExpressionBuilder(firstString + sign + secondString).build()
+    return if (ROOM_CURRENCY == APP_ACTIVITY.getString(R.string.RUB))
+        exp.evaluate().toString().substringBefore(".")
+    else exp.evaluate().toString()
 
+
+}
