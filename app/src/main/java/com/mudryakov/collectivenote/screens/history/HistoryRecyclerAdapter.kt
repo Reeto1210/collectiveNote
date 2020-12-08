@@ -3,6 +3,8 @@ package com.mudryakov.collectivenote.screens.history
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -49,6 +51,7 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.MyV
         } else {
             holder.attachedImage.setImageResource(R.drawable.ic_photo)
         }
+    setAnimation(holder.itemView)
     }
 
     override fun getItemCount(): Int = listOfPayments.size
@@ -83,7 +86,11 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.MyV
     }
 }
 
-
+private fun setAnimation(viewToAnimate: View) {
+    val animation: Animation =
+        AnimationUtils.loadAnimation(APP_ACTIVITY, R.anim.fast_slide_left)
+    viewToAnimate.startAnimation(animation)
+}
 
 
 

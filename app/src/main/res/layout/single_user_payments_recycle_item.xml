@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/app_margin"
@@ -34,7 +35,6 @@
         app:layout_constraintTop_toBottomOf="@+id/single_payment_summ" />
 
     <TextView
-
         android:id="@+id/single_payment_date"
         style="@style/single_payment_text_view"
         android:layout_width="0dp"

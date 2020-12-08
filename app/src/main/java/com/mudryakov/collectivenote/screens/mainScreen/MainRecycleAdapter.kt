@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -11,8 +13,8 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utility.APP_ACTIVITY
-import com.mudryakov.collectivenote.utility.ROOM_CURRENCY
 import com.mudryakov.collectivenote.utility.AppPreference
+import com.mudryakov.collectivenote.utility.ROOM_CURRENCY
 import kotlinx.android.synthetic.main.main_fragment_recycle_item.view.*
 
 class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>() {
@@ -29,17 +31,19 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.main_fragment_recycle_item, parent, false)
-               return MyViewHolder(view)
+        return MyViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentUser = list[position]
-         holder.divider.visibility = if (position == 0) View.GONE else View.VISIBLE
+        holder.divider.visibility = if (position == 0) View.GONE else View.VISIBLE
         holder.totalPayed.text =
-            if (currentUser.totalPayAtCurrentRoom.isNotEmpty()) APP_ACTIVITY.getString(R.string.sum_currency, currentUser.totalPayAtCurrentRoom,
-                ROOM_CURRENCY) else "0"
+            if (currentUser.totalPayAtCurrentRoom.isNotEmpty()) APP_ACTIVITY.getString(
+                R.string.sum_currency, currentUser.totalPayAtCurrentRoom,
+                ROOM_CURRENCY
+            ) else "0"
         holder.username.text = currentUser.name
-
+        setAnimation(holder.itemView)
     }
 
     override fun getItemCount() = list.size
@@ -64,9 +68,9 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>
     private fun addUserToRecycle(user: UserModel) {
         list.add(user)
         if (user.firebaseId == CURRENT_UID) {
-           list.last().name = AppPreference.getUserName()
+            list.last().name = AppPreference.getUserName()
             list.reverse()
-                }
+        }
         notifyItemInserted(list.indexOf(user))
     }
 
@@ -80,7 +84,6 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>
                 R.id.action_mainFragment_to_singleUserPayments,
                 bundle
             )
-
         }
         super.onViewAttachedToWindow(holder)
     }
@@ -88,5 +91,11 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>
     override fun onViewDetachedFromWindow(holder: MyViewHolder) {
         holder.layout.setOnClickListener { }
         super.onViewDetachedFromWindow(holder)
+    }
+
+    private fun setAnimation(viewToAnimate: View) {
+        val animation: Animation =
+            AnimationUtils.loadAnimation(APP_ACTIVITY, android.R.anim.slide_in_left)
+        viewToAnimate.startAnimation(animation)
     }
 }

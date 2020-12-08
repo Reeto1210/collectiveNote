@@ -19,10 +19,11 @@ class AppRoomRepository(private val dao: myDao):AppDatabaseRepository {
     override val groupMembers: LiveData<List<UserModel>>
         get() = dao.getAllUsers()
 
-    override fun login(type: String, onFail: () -> Unit, onSucces: () -> Unit) {
-          }
+    override fun deletePayment(payment:PaymentModel, onSuccess: () -> Unit) {}
 
-    override fun emailRegistration(onFail: () -> Unit, onSucces: () -> Unit) {
+    override fun login(type: String, onFail: () -> Unit, onSuccess: () -> Unit) {}
+
+    override fun emailRegistration(onFail: () -> Unit, onSuccess: () -> Unit) {
           }
 
     override fun createNewRoom(
@@ -30,21 +31,21 @@ class AppRoomRepository(private val dao: myDao):AppDatabaseRepository {
         roomPass: String,
         currencySign: String,
         onFail: () -> Unit,
-        onSucces: () -> Unit
+        onSuccess: () -> Unit
     ) {}
 
     override fun joinRoom(
         roomName: String,
         roomPass: String,
         onFail: () -> Unit,
-        onSucces: () -> Unit
+        onSuccess: () -> Unit
     ) {}
 
-    override fun addNewPayment(payment: PaymentModel, onSucces: () -> Unit) {}
+    override fun addNewPayment(payment: PaymentModel, onSuccess: () -> Unit) {}
 
-    override fun changeName(name: String, onSucces: () -> Unit) {}
+    override fun changeName(name: String, onSuccess: () -> Unit) {}
 
-    override fun pushFileToBase(imageUri: Uri, onSucces: (String) -> Unit) {}
+    override fun pushFileToBase(imageUri: Uri, onSuccess: (String) -> Unit) {}
 
     override fun signOut() {}
 

@@ -113,5 +113,11 @@
     <string name="USD">$</string>
     <string name="EUR">€</string>
 
+    <!-- singlePayments -->
+    <string name="confirm_delete">Подтвердите удаление</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="alert_dialog_message_delete">Вы действительно хотите удалить платёж от %1$s?</string>
+    <string name="payment_has_been_deleted_toast">Платёж удалён</string>
 
 </resources>

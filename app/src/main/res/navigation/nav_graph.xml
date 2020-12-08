@@ -95,7 +95,7 @@
     </fragment>
     <fragment
         android:id="@+id/singleUserPayments"
-        android:name="com.mudryakov.collectivenote.screens.singleUserPayments.SingleUserPayments"
+        android:name="com.mudryakov.collectivenote.screens.singleUserPayments.SingleUserPaymentsFragment"
         android:label="fragment_single_user_payments"
         tools:layout="@layout/single_payment_fragment" >
         <action

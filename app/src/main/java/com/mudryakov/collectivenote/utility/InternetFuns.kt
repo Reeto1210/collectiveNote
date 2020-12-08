@@ -36,7 +36,7 @@ fun checkInternetConnection(onFail: () -> Unit, onSuccess: () -> Unit) {
     CoroutineScope(Dispatchers.IO).launch {
         try {
             val sock = Socket()
-            sock.connect(InetSocketAddress("8.8.8.8", 53), 1000)
+            sock.connect(InetSocketAddress("8.8.8.8", 53), 1500)
             sock.close()
             CoroutineScope(Dispatchers.Main).launch{onSuccess()}
         } catch (e: IOException) {
