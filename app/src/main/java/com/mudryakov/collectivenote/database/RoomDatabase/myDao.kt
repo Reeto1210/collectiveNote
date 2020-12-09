@@ -27,6 +27,9 @@ interface myDao {
     @Query("DELETE FROM AllPayments")
    suspend fun deleteAllPayments()
 
+    @Delete
+    suspend fun deleteOnePayment(paymentModel: PaymentModel)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend  fun insertAllPayments(list:List<PaymentModel>)
 

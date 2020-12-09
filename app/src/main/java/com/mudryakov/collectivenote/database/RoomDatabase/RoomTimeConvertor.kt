@@ -11,7 +11,7 @@ class RoomtimeConverter {
 
 @TypeConverter
 fun toTimeAny(time: String):Any{
-    return time as Any
+    return time
 }
 
 }

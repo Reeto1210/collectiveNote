@@ -49,7 +49,6 @@ class SettingsFragment : BaseFragmentBack() {
                 .setTitle(getString(R.string.choose_ur_language))
                 .setItems(languages) { _: DialogInterface, i: Int ->
                     changeLocale(i)
-
                 }
                 .setIcon(R.drawable.ic_baseline_language_24)
                 .show()
@@ -64,7 +63,6 @@ class SettingsFragment : BaseFragmentBack() {
             else -> "Fail"
         }
       APP_ACTIVITY.changeLocale(language)
-
     }
 
     private fun initBehaviour() {
@@ -77,9 +75,7 @@ class SettingsFragment : BaseFragmentBack() {
             val newName = mBinding.settingsEditNameEditText.text.toString()
             if (newName.isNotEmpty()) {
                 checkInternetConnection({
-                    INTERNET = false
-                    showNoInternetToast()
-                    fastNavigate(R.id.action_settingsFragment_to_mainFragment)
+                    restartActivity()
                 }) {
                     mViewModel.changeName(newName) {
                         showToast(getString(R.string.name_changed))
@@ -89,7 +85,6 @@ class SettingsFragment : BaseFragmentBack() {
                 }
             } else showToast(getString(R.string.name_cant_be_empty_toast))
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -106,9 +101,7 @@ class SettingsFragment : BaseFragmentBack() {
 
     private fun changeUser() {
         checkInternetConnection({
-            INTERNET = false
-            showNoInternetToast()
-            fastNavigate(R.id.action_settingsFragment_to_mainFragment)
+            restartActivity()
         }) {
             mViewModel.signOut()
             AppPreference.clear()

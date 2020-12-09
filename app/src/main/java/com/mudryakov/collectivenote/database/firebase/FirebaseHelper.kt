@@ -50,6 +50,11 @@ private lateinit var ON_REGISTRATION_COMPLETE: () -> Unit
 private lateinit var ON_REGISTRATION_FAIL: () -> Unit
 
 
+
+
+
+
+
 fun logIn(type: String, onFail: () -> Unit, onCompelete: () -> Unit) {
     ON_REGISTRATION_COMPLETE = onCompelete
     ON_REGISTRATION_FAIL = onFail

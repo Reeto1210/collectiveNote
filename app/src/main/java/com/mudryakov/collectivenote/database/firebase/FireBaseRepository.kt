@@ -11,7 +11,6 @@ import com.mudryakov.collectivenote.utility.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
-import net.objecthunter.exp4j.ExpressionBuilder
 
 class FireBaseRepository : AppDatabaseRepository {
 
@@ -20,23 +19,28 @@ class FireBaseRepository : AppDatabaseRepository {
     override val groupMembers: LiveData<List<UserModel>> = FirebaseGroupMembers()
 
     override fun deletePayment(payment: PaymentModel, onSuccess: () -> Unit) {
+
         REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID)
             .child(payment.firebaseId).removeValue()
             .addOnFailureListener { showToast(APP_ACTIVITY.getString(R.string.something_going_wrong)) }
             .addOnSuccessListener {
-                var totalSum = calculate(AppPreference.getTotalSumm(), payment.summ,"-")
+                var totalSum = calculate(AppPreference.getTotalSumm(), payment.summ, "-")
                 if (ROOM_CURRENCY == APP_ACTIVITY.getString(R.string.RUB)) {
                     totalSum = totalSum.substringBefore('.')
                 }
                 REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_TOTAL_PAY).child(
                     CURRENT_ROOM_UID
                 ).setValue(totalSum).addOnSuccessListener {
-                    REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID)
-                        .setValue(payment.firebaseId)
-                    AppPreference.setTotalSumm(totalSum)
-                    onSuccess()
-                }
+                    REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(
+                        CHILD_TOTALPAY_AT_CURRENT_ROOM
+                    ).setValue(totalSum).addOnSuccessListener {
 
+                        AppPreference.setTotalSumm(totalSum)
+                        REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID)
+                            .setValue(payment.firebaseId)
+                        onSuccess()
+                    }
+                }
             }
     }
 
@@ -59,7 +63,7 @@ class FireBaseRepository : AppDatabaseRepository {
         REF_DATABASE_ROOT.child(NODE_ROOM_NAMES).addMySingleListener { DataSnapshot ->
             if (DataSnapshot.hasChild(roomName)) {
                 showToast(APP_ACTIVITY.getString(R.string.this_name_busy))
-            onFail()
+                onFail()
             } else {
                 pushRoomToFirebase(roomName, roomPass, currencySign, onFail) {
                     updateUserRoomId(it, onFail) {

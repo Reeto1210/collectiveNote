@@ -9,12 +9,15 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.mudryakov.collectivenote.MainActivity
 import com.mudryakov.collectivenote.R
+import com.mudryakov.collectivenote.database.firebase.FireBaseRepository
 import com.mudryakov.collectivenote.database.firebase.NODE_PAYMENT_IMAGES
 import com.mudryakov.collectivenote.database.firebase.REF_DATABASE_STORAGE
+import com.mudryakov.collectivenote.database.firebase.REPOSITORY
 import com.squareup.picasso.Picasso
 import net.objecthunter.exp4j.ExpressionBuilder
 import java.io.File
@@ -69,10 +72,12 @@ fun ImageView.setImage(url: String) {
 
 fun restartActivity() {
     val intent = Intent(APP_ACTIVITY, MainActivity::class.java)
-    INTERNET = false
-    APP_ACTIVITY.startActivity(intent)
     APP_ACTIVITY.finish()
-}
+    APP_ACTIVITY.startActivity(intent)
+    REPOSITORY = FireBaseRepository()
+    INTERNET = false
+
+        }
 
 fun fastNavigate(id: Int) {
     APP_ACTIVITY.navController.navigate(id)
@@ -89,7 +94,6 @@ fun View.makeInvisible() {
 fun View.makeGone() {
     this.visibility = View.GONE
 }
-
 
 fun exceptionEmailLoginToast(ex: Any) {
     val text =
@@ -119,6 +123,5 @@ fun calculate(firstString: String, secondString: String, sign: String = " + "): 
     return if (ROOM_CURRENCY == APP_ACTIVITY.getString(R.string.RUB))
         exp.evaluate().toString().substringBefore(".")
     else exp.evaluate().toString()
-
 
 }

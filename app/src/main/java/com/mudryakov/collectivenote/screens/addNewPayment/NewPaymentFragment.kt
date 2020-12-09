@@ -13,7 +13,6 @@ import com.mudryakov.collectivenote.databinding.FragmentNewPaymentBinding
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
 import com.mudryakov.collectivenote.utility.*
 import com.theartofdev.edmodo.cropper.CropImage
-import net.objecthunter.exp4j.ExpressionBuilder
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 
 
@@ -39,7 +38,7 @@ class NewPaymentFragment : BaseFragmentBack() {
     private fun initialization() {
         mViewModel = ViewModelProvider(this).get(AddNewPaymentViewModel::class.java)
         mBinding.addNewPaymentConfirm.setOnClickListener {
-            var sum = mBinding.addNewPaymentSumm.text.toString()
+            var sum = mBinding.addNewPaymentSumm.text.toString().replace(',','.')
             val description = mBinding.addNewPaymentDescription.text.toString()
             try {
                 sum = convertSum(sum)
@@ -48,12 +47,9 @@ class NewPaymentFragment : BaseFragmentBack() {
                     checkInternetConnection({ restartActivity() }) {
                         hideKeyboard(APP_ACTIVITY)
                         fastNavigate(R.id.action_newPaymentFragment_to_mainFragment)
-                      mViewModel.addNewPayment(sum, description, imageUri) {
-                        val exp = ExpressionBuilder(  "${AppPreference.getTotalSumm()} + ${sum}").build()
-                        val totalSum = exp.evaluate().toString()
-                         println(totalSum)
-                     showToast(APP_ACTIVITY.getString(R.string.toast_payment_added))
-                   }
+                        mViewModel.addNewPayment(sum, description, imageUri) {
+                            showToast(APP_ACTIVITY.getString(R.string.toast_payment_added))
+                        }
                     }
             } catch (e: Exception) {
                 mBinding.addNewPaymentSumm.setText("")

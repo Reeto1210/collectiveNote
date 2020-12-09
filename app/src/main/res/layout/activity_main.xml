@@ -14,13 +14,13 @@
 
         <ImageView
             android:alpha="0"
-            android:id="@+id/no_internet_indicator_btn"
+            android:id="@+id/no_internet_indicator_btn1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/app_margin"
             android:elevation="@dimen/elevation_for_no_internet_icon"
             android:src="@drawable/ic_no_internet"
-
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/main_toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/main_toolbar"

@@ -11,6 +11,5 @@ var INTERNET = false
 lateinit var USER: UserModel
 var ROOM_CURRENCY = ""
 lateinit var APP_ACTIVITY:MainActivity
-
 const val ENGLISH = "en"
 const val RUSSIAN = "ru"

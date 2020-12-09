@@ -18,7 +18,7 @@ import com.mudryakov.collectivenote.utility.ROOM_CURRENCY
 import kotlinx.android.synthetic.main.main_fragment_recycle_item.view.*
 
 class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>() {
-    val list = mutableListOf<UserModel>()
+    var list = mutableListOf<UserModel>()
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val username: TextView = view.main_recycle_item_username

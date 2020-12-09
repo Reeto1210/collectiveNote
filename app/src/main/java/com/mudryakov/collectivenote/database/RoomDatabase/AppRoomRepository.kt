@@ -13,6 +13,8 @@ class AppRoomRepository(private val dao: myDao):AppDatabaseRepository {
     suspend fun updateAllPaymentsRoomDatabase(list: List<PaymentModel>) = dao.updateAllPayments(list)
     suspend fun updateAllUsersRoomDatabase(list: List<UserModel>) = dao.updateAllUsers(list)
 
+    suspend fun deleteCurrentPayment(payment: PaymentModel) = dao.deleteOnePayment(payment)
+
     override val allPayments: LiveData<List<PaymentModel>>
         get() =dao.getAllPayments()
 
@@ -50,5 +52,6 @@ class AppRoomRepository(private val dao: myDao):AppDatabaseRepository {
     override fun signOut() {}
 
     override fun remindPassword(onSuccess: (String) -> Unit) { }
+
 
 }

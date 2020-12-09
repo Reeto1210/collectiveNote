@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
+import com.mudryakov.collectivenote.database.RoomDatabase.AppRoomRepository
 import com.mudryakov.collectivenote.database.firebase.*
 import com.mudryakov.collectivenote.databinding.FragmentMainBinding
 import com.mudryakov.collectivenote.models.UserModel
@@ -37,39 +38,28 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if (!INTERNET)
-            checkInternet()
-        else {
+         if (!INTERNET) {
+            checkInternetConnection({ noInternetMode() }) {
+                if (REPOSITORY is AppRoomRepository)
+                {
+                   restartActivity()
+                }
+                else {
+                    INTERNET = true
+                    initialization()
+                }
+            }
+        } else {
             initialization()
-            initObservers()
-            initCurrency()
+            restartIfInternetChanged()
         }
     }
-
-    private fun checkInternet() {
-        checkInternetConnection({noInternetMode()}) {
-            REPOSITORY = FireBaseRepository()
-            INTERNET = true
-            APP_ACTIVITY.mBinding.noInternetIndicatorBtn.makeGone()
-            initialization()
-            initObservers()
-            initCurrency()
-        }
-    }
-
 
     private fun noInternetMode() {
-        APP_ACTIVITY.mBinding.noInternetIndicatorBtn.setOnClickListener {
-            checkInternetConnection({ showNoInternetToast() }) {
-                restartActivity()
-            }
-        }
         INTERNET = false
-        APP_ACTIVITY.startNoInternetAnimation()
         REPOSITORY = ROOM_REPOSITORY
         initialization()
-        initObservers()
-        initCurrency()
+        initNoInternetBtn()
     }
 
 
@@ -95,27 +85,27 @@ class MainFragment : Fragment() {
         mObserver = Observer { list ->
             var totalSum = ""
             list.forEach {
-                totalSum +=  calculate(totalSum,it.totalPayAtCurrentRoom)
+                totalSum += calculate(totalSum, it.totalPayAtCurrentRoom)
                 mAdapter?.addItem(it)
             }
             mBinding.loadingLayout.visibility = View.GONE
             mBinding.mainFragmentTotalPaymentRoom.text =
                 getString(R.string.total_sum_payed, totalSum, ROOM_CURRENCY)
             APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-
         }
-
         mViewModel.allMembers.observe(this, mObserver)
     }
 
     private fun initialization() {
-        initDrawer()
         APP_ACTIVITY.back = false
         APP_ACTIVITY.title = APP_ACTIVITY.getString(R.string.app_name)
         CURRENT_ROOM_UID = AppPreference.getRoomId()
         mViewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
+        initDrawer()
         initFabNewPayment()
         initRecycle()
+        initObservers()
+        initCurrency()
     }
 
     private fun initFabNewPayment() {
@@ -132,21 +122,16 @@ class MainFragment : Fragment() {
         mAdapter = MainRecycleAdapter()
         mLayoutManager = LinearLayoutManager(this.context)
         mRecycle.adapter = mAdapter
-        mRecycle.layoutManager = mLayoutManager
     }
 
-
     override fun onDestroyView() {
+
         mAdapter = null
         _Binding = null
         mViewModel.allMembers.removeObserver(mObserver)
         APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        if (INTERNET){
-            checkInternetConnection({ restartActivity()}){}
-        }
+        restartIfInternetChanged()
         super.onDestroyView()
-
     }
-
 
 }

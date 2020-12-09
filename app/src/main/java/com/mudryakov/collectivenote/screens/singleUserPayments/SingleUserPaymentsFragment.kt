@@ -30,7 +30,7 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
     lateinit var mRecycle: RecyclerView
     lateinit var mPaymentObserver: Observer<List<PaymentModel>>
     var userId = ""
-    var canDelete = true
+    var isAvailable = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,16 +49,20 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
     }
 
     private fun initObserver() {
-        mViewModel = ViewModelProvider(this).get(SingleUserPaymentViewModel::class.java)
+              mViewModel = ViewModelProvider(this).get(SingleUserPaymentViewModel::class.java)
         mPaymentObserver = Observer {
             var isEmpty = true
             it.forEach { payment ->
                 if (payment.fromId == userId) {
                     mAdapter?.addItem(payment)
                     isEmpty = false
+
                 }
                 mRecycle.smoothScrollToPosition(0)
             }
+
+
+
             mBinding.singlePaymentProgressBar.makeInvisible()
             if (isEmpty) mBinding.singlePaymentsEmpty.makeVisible()
             else mBinding.singlePaymentsEmpty.makeGone()
@@ -72,8 +76,14 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
         mRecycle.layoutManager = LinearLayoutManager(APP_ACTIVITY)
         mRecycle.adapter = mAdapter
         if (userId == CURRENT_UID) {
+
             val mItemTouchHelper = object :
                 ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+
+                override fun isItemViewSwipeEnabled(): Boolean {
+                    return isAvailable
+                }
+
                 override fun onMove(
                     recyclerView: RecyclerView,
                     viewHolder: RecyclerView.ViewHolder,
@@ -97,13 +107,10 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
                         )
                         .setPositiveButton(getString(R.string.yes)) { _: DialogInterface, _: Int ->
                             mAdapter?.deleteItem(position)
-                            if (currentPayment != null && canDelete) {
+                            if (currentPayment != null) {
                                 deletePaymentFromFirebase(currentPayment)
-                            }else {
-                                showToast(getString(R.string.to_fast_delete))
-                                mAdapter?.notifyItemChanged(position)
                             }
-                            }
+                        }
                         .setNegativeButton(getString(R.string.no)) { _: DialogInterface, _: Int ->
                             mAdapter?.notifyItemChanged(position)
                         }
@@ -113,7 +120,7 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
                 }
             }
             val itemTouchHelper = ItemTouchHelper(mItemTouchHelper)
-            itemTouchHelper.attachToRecyclerView(mRecycle)
+            if (INTERNET) itemTouchHelper.attachToRecyclerView(mRecycle)
         }
     }
 
@@ -133,19 +140,16 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
 
 
     private fun deletePaymentFromFirebase(payment: PaymentModel) {
-
+        isAvailable = false
         checkInternetConnection({
-            INTERNET = false
-            showNoInternetToast()
-            fastNavigate(R.id.action_singleUserPayments_to_mainFragment)
+            restartActivity()
         }) {
-            canDelete = false
-            mViewModel.deletePayment(payment) {
 
+            mViewModel.deletePayment(payment) {
                 showToast(getString(R.string.payment_has_been_deleted_toast))
                 CoroutineScope(IO).launch {
-                    delay(1000)
-                    canDelete = true
+                    delay(200)
+                    isAvailable = true
                 }
             }
         }

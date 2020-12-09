@@ -35,11 +35,11 @@ class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         _Binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         setSupportActionBar(mBinding.mainToolbar)
         APP_ACTIVITY = this
+        INTERNET = false
         navController = Navigation.findNavController(APP_ACTIVITY, R.id.container)
         actionBar = supportActionBar
         mDrawer = mBinding.myDrawer
@@ -53,8 +53,8 @@ class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSel
         AppPreference.getPreference(APP_ACTIVITY)
         setDrawerEdge()
         mNavView.setNavigationItemSelectedListener(this)
-        checkInternetConnection({ if (INTERNET) restartActivity() }) {}
-    }
+        APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+       }
 
 
     private fun setDrawerEdge() {
@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSel
         if (back) onBackPressed()
         else mDrawer.openDrawer(mNavView)
         return true
-
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -112,7 +111,7 @@ class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSel
             if (doubleClick) super.onBackPressed()
             else {
                 doubleClick = true
-                showToast("Нажмите ещё раз для выхода")
+                showToast(getString(R.string.ask_for_double_click_toast))
                 CoroutineScope(IO).launch {
                     delay(1500)
                     doubleClick = false
@@ -122,25 +121,13 @@ class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSel
     }
 
     override fun onStop() {
-        try {
+       try {
             fastNavigate(R.id.action_settingsFragment_to_mainFragment)
         } catch (e: Exception) {
         }
         super.onStop()
     }
 
-
-    fun startNoInternetAnimation() {
-        ViewCompat.animate(mBinding.noInternetIndicatorBtn)
-            .alpha(1.0F)
-            .setDuration(1000)
-            .withEndAction {
-                ViewCompat.animate(mBinding.noInternetIndicatorBtn)
-                    .alpha(0.0f)
-                    .setDuration(1000)
-                    .withEndAction { startNoInternetAnimation() }
-            }
-    }
 
     fun changeLocale(language: String) {
         ApplicationLocale.localeManager!!.setNewLocale(this, language)
