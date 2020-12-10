@@ -90,7 +90,6 @@ fun createNewEmailUser(onFail: () -> Unit,onSuccess: () -> Unit) {
         }
 }
 
-
 fun logInGoogle() {
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestEmail()
@@ -197,7 +196,7 @@ fun updatePreferenceCurrentPay(function: () -> Unit) {
                 }
         }
 
-}
+    }
 
 fun updateAllUserPayments() {
     findAllUsersRooms { listOfId ->

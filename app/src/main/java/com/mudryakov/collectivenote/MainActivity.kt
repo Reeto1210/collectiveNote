@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSel
 
     override fun onStart() {
         super.onStart()
+        hideKeyboard(APP_ACTIVITY)
         AppPreference.getPreference(APP_ACTIVITY)
         setDrawerEdge()
         mNavView.setNavigationItemSelectedListener(this)

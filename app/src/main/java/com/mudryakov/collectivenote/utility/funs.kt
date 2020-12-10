@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
-import android.provider.Settings.Global.getString
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
@@ -120,28 +119,36 @@ fun exceptionEmailRegistrationToast(exText: String) {
 }
 
 fun calculate(firstString: String, secondString: String, sign: String = " + "): String {
+    //var firstString = firstStringIn
+    //if (firstString == "0") firstString = ""
+  //  var secondString = secondStringIn
+    //if (secondString == "0") secondString = ""
     val exp = ExpressionBuilder(firstString + sign + secondString).build()
     return if (ROOM_CURRENCY == APP_ACTIVITY.getString(R.string.RUB))
         exp.evaluate().toString().substringBefore(".")
     else exp.evaluate().toString()
+
 }
+
 fun initHomeUpFalse() {
     APP_ACTIVITY.actionBar?.setDisplayHomeAsUpEnabled(false)
     APP_ACTIVITY.back = false
 }
-fun buildRoomChooseDialog(click:(String)->Unit){
+
+fun buildRoomChooseDialog(click: (String) -> Unit) {
     val builder = AlertDialog.Builder(APP_ACTIVITY)
     builder.setTitle(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_title))
         .setMessage(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_text))
         .setPositiveButton(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_positive_button)) { _: DialogInterface, _: Int ->
-           click(CREATOR)
+            click(CREATOR)
         }
         .setNeutralButton(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_negative_button)) { _: DialogInterface, _: Int ->
-           click(MEMBER)
+            click(MEMBER)
         }
         .setCancelable(false)
         .show()
 }
+
 fun convertSum(sum: String): String {
     sum.toDouble()
     if (sum[0] == '-' || sum[0] == '.') throw Exception("")

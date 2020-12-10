@@ -84,6 +84,7 @@ class FireBaseRepository : AppDatabaseRepository {
                 REF_DATABASE_ROOT.child(NODE_ROOM_DATA).child(tryingId).child(CHILD_PASS)
                     .addListenerForSingleValueEvent(AppValueEventListener { DataSnapshot ->
                         if (DataSnapshot.value == roomPass) {
+
                             REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(tryingId).setValue(
                                 tryingId
                             ).addOnSuccessListener {

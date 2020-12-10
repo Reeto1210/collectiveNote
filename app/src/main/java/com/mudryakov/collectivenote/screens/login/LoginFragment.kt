@@ -16,6 +16,7 @@ import com.mudryakov.collectivenote.databinding.FragmentLoginBinding
 import com.mudryakov.collectivenote.utility.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 
 
 class LoginFragment : Fragment() {
@@ -40,10 +41,12 @@ class LoginFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         APP_ACTIVITY.title = getString(R.string.login_toolbar_title)
+
         initialization()
         initHomeUpFalse()
         animateButtons()
         checkSignIn()
+    hideKeyboard(APP_ACTIVITY)
     }
 
     private fun checkSignIn() {
@@ -138,6 +141,7 @@ class LoginFragment : Fragment() {
     private fun onRegisterSuccess() {
         onLoginFail()
         changeName {
+           hideKeyboard(APP_ACTIVITY)
             fastNavigate(R.id.action_loginFragment_to_roomChooseFragment)
         }
     }

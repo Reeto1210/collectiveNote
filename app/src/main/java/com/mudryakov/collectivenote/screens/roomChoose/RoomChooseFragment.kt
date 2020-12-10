@@ -16,6 +16,7 @@ import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.databinding.FragmentRoomChooseBinding
 import com.mudryakov.collectivenote.utility.*
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
+import java.util.*
 
 
 class RoomChooseFragment : Fragment() {
@@ -75,8 +76,8 @@ class RoomChooseFragment : Fragment() {
         initSpinner()
         APP_ACTIVITY.title = getString(R.string.create_room)
         mBinding.roomChooseContinue.setOnClickListener {
-            val roomName = mBinding.roomChooseName.text.toString()
-            val roomPass = mBinding.roomChoosePassword.text.toString()
+            val roomName = mBinding.roomChooseName.text.toString().toLowerCase(Locale.ROOT)
+            val roomPass = mBinding.roomChoosePassword.text.toString().toLowerCase(Locale.ROOT)
             when {
                 roomName.isEmpty() || roomPass.isEmpty() -> showToast(R.string.add_info)
                 currencySign == "" -> showToast(R.string.choose_currency)
@@ -100,8 +101,8 @@ class RoomChooseFragment : Fragment() {
         APP_ACTIVITY.title = getString(R.string.join_room)
         mBinding.roomChooseContinue.setOnClickListener {
             showProgressBar()
-            val roomName = mBinding.roomChooseName.text.toString()
-            val roomPass = mBinding.roomChoosePassword.text.toString()
+            val roomName = mBinding.roomChooseName.text.toString().toLowerCase(Locale.ROOT)
+            val roomPass = mBinding.roomChoosePassword.text.toString().toLowerCase(Locale.ROOT)
             checkInternetAtAuth({onFail()}){
                 mViewModel.joinRoom(roomName, roomPass, { onFail() }) {
                     AppPreference.setRoomName(roomName)

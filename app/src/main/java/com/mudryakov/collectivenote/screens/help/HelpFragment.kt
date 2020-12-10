@@ -32,5 +32,11 @@ class HelpFragment : BaseFragmentBack() {
     private fun initialization() {
         APP_ACTIVITY.title = getString(R.string.help)
         mViewModel = ViewModelProvider(this).get(HelpFragmentViewModel::class.java)
+
+    mBinding.donateBtn.setOnClickListener {
+        //дать денег мне любимому
     }
+
+    }
+
 }

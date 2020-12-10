@@ -34,7 +34,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/app_margin"
-
             android:autoLink="email"
             android:text="@string/my_email"
             android:textColor="@color/black"
@@ -44,17 +43,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/help_main_text" />
 
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         style="@style/btn_style"
+        android:id="@+id/donate_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Поддержать разработчика"
+        android:text="@string/donate_btn_text"
         android:textSize="@dimen/small_text"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/help_main_layout" />

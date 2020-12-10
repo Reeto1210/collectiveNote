@@ -44,7 +44,7 @@ class RoomInfoFragment : BaseFragmentBack() {
         mObserverMembers = Observer {
             mViewModel.allPayments.removeObserver { mObserverPayments }
             it.forEach { member ->
-                totalSum += calculate(totalSum, member.totalPayAtCurrentRoom)
+                totalSum = calculate(totalSum, member.totalPayAtCurrentRoom)
                 totalMembers++
                 callback2 = true
             }
