@@ -24,7 +24,7 @@ fun buildNoInternetDialog(onClickPositiveButtonFunction: () -> Unit) {
 }
 
 fun showNoInternetToast() {
-    showToast(APP_ACTIVITY.getString(R.string.no_internet_toast))
+    showToast(R.string.no_internet_toast)
 }
 
 fun checkInternetAtAuth(onFail: () -> Unit, onSuccess: () -> Unit) {

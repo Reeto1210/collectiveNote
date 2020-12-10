@@ -1,15 +1,17 @@
 package com.mudryakov.collectivenote.utility
 
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
+import android.provider.Settings.Global.getString
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.mudryakov.collectivenote.MainActivity
@@ -24,7 +26,8 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun showToast(text: String) = Toast.makeText(APP_ACTIVITY, text, Toast.LENGTH_SHORT).show()
+fun showToast(id: Int) =
+    Toast.makeText(APP_ACTIVITY, APP_ACTIVITY.getString(id), Toast.LENGTH_SHORT).show()
 
 fun View.startRegisterAnimation(visible: Boolean) {
     if (visible) {
@@ -76,8 +79,7 @@ fun restartActivity() {
     APP_ACTIVITY.startActivity(intent)
     REPOSITORY = FireBaseRepository()
     INTERNET = false
-
-        }
+}
 
 fun fastNavigate(id: Int) {
     APP_ACTIVITY.navController.navigate(id)
@@ -96,26 +98,25 @@ fun View.makeGone() {
 }
 
 fun exceptionEmailLoginToast(ex: Any) {
-    val text =
+    val textId =
         when (ex) {
-            is FirebaseAuthInvalidCredentialsException -> APP_ACTIVITY.getString(R.string.exception_check_credentials)
-            is FirebaseAuthInvalidUserException -> APP_ACTIVITY.getString(R.string.exception_login_user_invalid)
-            else -> APP_ACTIVITY.getString(R.string.something_going_wrong)
+            is FirebaseAuthInvalidCredentialsException -> R.string.exception_check_credentials
+            is FirebaseAuthInvalidUserException -> R.string.exception_login_user_invalid
+            else -> R.string.something_going_wrong
         }
-    showToast(text)
+    showToast(textId)
 }
 
 fun exceptionEmailRegistrationToast(exText: String) {
-    val toastText =
+    val toastTextId =
         when {
-            exText.contains("The email address is badly formatted") -> APP_ACTIVITY.getString(R.string.exception_check_email)
-            exText.contains("The given password is invalid") -> APP_ACTIVITY.getString(R.string.exception_pass_must_be_six_letters)
-            exText.contains("The email address is already in use by another account") -> APP_ACTIVITY.getString(
-                R.string.exception_email_busy
-            )
-            else -> APP_ACTIVITY.getString(R.string.something_going_wrong)
+            exText.contains("The email address is badly formatted") -> R.string.exception_check_email
+            exText.contains("The given password is invalid") -> R.string.exception_pass_must_be_six_letters
+            exText.contains("The email address is already in use by another account") -> R.string.exception_email_busy
+
+            else -> R.string.something_going_wrong
         }
-    showToast(toastText)
+    showToast(toastTextId)
 }
 
 fun calculate(firstString: String, secondString: String, sign: String = " + "): String {
@@ -123,5 +124,39 @@ fun calculate(firstString: String, secondString: String, sign: String = " + "): 
     return if (ROOM_CURRENCY == APP_ACTIVITY.getString(R.string.RUB))
         exp.evaluate().toString().substringBefore(".")
     else exp.evaluate().toString()
-
+}
+fun initHomeUpFalse() {
+    APP_ACTIVITY.actionBar?.setDisplayHomeAsUpEnabled(false)
+    APP_ACTIVITY.back = false
+}
+fun buildRoomChooseDialog(click:(String)->Unit){
+    val builder = AlertDialog.Builder(APP_ACTIVITY)
+    builder.setTitle(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_title))
+        .setMessage(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_text))
+        .setPositiveButton(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_positive_button)) { _: DialogInterface, _: Int ->
+           click(CREATOR)
+        }
+        .setNeutralButton(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_negative_button)) { _: DialogInterface, _: Int ->
+           click(MEMBER)
+        }
+        .setCancelable(false)
+        .show()
+}
+fun convertSum(sum: String): String {
+    sum.toDouble()
+    if (sum[0] == '-' || sum[0] == '.') throw Exception("")
+    return if (ROOM_CURRENCY == APP_ACTIVITY.getString(R.string.RUB)) {
+        sum.substringBefore(".")
+    } else {
+        if (!sum.contains('.')) {
+            "$sum.00"
+        } else {
+            val dotIndex = sum.indexOf(".")
+            try {
+                sum.substring(0, dotIndex + 3)
+            } catch (e: Exception) {
+                sum.substring(0, dotIndex + 2) + "0"
+            }
+        }
+    }
 }

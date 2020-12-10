@@ -109,7 +109,7 @@ fun handleSignInResult(task: Task<GoogleSignInAccount>) {
         pushUserToFirebase()
     } catch (e: ApiException) {
         ON_REGISTRATION_FAIL()
-        showToast(APP_ACTIVITY.getString(R.string.something_going_wrong))
+        showToast(R.string.something_going_wrong)
     }
 }
 
@@ -120,7 +120,7 @@ fun pushUserToFirebase() {
         if (!it.hasChild(CURRENT_UID)) {
             REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).setValue(USER)
                 .addOnFailureListener {
-                    showToast(APP_ACTIVITY.getString(R.string.something_going_wrong))
+                    showToast(R.string.something_going_wrong)
                     ON_REGISTRATION_FAIL()
                 }
                 .addOnSuccessListener {
@@ -154,7 +154,7 @@ fun pushRoomToFirebase(
         }
         .addOnFailureListener {
             onFail()
-            showToast(APP_ACTIVITY.getString(R.string.something_going_wrong))
+            showToast(R.string.something_going_wrong)
         }
 }
 
@@ -163,9 +163,9 @@ fun updateUserRoomId(roomKey: String, onFail: () -> Unit, onSuccess: () -> Unit)
     REF_DATABASE_ROOT.child(NODE_USERS).child(AppPreference.getUserId()).child(
         CHILD_ROOM_ID
     ).setValue(roomKey)
-        .addOnFailureListener { problem ->
+        .addOnFailureListener {
             onFail()
-            showToast(problem.message.toString())
+            showToast(R.string.something_going_wrong)
         }
         .addOnSuccessListener {
             REF_DATABASE_ROOT.child(NODE_ROOM_MEMBERS).child(roomKey).child(CURRENT_UID)
@@ -176,7 +176,7 @@ fun updateUserRoomId(roomKey: String, onFail: () -> Unit, onSuccess: () -> Unit)
                     updatePreferenceCurrentPay { onSuccess() }
                 }
                 .addOnFailureListener {
-                   showToast(APP_ACTIVITY.getString(R.string.something_going_wrong))
+                   showToast(R.string.something_going_wrong)
                     onFail()
                 }
         }
@@ -187,13 +187,12 @@ fun updatePreferenceCurrentPay(function: () -> Unit) {
         .child(CURRENT_ROOM_UID).addMySingleListener {
             val totalPay = if (it.value.toString() == "null") "0" else it.value.toString()
             AppPreference.setTotalSumm(totalPay)
-
             REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
                 .child(CHILD_TOTALPAY_AT_CURRENT_ROOM)
                 .setValue(totalPay)
                 .addOnSuccessListener { function() }
                 .addOnFailureListener {
-                    showToast(APP_ACTIVITY.getString(R.string.something_going_wrong))
+                    showToast(R.string.something_going_wrong)
                     ON_REGISTRATION_FAIL()
                 }
         }

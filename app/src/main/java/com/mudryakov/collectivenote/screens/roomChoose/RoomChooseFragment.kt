@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.mudryakov.collectivenote.R
@@ -38,7 +39,7 @@ class RoomChooseFragment : Fragment() {
             CURRENT_UID = AppPreference.getUserId()
             navNext()
         } else {
-            startJoin()
+            buildRoomChooseDialog {enterRoom(it)}
         }
     }
 
@@ -48,39 +49,14 @@ class RoomChooseFragment : Fragment() {
         val adapter = MyArrayAdapter(APP_ACTIVITY, R.layout.spinner_item, currency)
         spinner.adapter = adapter
         spinner.makeVisible()
-        spinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                currencySign = when (position) {
-                    1 -> getString(R.string.RUB)
-                    2 -> getString(R.string.USD)
-                    3 -> getString(R.string.EUR)
-                    else -> ""
-                }
+           spinner.onItemSelectedListener = AppOnItemSelectedListener { position ->
+            currencySign = when (position) {
+                1 -> getString(R.string.RUB)
+                2 -> getString(R.string.USD)
+                3 -> getString(R.string.EUR)
+                else -> ""
             }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
-    }
-
-    private fun startJoin() {
-        val builder = AlertDialog.Builder(APP_ACTIVITY)
-        builder.setTitle(getString(R.string.choose_room_alert_dialog_title))
-            .setMessage(getString(R.string.choose_room_alert_dialog_text))
-            .setPositiveButton(getString(R.string.choose_room_alert_dialog_positive_button)) { _: DialogInterface, _: Int ->
-                enterRoom(CREATOR)
-            }
-            .setNeutralButton(getString(R.string.choose_room_alert_dialog_negative_button)) { _: DialogInterface, _: Int ->
-                enterRoom(MEMBER)
-            }
-            .setCancelable(false)
-            .show()
-
+       }
     }
 
     private fun initialization() {
@@ -102,8 +78,8 @@ class RoomChooseFragment : Fragment() {
             val roomName = mBinding.roomChooseName.text.toString()
             val roomPass = mBinding.roomChoosePassword.text.toString()
             when {
-                roomName.isEmpty() || roomPass.isEmpty() -> showToast(getString(R.string.add_info))
-                currencySign == "" -> showToast(getString(R.string.choose_currency))
+                roomName.isEmpty() || roomPass.isEmpty() -> showToast(R.string.add_info)
+                currencySign == "" -> showToast(R.string.choose_currency)
                 else -> {
                     showProgressBar()
                     checkInternetAtAuth({onFail()}) {
@@ -138,7 +114,7 @@ class RoomChooseFragment : Fragment() {
 
     private fun navNext() {
         hideKeyboard(APP_ACTIVITY)
-        if (!AppPreference.getSignInRoom()) showToast(messageText)
+        if (!AppPreference.getSignInRoom()) Toast.makeText(APP_ACTIVITY,messageText,Toast.LENGTH_LONG).show()
         AppPreference.setSignInRoom(true)
         fastNavigate(R.id.action_roomChooseFragment_to_mainFragment)
     }

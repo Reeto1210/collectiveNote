@@ -41,10 +41,9 @@ class LoginFragment : Fragment() {
         super.onStart()
         APP_ACTIVITY.title = getString(R.string.login_toolbar_title)
         initialization()
-        initHomeUp()
+        initHomeUpFalse()
         animateButtons()
         checkSignIn()
-
     }
 
     private fun checkSignIn() {
@@ -56,12 +55,6 @@ class LoginFragment : Fragment() {
             showChangeNameLayout()
         }
     }
-
-    private fun initHomeUp() {
-        APP_ACTIVITY.actionBar?.setDisplayHomeAsUpEnabled(false)
-        APP_ACTIVITY.back = false
-    }
-
 
     private fun showChangeNameLayout() {
         mBinding.firstLogin.makeGone()
@@ -111,16 +104,16 @@ class LoginFragment : Fragment() {
                 val pass = mBinding.loginInputPassword.text.toString()
                 if (email.isNotEmpty() && pass.isNotEmpty()) {
                     showProgressBar()
-                    checkInternetAtAuth({onloginFail()}) {
+                    checkInternetAtAuth({onLoginFail()}) {
                         mViewModel.login(
                             TYPE_EMAIL,
                             email,
                             pass,
-                            { onloginFail() }) {
+                            { onLoginFail() }) {
                             onRegisterSuccess()
                         }
                     }
-                } else showToast(getString(R.string.add_info))
+                } else showToast(R.string.add_info)
             }
         }
     }
@@ -129,11 +122,11 @@ class LoginFragment : Fragment() {
         mBinding.loginBtnSignInGoogle.setOnClickListener {
             if (!isLoading) {
                 showProgressBar()
-                checkInternetAtAuth({onloginFail()})
+                checkInternetAtAuth({onLoginFail()})
                 {
                     mViewModel.login(
                         TYPE_GOOGLE_ACCOUNT,
-                        onFail = { onloginFail() }) {
+                        onFail = { onLoginFail() }) {
                         onRegisterSuccess()
                     }
                 }
@@ -143,7 +136,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun onRegisterSuccess() {
-        onloginFail()
+        onLoginFail()
         changeName {
             fastNavigate(R.id.action_loginFragment_to_roomChooseFragment)
         }
@@ -158,23 +151,22 @@ class LoginFragment : Fragment() {
             if (newName.isNotEmpty()) {
                 if (!isLoading) {
                     showProgressBar()
-                    checkInternetAtAuth({onloginFail()})
+                    checkInternetAtAuth({onLoginFail()})
                     {
                         mViewModel.changeName(newName) { onConfirm() }
                     }
                 }
             } else
-                showToast(getString(R.string.name_cant_be_empty_toast))
+                showToast(R.string.name_cant_be_empty_toast)
         }
     }
 
-    private fun onloginFail() {
+    private fun onLoginFail() {
         isLoading = false
         mBinding.fragmentLoginProgressBar.makeGone()
     }
 
     private fun showProgressBar() {
-
         isLoading = true
         mBinding.fragmentLoginProgressBar.makeVisible()
     }

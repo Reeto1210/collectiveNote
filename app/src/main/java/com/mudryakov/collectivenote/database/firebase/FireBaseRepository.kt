@@ -19,28 +19,25 @@ class FireBaseRepository : AppDatabaseRepository {
     override val groupMembers: LiveData<List<UserModel>> = FirebaseGroupMembers()
 
     override fun deletePayment(payment: PaymentModel, onSuccess: () -> Unit) {
+        val refCurrentUser = REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
 
         REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID)
             .child(payment.firebaseId).removeValue()
-            .addOnFailureListener { showToast(APP_ACTIVITY.getString(R.string.something_going_wrong)) }
+            .addOnFailureListener { showToast(R.string.something_going_wrong)}
             .addOnSuccessListener {
-                var totalSum = calculate(AppPreference.getTotalSumm(), payment.summ, "-")
-                if (ROOM_CURRENCY == APP_ACTIVITY.getString(R.string.RUB)) {
-                    totalSum = totalSum.substringBefore('.')
-                }
-                REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_TOTAL_PAY).child(
-                    CURRENT_ROOM_UID
-                ).setValue(totalSum).addOnSuccessListener {
-                    REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(
-                        CHILD_TOTALPAY_AT_CURRENT_ROOM
-                    ).setValue(totalSum).addOnSuccessListener {
+                val totalSum = calculate(AppPreference.getTotalSumm(), payment.summ, "-")
+                refCurrentUser.child(CHILD_TOTAL_PAY).child(CURRENT_ROOM_UID).setValue(totalSum)
+                    .addOnSuccessListener {
+                        refCurrentUser.child(
+                            CHILD_TOTALPAY_AT_CURRENT_ROOM
+                        ).setValue(totalSum).addOnSuccessListener {
 
-                        AppPreference.setTotalSumm(totalSum)
-                        REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID)
-                            .setValue(payment.firebaseId)
-                        onSuccess()
+                            AppPreference.setTotalSumm(totalSum)
+                            REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID)
+                                .setValue(payment.firebaseId)
+                            onSuccess()
+                        }
                     }
-                }
             }
     }
 
@@ -62,7 +59,7 @@ class FireBaseRepository : AppDatabaseRepository {
     ) {
         REF_DATABASE_ROOT.child(NODE_ROOM_NAMES).addMySingleListener { DataSnapshot ->
             if (DataSnapshot.hasChild(roomName)) {
-                showToast(APP_ACTIVITY.getString(R.string.this_name_busy))
+                showToast(R.string.this_name_busy)
                 onFail()
             } else {
                 pushRoomToFirebase(roomName, roomPass, currencySign, onFail) {
@@ -96,11 +93,11 @@ class FireBaseRepository : AppDatabaseRepository {
                             }
                                 .addOnFailureListener {
                                     onFail()
-                                    showToast(APP_ACTIVITY.getString(R.string.something_going_wrong))
+                                    showToast(R.string.something_going_wrong)
                                 }
                         } else {
                             onFail()
-                            showToast(APP_ACTIVITY.getString(R.string.check_room_acc))
+                            showToast(R.string.check_room_acc)
                         }
                     }
                     )
@@ -109,39 +106,31 @@ class FireBaseRepository : AppDatabaseRepository {
 
 
     override fun addNewPayment(payment: PaymentModel, onSuccess: () -> Unit) {
-        var totalSum = calculate(AppPreference.getTotalSumm(), payment.summ)
-        if (ROOM_CURRENCY == APP_ACTIVITY.getString(R.string.RUB)) {
-            totalSum = totalSum.substringBefore('.')
-        }
-        val currentRef = REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID)
-        val key = currentRef.push().key.toString()
+        val totalSum = calculate(AppPreference.getTotalSumm(), payment.summ)
+        val refCurrentRoom = REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID)
+        val refCurrentUser = REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
+        val key = refCurrentRoom.push().key.toString()
         payment.firebaseId = key
         payment.time = ServerValue.TIMESTAMP
-        currentRef.child(key).setValue(payment)
 
+        refCurrentRoom.child(key).setValue(payment)
             .addOnSuccessListener {
-                REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_TOTAL_PAY).child(
+                refCurrentUser.child(CHILD_TOTAL_PAY).child(
                     CURRENT_ROOM_UID
                 )
                     .setValue(totalSum)
                     .addOnSuccessListener {
-                        REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(
-                            CHILD_TOTALPAY_AT_CURRENT_ROOM
-                        ).setValue(totalSum)
+                       refCurrentUser.child(CHILD_TOTALPAY_AT_CURRENT_ROOM)
+                           .setValue(totalSum)
                             .addOnSuccessListener {
                                 REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID)
-                                    .setValue(key)
+                                    .setValue(key+ "1")
                                 AppPreference.setTotalSumm(totalSum)
                                 onSuccess()
                             }
-                            .addOnFailureListener {
-                                REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
-                                    .child(CHILD_TOTAL_PAY).child(CURRENT_ROOM_UID).removeValue()
-
-                            }
-                    }
+                   }
             }
-            .addOnFailureListener { showToast(APP_ACTIVITY.getString(R.string.something_going_wrong)) }
+            .addOnFailureListener { showToast(R.string.something_going_wrong) }
     }
 
 
@@ -154,7 +143,7 @@ class FireBaseRepository : AppDatabaseRepository {
                 CoroutineScope(IO).launch { updateAllUserPayments() }
                 onSuccess()
             }
-            .addOnFailureListener { showToast(APP_ACTIVITY.getString(R.string.something_going_wrong)) }
+            .addOnFailureListener { showToast(R.string.something_going_wrong) }
     }
 
 
@@ -162,10 +151,10 @@ class FireBaseRepository : AppDatabaseRepository {
         val key = REF_DATABASE_ROOT.push().key.toString()
         val path = REF_DATABASE_STORAGE.child(NODE_PAYMENT_IMAGES).child(key)
         path.putFile(imageUri)
-            .addOnFailureListener { showToast(it.message.toString()) }
+            .addOnFailureListener { showToast(R.string.something_going_wrong) }
             .addOnCompleteListener { _ ->
                 path.downloadUrl
-                    .addOnFailureListener { showToast(APP_ACTIVITY.getString(R.string.something_going_wrong)) }
+                    .addOnFailureListener { showToast(R.string.something_going_wrong) }
                     .addOnSuccessListener { onSuccess(it.toString()) }
             }
     }
@@ -180,6 +169,4 @@ class FireBaseRepository : AppDatabaseRepository {
                 onSuccess(it.value.toString())
             }
     }
-
-
 }

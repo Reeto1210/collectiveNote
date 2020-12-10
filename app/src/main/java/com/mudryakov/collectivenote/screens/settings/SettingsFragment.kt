@@ -32,9 +32,9 @@ class SettingsFragment : BaseFragmentBack() {
     }
 
     private fun initialization() {
+        setHasOptionsMenu(true)
         APP_ACTIVITY.title = getString(R.string.settings)
         mBinding.settingsName.text = getString(R.string.user_name, AppPreference.getUserName())
-        setHasOptionsMenu(true)
         mViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
         initBehaviour()
         initChangeLanguage()
@@ -78,12 +78,12 @@ class SettingsFragment : BaseFragmentBack() {
                     restartActivity()
                 }) {
                     mViewModel.changeName(newName) {
-                        showToast(getString(R.string.name_changed))
+                        showToast(R.string.name_changed)
                         hideKeyboard(APP_ACTIVITY)
                         fastNavigate(R.id.action_settingsFragment_to_mainFragment)
                     }
                 }
-            } else showToast(getString(R.string.name_cant_be_empty_toast))
+            } else showToast(R.string.name_cant_be_empty_toast)
         }
     }
 

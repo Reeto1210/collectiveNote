@@ -1,22 +1,35 @@
 package com.mudryakov.collectivenote.screens.singleUserPayments
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import com.mudryakov.collectivenote.database.firebase.CURRENT_ROOM_UID
+import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.database.firebase.REPOSITORY
 import com.mudryakov.collectivenote.database.firebase.ROOM_REPOSITORY
 import com.mudryakov.collectivenote.models.PaymentModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
+import com.mudryakov.collectivenote.models.UserModel
+import com.mudryakov.collectivenote.utility.AppPreference
 import kotlinx.coroutines.launch
 
 class SingleUserPaymentViewModel(application: Application) : AndroidViewModel(application) {
     val singleUserPayments = REPOSITORY.allPayments
 
     fun deletePayment(payment: PaymentModel, onSuccess: () -> Unit) {
-       CoroutineScope(IO).launch {
-        ROOM_REPOSITORY.deleteCurrentPayment(payment)}
-        REPOSITORY.deletePayment(payment) { onSuccess() }
+        REPOSITORY.deletePayment(payment) {
+            onSuccess()
+            updateUserInRoom()
+        }
+    }
+
+    fun updateUserInRoom() = viewModelScope.launch {
+        val curUser = UserModel(
+            CURRENT_UID,
+            AppPreference.getUserName(),
+            CURRENT_ROOM_UID,
+            AppPreference.getTotalSumm()
+        )
+        ROOM_REPOSITORY.updateUser(curUser)
     }
 
 }

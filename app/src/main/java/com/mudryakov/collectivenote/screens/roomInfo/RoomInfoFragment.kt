@@ -51,6 +51,7 @@ class RoomInfoFragment : BaseFragmentBack() {
             updateInfo()
         }
         mObserverPayments = Observer {
+            totalValueOfPayments = 0
             it.forEach { _ ->
                 totalValueOfPayments++
             }
@@ -65,8 +66,6 @@ class RoomInfoFragment : BaseFragmentBack() {
     private fun initialization() {
         APP_ACTIVITY.title = getString(R.string.room_info)
         mViewModel = ViewModelProvider(this).get(RoomInfoViewModel::class.java)
-        mBinding.infoIconPass.setImageResource(R.drawable.info_pass_icon)
-        mBinding.infoIconPass.makeVisible()
         mBinding.infoIconPass.setOnClickListener {
             checkInternetConnection({ showNoInternetToast() }) {
                 mBinding.infoIconPass.setImageResource(R.drawable.loading_pass)

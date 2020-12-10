@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
+import java.lang.reflect.Member
 
 class AppRoomRepository(private val dao: myDao):AppDatabaseRepository {
 
@@ -13,7 +14,7 @@ class AppRoomRepository(private val dao: myDao):AppDatabaseRepository {
     suspend fun updateAllPaymentsRoomDatabase(list: List<PaymentModel>) = dao.updateAllPayments(list)
     suspend fun updateAllUsersRoomDatabase(list: List<UserModel>) = dao.updateAllUsers(list)
 
-    suspend fun deleteCurrentPayment(payment: PaymentModel) = dao.deleteOnePayment(payment)
+    suspend fun updateUser(user: UserModel) = dao.updateUser(user)
 
     override val allPayments: LiveData<List<PaymentModel>>
         get() =dao.getAllPayments()

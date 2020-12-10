@@ -54,7 +54,6 @@
         <TextView
             android:id="@+id/settings_room_members_value"
             style="@style/settings_room_info_text"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settings_room_pass" />
 

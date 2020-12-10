@@ -20,6 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 
 
 class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSelectedListener {
@@ -105,13 +106,14 @@ class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSel
 
     override fun onBackPressed() {
         mDrawer.closeDrawer(mNavView)
-        if (back)
+        hideKeyboard(APP_ACTIVITY)
+          if (back)
             super.onBackPressed()
         else {
             if (doubleClick) super.onBackPressed()
             else {
                 doubleClick = true
-                showToast(getString(R.string.ask_for_double_click_toast))
+                showToast(R.string.ask_for_double_click_toast)
                 CoroutineScope(IO).launch {
                     delay(1500)
                     doubleClick = false

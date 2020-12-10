@@ -21,6 +21,7 @@ class NewPaymentFragment : BaseFragmentBack() {
     val mBinding get() = _Binding!!
     lateinit var mViewModel: AddNewPaymentViewModel
     var imageUri: Uri? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,18 +43,17 @@ class NewPaymentFragment : BaseFragmentBack() {
             val description = mBinding.addNewPaymentDescription.text.toString()
             try {
                 sum = convertSum(sum)
-                if (sum[0] == '-' || sum[0] == '.') throw Exception("")
                 if (sum.isNotEmpty() && description.isNotEmpty())
-                    checkInternetConnection({ restartActivity() }) {
+                    checkInternetConnection({restartActivity()}) {
                         hideKeyboard(APP_ACTIVITY)
                         fastNavigate(R.id.action_newPaymentFragment_to_mainFragment)
                         mViewModel.addNewPayment(sum, description, imageUri) {
-                            showToast(APP_ACTIVITY.getString(R.string.toast_payment_added))
+                            showToast(R.string.toast_payment_added)
                         }
                     }
             } catch (e: Exception) {
                 mBinding.addNewPaymentSumm.setText("")
-                showToast(getString(R.string.catch_payment_sum))
+                showToast(R.string.catch_payment_sum)
             }
         }
         mBinding.addPaymentAttachImage.setOnClickListener {
@@ -64,23 +64,7 @@ class NewPaymentFragment : BaseFragmentBack() {
         }
     }
 
-    private fun convertSum(sum: String): String {
-        sum.toDouble()
-        return if (ROOM_CURRENCY == getString(R.string.RUB)) {
-            sum.substringBefore(".")
-        } else {
-            if (!sum.contains('.')) {
-                "$sum.00"
-            } else {
-                val dotIndex = sum.indexOf(".")
-                try {
-                    sum.substring(0, dotIndex + 3)
-                } catch (e: Exception) {
-                    sum.substring(0, dotIndex + 2) + "0"
-                }
-            }
-        }
-    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && data != null

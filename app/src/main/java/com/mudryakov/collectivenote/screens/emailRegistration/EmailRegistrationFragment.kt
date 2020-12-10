@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.mudryakov.collectivenote.R
+import com.mudryakov.collectivenote.database.firebase.AUTH
 import com.mudryakov.collectivenote.databinding.FragmentEmailRegistrationBinding
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
 import com.mudryakov.collectivenote.utility.*
@@ -27,7 +28,7 @@ class EmailRegistrationFragment : BaseFragmentBack() {
         super.onStart()
         initialization()
         registerClick()
-    }
+       }
 
     private fun registerClick() {
         mBinding.registrationEmailBtn.setOnClickListener {
@@ -41,7 +42,7 @@ class EmailRegistrationFragment : BaseFragmentBack() {
                         fastNavigate(R.id.action_emailRegistrationFragment_to_loginFragment)
                     }
                 }
-            } else showToast(getString(R.string.add_info))
+            } else showToast(R.string.add_info)
         }
 
     }
@@ -62,5 +63,10 @@ class EmailRegistrationFragment : BaseFragmentBack() {
         APP_ACTIVITY.actionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
         APP_ACTIVITY.title = getString(R.string.new_account_register)
         mViewModel = ViewModelProvider(this).get(EmailRegistrationViewModel::class.java)
+    }
+
+    override fun onDestroy() {
+       _binding = null
+        super.onDestroy()
     }
 }

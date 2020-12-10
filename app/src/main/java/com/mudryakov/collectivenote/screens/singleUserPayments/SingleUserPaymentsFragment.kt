@@ -146,7 +146,8 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
         }) {
 
             mViewModel.deletePayment(payment) {
-                showToast(getString(R.string.payment_has_been_deleted_toast))
+
+                showToast(R.string.payment_has_been_deleted_toast)
                 CoroutineScope(IO).launch {
                     delay(200)
                     isAvailable = true

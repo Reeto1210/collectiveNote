@@ -37,8 +37,8 @@
         tools:ignore="Autofill,TextFields" />
 
 
-    <Spinner
-android:visibility="gone"
+    <com.mudryakov.collectivenote.utility.MySpinner
+        android:visibility="gone"
         android:id="@+id/room_choose_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

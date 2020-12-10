@@ -39,19 +39,21 @@ class MainFragment : Fragment() {
     override fun onResume() {
         super.onResume()
          if (!INTERNET) {
-            checkInternetConnection({ noInternetMode() }) {
-                if (REPOSITORY is AppRoomRepository)
-                {
-                   restartActivity()
-                }
-                else {
-                    INTERNET = true
-                    initialization()
-                }
-            }
+           noInternetAction()
         } else {
             initialization()
             restartIfInternetChanged()
+        }
+    }
+
+    private fun noInternetAction() {
+        checkInternetConnection({ noInternetMode() }) {
+            if (REPOSITORY is AppRoomRepository)
+                restartActivity()
+             else {
+                INTERNET = true
+                initialization()
+            }
         }
     }
 
@@ -125,7 +127,6 @@ class MainFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-
         mAdapter = null
         _Binding = null
         mViewModel.allMembers.removeObserver(mObserver)
