@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSel
         mDrawer = mBinding.myDrawer
         mNavView = mBinding.myNavView
         mNavView.itemIconTintList = null
-    }
+          }
 
 
     override fun onStart() {

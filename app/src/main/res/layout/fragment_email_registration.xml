@@ -1,59 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".screens.emailRegistration.EmailRegistrationFragment">
 
-    <TextView
-        android:id="@+id/registration_email_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/app_margin"
-        android:text="@string/title_email_registration"
-        android:textColor="@color/design_default_color_secondary_variant"
-        android:textSize="@dimen/Large_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/registration_input_email"
-        style="@style/input_text_style"
-        android:hint="@string/e_mail"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/registration_email_title"
-        tools:ignore="Autofill" />
+        <TextView
+            android:id="@+id/registration_email_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/app_margin"
+            android:text="@string/title_email_registration"
+            android:textColor="@color/design_default_color_secondary_variant"
+            android:textSize="@dimen/Large_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/registration_input_password"
-        style="@style/input_text_style"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_input_email"
-        tools:ignore="Autofill" />
+        <EditText
+            android:id="@+id/registration_input_email"
+            style="@style/input_text_style"
+            android:hint="@string/e_mail"
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registration_email_title"
+            tools:ignore="Autofill" />
 
-    <TextView
-        android:id="@+id/registration_email_btn"
-        style="@style/btn_style"
-        android:text="@string/email_registration_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/registration_input_password" />
-    <ProgressBar
-        android:visibility="gone"
-        android:id="@+id/email_registration_progress_bar"
-        android:layout_width="@dimen/progress_bar_size"
-        android:layout_height="@dimen/progress_bar_size"
-        android:layout_margin="@dimen/app_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_input_password" />
+        <EditText
+            android:id="@+id/registration_input_password"
+            style="@style/input_text_style"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registration_input_email"
+            tools:ignore="Autofill" />
+
+        <TextView
+            android:id="@+id/registration_email_btn"
+            style="@style/btn_style"
+            android:text="@string/email_registration_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registration_input_password" />
+
+        <ProgressBar
+            android:id="@+id/email_registration_progress_bar"
+            android:layout_width="@dimen/progress_bar_size"
+            android:layout_height="@dimen/progress_bar_size"
+            android:layout_margin="@dimen/app_margin"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registration_input_password" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

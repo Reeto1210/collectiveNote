@@ -88,6 +88,7 @@
     <!-- help -->
     <string name="my_email">E-mail для связи: mudryakov21@mail.ru</string>
     <string name="help_main_text">Душещипательная история почему програмист не должен умереть с голоду, а так же контактный емейл и прочая инфа. Чем в казино всё проебать, разраба лучше поддержать!</string>
+    <string name="donate_btn_text">Поддержать разработчика</string>
 
     <!-- internetCheck -->
     <string name="internet_alert_dialog_title">Отсутсвует интернет соединение</string>
@@ -124,7 +125,7 @@
     <string name="no">Нет</string>
     <string name="alert_dialog_message_delete">Вы действительно хотите удалить платёж от %1$s?</string>
     <string name="payment_has_been_deleted_toast">Платёж удалён</string>
-    <string name="donate_btn_text">Поддержать разработчика</string>
+
 
 
 </resources>

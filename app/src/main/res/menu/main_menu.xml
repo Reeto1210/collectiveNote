@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group >
-
-
+    <group>
         <item
             android:id="@+id/drawer_history"
             android:icon="@drawable/ic_history_drawer"
@@ -19,15 +17,13 @@
             android:id="@+id/drawer_info"
             android:icon="@drawable/ic_drawer_info"
             android:title="@string/room_info" />
-
-
     </group>
 
     <group android:id="@+id/bottom_menu">
-    <item
-        android:id="@+id/drawer_help"
-        android:icon="@drawable/ic_help"
-        android:title="@string/help" />
+        <item
+            android:id="@+id/drawer_help"
+            android:icon="@drawable/ic_help"
+            android:title="@string/help" />
     </group>
 
 </menu>
