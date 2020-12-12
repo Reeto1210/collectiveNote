@@ -17,7 +17,7 @@
         style="@style/single_payment_text_view"
         android:layout_width="0dp"
         android:layout_marginTop="@dimen/app_margin"
-        android:textColor="@color/design_default_color_secondary_variant"
+        android:textColor="@color/main_color_secondary_variant"
         android:textSize="@dimen/Large_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/single_payment_date"
-        tools:srcCompat="@tools:sample/avatars" />
-
+        tools:srcCompat="@tools:sample/avatars"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

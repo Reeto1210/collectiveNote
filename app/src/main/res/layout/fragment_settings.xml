@@ -57,7 +57,8 @@
         android:text="@string/continue_it"
         android:textSize="@dimen/normal_text"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/settings_edit_name_edit_text" />
 
     <TextView

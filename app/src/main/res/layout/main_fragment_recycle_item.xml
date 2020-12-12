@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/main_recycle_item_username"
-        android:layout_width="@dimen/history_item_width"
+        android:layout_width="@dimen/main_fragment_recycle_name_width"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/app_margin"
         android:textColor="@color/black"
@@ -25,6 +25,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/normal_text"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/main_recycle_item_username"
         app:layout_constraintTop_toTopOf="parent" />
 

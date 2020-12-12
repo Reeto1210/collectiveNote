@@ -21,9 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/app_margin"
+        android:layout_marginTop="4dp"
         android:background="@color/white"
         android:elevation="@dimen/app_elevation"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -31,6 +31,7 @@
         <TextView
             android:id="@+id/settings_room_name"
             style="@style/settings_room_info_text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,10 +44,12 @@
 
         <ImageView
             android:id="@+id/info_icon_pass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/standart_icon_size"
+            android:layout_height="@dimen/standart_icon_size"
             android:src="@drawable/info_pass_icon"
             app:layout_constraintBottom_toBottomOf="@+id/settings_room_pass"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/settings_room_pass"
             app:layout_constraintTop_toTopOf="@+id/settings_room_pass"
             tools:ignore="ContentDescription" />
@@ -54,6 +57,7 @@
         <TextView
             android:id="@+id/settings_room_members_value"
             style="@style/settings_room_info_text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settings_room_pass" />
 
@@ -61,26 +65,29 @@
         <TextView
             android:id="@+id/settings_room_total_payed"
             style="@style/settings_room_info_text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settings_room_members_value" />
 
         <TextView
             android:id="@+id/settings_total_value_of_payments"
             style="@style/settings_room_info_text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settings_room_total_payed" />
 
         <TextView
             android:id="@+id/settings_user_total_payment"
             style="@style/settings_room_info_text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settings_total_value_of_payments" />
         <!-- change currency will be available a next version -->
         <TextView
             android:id="@+id/settings_currency"
             style="@style/settings_room_info_text"
-            android:layout_marginStart="@dimen/app_margin"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settings_user_total_payment" />
 

@@ -12,7 +12,7 @@
     tools:context=".screens.addNewPayment.NewPaymentFragment">
 
     <EditText
-        android:maxLength="9"
+        android:maxLength="7"
         android:id="@+id/add_new_payment_summ"
         style="@style/input_text_style"
         android:hint="@string/sum"
@@ -32,13 +32,14 @@
         app:layout_constraintTop_toBottomOf="@id/add_new_payment_summ"
         tools:ignore="Autofill,TextFields" />
 
-    <TextView
-        android:id="@+id/add_new_payment_confirm"
-        style="@style/btn_style"
-        android:text="@string/confirm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_new_payment_description" />
+        <TextView
+            android:id="@+id/add_new_payment_confirm"
+            style="@style/btn_style"
+            android:text="@string/confirm"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_new_payment_description" />
 
     <ImageView
        android:padding="@dimen/very_small_padding"

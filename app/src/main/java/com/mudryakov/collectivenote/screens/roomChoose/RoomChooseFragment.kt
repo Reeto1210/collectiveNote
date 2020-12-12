@@ -35,6 +35,7 @@ class RoomChooseFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        hideKeyboard(APP_ACTIVITY)
         initialization()
         if (AppPreference.getSignInRoom()) {
             CURRENT_UID = AppPreference.getUserId()

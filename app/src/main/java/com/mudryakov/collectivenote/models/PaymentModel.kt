@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 
 import com.mudryakov.collectivenote.database.RoomDatabase.RoomtimeConverter
+import com.mudryakov.collectivenote.utility.EMPTY
 
 @Entity(tableName = "AllPayments")
 @TypeConverters(RoomtimeConverter::class)
@@ -15,7 +16,7 @@ data class PaymentModel(
     @ColumnInfo val description: String = "",
     @ColumnInfo var time: Any = "",
     @ColumnInfo var fromId: String = "",
-    @ColumnInfo  var imageUrl: String = "empty",
+    @ColumnInfo  var imageUrl: String = EMPTY,
     @ColumnInfo var fromName: String = ""
 ) {
     override fun equals(other: Any?): Boolean {

@@ -8,15 +8,14 @@
             android:id="@+id/drawer_history"
             android:icon="@drawable/ic_history_drawer"
             android:title="@string/history" />
-        <item
-
-            android:id="@+id/drawer_settings"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/settings" />
-        <item
+               <item
             android:id="@+id/drawer_info"
             android:icon="@drawable/ic_drawer_info"
             android:title="@string/room_info" />
+        <item
+            android:id="@+id/drawer_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings" />
     </group>
 
     <group android:id="@+id/bottom_menu">

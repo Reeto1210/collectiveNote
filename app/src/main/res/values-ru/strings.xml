@@ -47,7 +47,6 @@
         <item>EUR - €</item>
     </string-array>
 
-
     <!-- navDrawer -->
     <string name="bottom_sheet_history">История вложений</string>
     <string name="settings">Настройки</string>
@@ -72,7 +71,6 @@
     <string name="total_user_payed">Ваши траты: %1$s%2$s</string>
     <string name="room_info">Информация о комнате</string>
     <string name="room_pass">Пароль: %1$s</string>
-
      <string name="info_password_btn">Напомнить пароль</string>
     <string name="room_current">Текущая валюта:%1$s</string>
 

@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 object AppPreference {
-    private const val FAIL = "fail"
+
     private const val namePref = "preference"
     private const val USER_ID = "userId"
     private const val USER_NAME = "userName"
@@ -14,7 +14,7 @@ object AppPreference {
     private const val TOTAL_PAY = "totalPay"
     private const val ROOM_NAME = "roomName"
     private const val ROOM_CURRENCY = "roomCurrency"
-    private const val LOCALE = "locale"
+
     private lateinit var mPreference: SharedPreferences
 
 

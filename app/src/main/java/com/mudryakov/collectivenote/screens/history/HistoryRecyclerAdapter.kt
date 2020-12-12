@@ -8,13 +8,15 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.utility.*
 import kotlinx.android.synthetic.main.history_recycle_item.view.*
 
-class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.MyViewHolder>() {
+class HistoryRecyclerAdapter : RecyclerView.Adapter<HistoryRecyclerAdapter.MyViewHolder>() {
     var arOfOpened = arrayListOf<Int>()
     var listOfPayments = mutableListOf<PaymentModel>()
 
@@ -38,20 +40,23 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.MyV
         val curPayment = listOfPayments[position]
         holder.fromName.text = curPayment.fromName
         holder.description.text = curPayment.description
-        holder.sum.text = APP_ACTIVITY.getString(R.string.sum_currency,curPayment.summ,
-            ROOM_CURRENCY )
+        holder.sum.text = APP_ACTIVITY.getString(
+            R.string.sum_currency, curPayment.summ,
+            ROOM_CURRENCY
+        )
         holder.date.text = curPayment.time.toString().transformToDate()
 
         if (arOfOpened.contains(position)) {
             holder.fullScreenImage.makeVisible()
             holder.fullScreenImage.setImage(curPayment.imageUrl)
         } else holder.fullScreenImage.makeGone()
-        if (curPayment.imageUrl != "empty") {
+        if (curPayment.imageUrl != EMPTY) {
             holder.attachedImage.setImageResource(R.drawable.ic_photo_coloring)
         } else {
             holder.attachedImage.setImageResource(R.drawable.ic_photo)
         }
-    setAnimation(holder.itemView)
+
+
     }
 
     override fun getItemCount(): Int = listOfPayments.size
@@ -66,24 +71,25 @@ class HistoryRecyclerAdapter() : RecyclerView.Adapter<HistoryRecyclerAdapter.MyV
 
     override fun onViewAttachedToWindow(holder: MyViewHolder) {
         val curPayment = listOfPayments[holder.adapterPosition]
-        holder.baseLayout.setOnClickListener {
-            if (holder.fullScreenImage.visibility == View.GONE && curPayment.imageUrl != "empty") {
-                holder.fullScreenImage.makeVisible()
-                if (holder.adapterPosition != listOfPayments.lastIndex) {
+        if (curPayment.imageUrl != EMPTY)
+            holder.baseLayout.setOnClickListener {
+                if (holder.fullScreenImage.visibility == View.GONE) {
                     arOfOpened.add(holder.adapterPosition)
+                    holder.fullScreenImage.setImage(curPayment.imageUrl)
+                } else {
+                    arOfOpened.remove(holder.adapterPosition)
                 }
-                holder.fullScreenImage.setImage(curPayment.imageUrl)
-            } else {
-                holder.fullScreenImage.makeGone()
-                arOfOpened.remove(holder.adapterPosition)
-            }
-        }
+                notifyItemChanged(holder.adapterPosition)
+                       }
+                 setAnimation(holder.itemView)
     }
 
     override fun onViewDetachedFromWindow(holder: MyViewHolder) {
         holder.baseLayout.setOnClickListener {}
         super.onViewDetachedFromWindow(holder)
     }
+
+
 }
 
 private fun setAnimation(viewToAnimate: View) {

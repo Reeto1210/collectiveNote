@@ -100,7 +100,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.ninenox.kotlinlocalemanager:kotlin-locale-manager:1.0.0'
-
-    implementation 'net.objecthunter:exp4j:0.4.8'
-
+   implementation 'net.objecthunter:exp4j:0.4.8'
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
 }

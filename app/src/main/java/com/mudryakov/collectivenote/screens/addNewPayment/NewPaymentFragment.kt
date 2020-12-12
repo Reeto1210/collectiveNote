@@ -58,8 +58,11 @@ class NewPaymentFragment : BaseFragmentBack() {
         }
         mBinding.addPaymentAttachImage.setOnClickListener {
             CropImage.activity()
+                .setAllowFlipping(false)
+                .setAllowRotation(false)
+                .setCropMenuCropButtonTitle(getString(R.string.continue_it))
                 .setAspectRatio(1, 1)
-                .setRequestedSize(600, 600)
+                .setRequestedSize(CROP_IMAGE_SIZE, CROP_IMAGE_SIZE)
                 .start(APP_ACTIVITY, this)
         }
     }

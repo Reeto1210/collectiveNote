@@ -11,7 +11,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
     tools:context=".screens.login.LoginFragment">
 
@@ -24,11 +24,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/first_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
 
         <TextView
             android:id="@+id/login_email_title"
@@ -36,11 +38,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/app_margin"
             android:text="@string/title_email_login"
-            android:textColor="@color/design_default_color_secondary_variant"
+            android:textColor="@color/main_color_secondary_variant"
             android:textSize="@dimen/Large_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <EditText
 
             android:id="@+id/login_input_email"
@@ -70,7 +73,7 @@
             android:layout_margin="@dimen/app_margin"
             android:gravity="center"
             android:text="@string/Use_your_Google_account"
-            android:textColor="@color/design_default_color_secondary_variant"
+            android:textColor="@color/main_color_secondary_variant"
             android:textSize="@dimen/small_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +97,6 @@
             android:background="@drawable/background_for_custom_buttons"
             android:elevation="@dimen/app_elevation"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.543"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_tip">
 
@@ -140,7 +142,6 @@
             app:layout_constraintVertical_bias="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
 

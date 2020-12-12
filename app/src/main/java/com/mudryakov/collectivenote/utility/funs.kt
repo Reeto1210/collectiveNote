@@ -119,10 +119,6 @@ fun exceptionEmailRegistrationToast(exText: String) {
 }
 
 fun calculate(firstString: String, secondString: String, sign: String = " + "): String {
-    //var firstString = firstStringIn
-    //if (firstString == "0") firstString = ""
-  //  var secondString = secondStringIn
-    //if (secondString == "0") secondString = ""
     val exp = ExpressionBuilder(firstString + sign + secondString).build()
     return if (ROOM_CURRENCY == APP_ACTIVITY.getString(R.string.RUB))
         exp.evaluate().toString().substringBefore(".")

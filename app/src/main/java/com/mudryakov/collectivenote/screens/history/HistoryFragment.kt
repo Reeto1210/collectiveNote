@@ -50,8 +50,6 @@ class HistoryFragment : BaseFragmentBack() {
             mBinding.historyProgressBar.makeInvisible()
             if (it.isEmpty()) mBinding.historyListIsEmpty.makeVisible()
             else mBinding.historyListIsEmpty.makeInvisible()
-
-
         }
         mViewModel.paymentList.observe(this, mPaymentObserver)
     }
