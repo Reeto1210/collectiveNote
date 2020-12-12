@@ -9,6 +9,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
 import com.mudryakov.collectivenote.R
@@ -50,11 +51,6 @@ private lateinit var ON_REGISTRATION_COMPLETE: () -> Unit
 private lateinit var ON_REGISTRATION_FAIL: () -> Unit
 
 
-
-
-
-
-
 fun logIn(type: String, onFail: () -> Unit, onCompelete: () -> Unit) {
     ON_REGISTRATION_COMPLETE = onCompelete
     ON_REGISTRATION_FAIL = onFail
@@ -67,31 +63,32 @@ fun logIn(type: String, onFail: () -> Unit, onCompelete: () -> Unit) {
 
 
 fun logInEmail() {
-       AUTH.signInWithEmailAndPassword(EMAIL, PASSWORD)
+    AUTH.signInWithEmailAndPassword(EMAIL, PASSWORD)
         .addOnSuccessListener {
-           AppPreference.setUserId( AUTH.currentUser?.uid.toString())
+            AppPreference.setUserId(AUTH.currentUser?.uid.toString())
             ON_REGISTRATION_COMPLETE()
         }.addOnFailureListener { ex ->
-           ON_REGISTRATION_FAIL()
-           exceptionEmailLoginToast(ex)
+            ON_REGISTRATION_FAIL()
+            exceptionEmailLoginToast(ex)
         }
 }
 
-fun createNewEmailUser(onFail: () -> Unit,onSuccess: () -> Unit) {
-   ON_REGISTRATION_COMPLETE = onSuccess
+fun createNewEmailUser(onFail: () -> Unit, onSuccess: () -> Unit) {
+    ON_REGISTRATION_COMPLETE = onSuccess
     ON_REGISTRATION_FAIL = onFail
     AUTH.createUserWithEmailAndPassword(EMAIL, PASSWORD).addOnSuccessListener {
-        AppPreference.setUserId( AUTH.currentUser?.uid.toString())
+        AppPreference.setUserId(AUTH.currentUser?.uid.toString())
         pushUserToFirebase()
     }
-        .addOnFailureListener {ex->
+        .addOnFailureListener { ex ->
             ON_REGISTRATION_FAIL()
-                      exceptionEmailRegistrationToast(ex.message.toString())
+            exceptionEmailRegistrationToast(ex.message.toString())
         }
 }
 
 fun logInGoogle() {
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestIdToken(APP_ACTIVITY.getString(R.string.default_web_client_id))
         .requestEmail()
         .build()
     val mGoogleSingInClient = GoogleSignIn.getClient(APP_ACTIVITY, gso)
@@ -103,14 +100,26 @@ fun logInGoogle() {
 fun handleSignInResult(task: Task<GoogleSignInAccount>) {
     try {
         val account: GoogleSignInAccount = task.getResult(ApiException::class.java)!!
-        USERNAME = account.displayName.toString()
-        AppPreference.setUserId(account.id.toString())
-        pushUserToFirebase()
+
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        AUTH.signInWithCredential(credential)
+            .addOnSuccessListener {
+                USERNAME = account.displayName.toString()
+                AppPreference.setUserId(AUTH?.currentUser?.uid!!)
+                pushUserToFirebase()
+            }
+            .addOnFailureListener {
+                ON_REGISTRATION_FAIL()
+                showToast(R.string.something_going_wrong)
+            }
+
+
     } catch (e: ApiException) {
         ON_REGISTRATION_FAIL()
         showToast(R.string.something_going_wrong)
     }
 }
+
 
 fun pushUserToFirebase() {
     CURRENT_UID = AppPreference.getUserId()
@@ -132,7 +141,7 @@ fun pushUserToFirebase() {
 fun pushRoomToFirebase(
     roomName: String,
     roomPass: String,
-    currencySign:String,
+    currencySign: String,
     onFail: () -> Unit,
     function: (String) -> Unit
 ) {
@@ -175,7 +184,7 @@ fun updateUserRoomId(roomKey: String, onFail: () -> Unit, onSuccess: () -> Unit)
                     updatePreferenceCurrentPay { onSuccess() }
                 }
                 .addOnFailureListener {
-                   showToast(R.string.something_going_wrong)
+                    showToast(R.string.something_going_wrong)
                     onFail()
                 }
         }
@@ -196,7 +205,7 @@ fun updatePreferenceCurrentPay(function: () -> Unit) {
                 }
         }
 
-    }
+}
 
 fun updateAllUserPayments() {
     findAllUsersRooms { listOfId ->
