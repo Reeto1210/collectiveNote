@@ -9,6 +9,7 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.databinding.FragmentHelpBinding
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
 import com.mudryakov.collectivenote.utility.APP_ACTIVITY
+import java.math.BigDecimal
 
 
 class HelpFragment : BaseFragmentBack() {

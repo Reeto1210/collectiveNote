@@ -42,6 +42,7 @@ class NewPaymentFragment : BaseFragmentBack() {
             var sum = mBinding.addNewPaymentSumm.text.toString().replace(',','.')
             val description = mBinding.addNewPaymentDescription.text.toString()
             try {
+
                 sum = convertSum(sum)
                 if (sum.isNotEmpty() && description.isNotEmpty())
                     checkInternetConnection({restartActivity()}) {

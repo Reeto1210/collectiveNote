@@ -66,7 +66,7 @@ class MainFragment : Fragment() {
 
 
     private fun initCurrency() {
-        if (AppPreference.getCurrency() == "fail") {
+        if (AppPreference.getCurrency() == FAIL) {
             REF_DATABASE_ROOT.child(NODE_ROOM_DATA).child(CURRENT_ROOM_UID).child(
                 CHILD_ROOM_CURRENCY
             ).addMySingleListener {
@@ -85,10 +85,9 @@ class MainFragment : Fragment() {
 
     private fun initObservers() {
         mObserver = Observer { list ->
-            var totalSum = ""
+            var totalSum = "0.00"
             list.forEach {
-                totalSum = calculate(totalSum, it.totalPayAtCurrentRoom)
-
+                totalSum = calculateSum(totalSum, it.totalPayAtCurrentRoom)
                 mAdapter?.addItem(it)
             }
             mBinding.loadingLayout.visibility = View.GONE

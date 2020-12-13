@@ -193,7 +193,7 @@ fun updateUserRoomId(roomKey: String, onFail: () -> Unit, onSuccess: () -> Unit)
 fun updatePreferenceCurrentPay(function: () -> Unit) {
     REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_TOTAL_PAY)
         .child(CURRENT_ROOM_UID).addMySingleListener {
-            val totalPay = if (it.value.toString() == "null") "0" else it.value.toString()
+            val totalPay = if (it.value.toString() == "null") "0.00" else it.value.toString()
             AppPreference.setTotalSumm(totalPay)
             REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
                 .child(CHILD_TOTALPAY_AT_CURRENT_ROOM)

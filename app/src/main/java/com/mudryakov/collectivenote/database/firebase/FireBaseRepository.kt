@@ -25,13 +25,13 @@ class FireBaseRepository : AppDatabaseRepository {
             .child(payment.firebaseId).removeValue()
             .addOnFailureListener { showToast(R.string.something_going_wrong)}
             .addOnSuccessListener {
-                val totalSum = calculate(AppPreference.getTotalSumm(), payment.summ, "-")
+                val totalSum = calculateMinus(AppPreference.getTotalSumm(), payment.summ)
+
                 refCurrentUser.child(CHILD_TOTAL_PAY).child(CURRENT_ROOM_UID).setValue(totalSum)
                     .addOnSuccessListener {
                         refCurrentUser.child(
                             CHILD_TOTALPAY_AT_CURRENT_ROOM
                         ).setValue(totalSum).addOnSuccessListener {
-
                             AppPreference.setTotalSumm(totalSum)
                             REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID)
                                 .setValue(payment.firebaseId)
@@ -107,7 +107,7 @@ class FireBaseRepository : AppDatabaseRepository {
 
 
     override fun addNewPayment(payment: PaymentModel, onSuccess: () -> Unit) {
-        val totalSum = calculate(AppPreference.getTotalSumm(), payment.summ)
+        val totalSum = calculateSum(AppPreference.getTotalSumm(), payment.summ)
         val refCurrentRoom = REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID)
         val refCurrentUser = REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
         val key = refCurrentRoom.push().key.toString()

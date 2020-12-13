@@ -99,7 +99,7 @@ object AppPreference {
     }
 
     fun getTotalSumm(): String {
-        return mPreference.getString(TOTAL_PAY, "0").toString()
+        return mPreference.getString(TOTAL_PAY, "0.00").toString()
     }
 
     fun setRoomName(name: String) {

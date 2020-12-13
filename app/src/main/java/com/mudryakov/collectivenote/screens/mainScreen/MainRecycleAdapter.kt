@@ -48,22 +48,19 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>
 
     override fun getItemCount() = list.size
 
-    fun addItem(user: UserModel) {
-        var iteral = -1
-        if (!list.contains(user))
+    fun addItem(user: UserModel) =
+        if (!list.contains(user)) {
             addUserToRecycle(user)
-        else {
-            list.forEach {
-                if (it.firebaseId == user.firebaseId && it.totalPayAtCurrentRoom != user.totalPayAtCurrentRoom)
-                    iteral = list.indexOf(it)
+            notifyItemInserted(list.indexOf(user))
+        } else {
+            list.forEachIndexed { i: Int, userModel: UserModel ->
+                if (userModel.firebaseId == user.firebaseId && userModel.totalPayAtCurrentRoom != user.totalPayAtCurrentRoom) {
+                    userModel.totalPayAtCurrentRoom = user.totalPayAtCurrentRoom
+                    notifyItemChanged(i)
+                }
             }
-            if (iteral != -1) {
-                list.removeAt(iteral)
-                notifyItemRemoved(iteral)
-                addUserToRecycle(user)
-            }
+
         }
-    }
 
     private fun addUserToRecycle(user: UserModel) {
         list.add(user)

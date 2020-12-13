@@ -20,7 +20,6 @@ import com.mudryakov.collectivenote.database.firebase.NODE_PAYMENT_IMAGES
 import com.mudryakov.collectivenote.database.firebase.REF_DATABASE_STORAGE
 import com.mudryakov.collectivenote.database.firebase.REPOSITORY
 import com.squareup.picasso.Picasso
-import net.objecthunter.exp4j.ExpressionBuilder
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -118,13 +117,38 @@ fun exceptionEmailRegistrationToast(exText: String) {
     showToast(toastTextId)
 }
 
-fun calculate(firstString: String, secondString: String, sign: String = " + "): String {
-    val exp = ExpressionBuilder(firstString + sign + secondString).build()
-    return if (ROOM_CURRENCY == APP_ACTIVITY.getString(R.string.RUB))
-        exp.evaluate().toString().substringBefore(".")
-    else exp.evaluate().toString()
+fun calculateSum(firstString: String, secondString: String): String {
+    val n1 = firstString.replace(".", "").toInt()
+    val n2 = secondString.replace(".", "").toInt()
+
+    return if (ROOM_CURRENCY == APP_ACTIVITY.getString(R.string.RUB)) (n1 + n2).toString()
+    else {
+
+        val result = (n1 + n2).toString()
+              if (result == "0") return "0.00"
+     val  i = result.dropLast(2) + "." + result.substring(result.lastIndex - 1
+     )
+        return i
+
+    }
 
 }
+
+fun calculateMinus(firstString: String, secondString: String): String {
+    val n1 = firstString.replace(".", "").toInt()
+    val n2 = secondString.replace(".", "").toInt()
+    return if (ROOM_CURRENCY == APP_ACTIVITY.getString(R.string.RUB)) (n1 - n2).toString()
+    else {
+
+        val result = (n1 - n2).toString()
+        if (result == "0") return "0.00"
+        return result.dropLast(2) + "." + result.substring(result.lastIndex - 1)
+
+    }
+
+}
+
+
 
 fun initHomeUpFalse() {
     APP_ACTIVITY.actionBar?.setDisplayHomeAsUpEnabled(false)
@@ -147,6 +171,7 @@ fun buildRoomChooseDialog(click: (String) -> Unit) {
 
 fun convertSum(sum: String): String {
     sum.toDouble()
+    if (sum[0] == '0' && sum[1] != '.') throw Exception("")
     if (sum[0] == '-' || sum[0] == '.') throw Exception("")
     return if (ROOM_CURRENCY == APP_ACTIVITY.getString(R.string.RUB)) {
         sum.substringBefore(".")
