@@ -5,62 +5,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.emailRegistration.EmailRegistrationFragment">
+    tools:context=".screens.emailLogin.EmailLoginFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/registration_email_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/app_margin"
-            android:text="@string/title_email_registration"
-            android:textColor="@color/main_color_secondary_variant"
-            android:textSize="@dimen/Large_text"
+            android:id="@+id/login_email_title"
+            style="@style/title_style"
+            android:text="@string/title_email_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/registration_input_email"
+            android:id="@+id/login_input_email"
             style="@style/input_text_style"
             android:hint="@string/e_mail"
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/registration_email_title"
+            app:layout_constraintTop_toBottomOf="@id/login_email_title"
             tools:ignore="Autofill" />
 
         <EditText
-            android:id="@+id/registration_input_password"
+            android:id="@+id/login_input_password"
             style="@style/input_text_style"
             android:hint="@string/password"
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registration_input_email"
+            app:layout_constraintTop_toBottomOf="@+id/login_input_email"
             tools:ignore="Autofill" />
 
         <TextView
-            android:id="@+id/registration_email_btn"
+            android:id="@+id/login_email_btn"
             style="@style/btn_style"
-            android:text="@string/email_registration_btn"
+            android:text="@string/email_login_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/registration_input_password" />
+            app:layout_constraintTop_toBottomOf="@id/login_input_password" />
 
         <ProgressBar
-            android:id="@+id/email_registration_progress_bar"
+            android:id="@+id/email_login_progress_bar"
             android:layout_width="@dimen/progress_bar_size"
             android:layout_height="@dimen/progress_bar_size"
             android:layout_margin="@dimen/app_margin"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registration_input_password" />
+            app:layout_constraintTop_toBottomOf="@+id/login_input_password" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

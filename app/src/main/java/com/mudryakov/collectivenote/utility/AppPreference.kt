@@ -10,7 +10,7 @@ object AppPreference {
     private const val USER_NAME = "userName"
     private const val IS_SIGN_IN = "isSignIn"
     private const val IS_SIGN_IN_ROOM = "isSignInRoom"
-    private const val ROOM_ID = "roomId"
+    private const val GROUP_ID = "roomId"
     private const val TOTAL_PAY = "totalPay"
     private const val ROOM_NAME = "roomName"
     private const val ROOM_CURRENCY = "roomCurrency"
@@ -51,9 +51,9 @@ object AppPreference {
             .apply()
     }
 
-    fun setRoomId(roomId: String) {
+    fun setGroupId(roomId: String) {
         mPreference.edit()
-            .putString(ROOM_ID, roomId)
+            .putString(GROUP_ID, roomId)
             .apply()
     }
 
@@ -89,7 +89,7 @@ object AppPreference {
     }
 
     fun getRoomId(): String {
-        return mPreference.getString(ROOM_ID, FAIL).toString()
+        return mPreference.getString(GROUP_ID, FAIL).toString()
     }
 
     fun setTotalSumm(s: String) {
@@ -102,7 +102,7 @@ object AppPreference {
         return mPreference.getString(TOTAL_PAY, "0.00").toString()
     }
 
-    fun setRoomName(name: String) {
+    fun setGroupName(name: String) {
         mPreference.edit().putString(ROOM_NAME, name)
             .apply()
     }

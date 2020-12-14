@@ -1,131 +1,126 @@
 <resources>
     <!-- general -->
-    <string name="app_name">Collective note</string>
-    <string name="common_app_name">Рабочее название</string>
-    <string name="add_info">Заполните все поля</string>
-    <string name="total_sum_payed">Всего потрачено: %1$s%2$s</string>
-    <string name="list_of_payments_is_empty">Список платежей пуст</string>
-    <string name="error_in_download">Произошёл сбой при скачивании файла</string>
-    <string name="trouble_with_download">Ошибка загрузки</string>
+    <string name="app_name">Collective Balance</string>
+    <string name="add_info">Fill in all the fields </string>
+    <string name="total_sum_payed">Total paid: %1$s%2$s</string>
+    <string name="list_of_payments_is_empty">List is empty</string>
+    <string name="error_in_download">Download error</string>
+    <string name="trouble_with_download">Download error</string>
     <string name="sum_currency">%1$s%2$s</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="loading_main">Название загрузки</string>
-    <string name="no_internet_toast">Отсутсвует интернет соединение</string>
-    <string name="ask_for_double_click_toast">Нажмите ещё раз для выхода</string>
-
-
-    <!-- login -->
-    <string name="title_email_login">e-mail аутентификация</string>
-    <string name="Use_your_Google_account">Использовать свой Google аккаунт</string>
-    <string name="Enter">Войти</string>
+    <string name="loading_main">Loading</string>
+    <string name="no_internet_toast">No internet connection</string>
+    <string name="ask_for_double_click_toast">press again to exit</string>
     <string name="e_mail">E-mail</string>
-    <string name="password">Пароль</string>
-    <string name="login_toolbar_title">Добро пожаловать</string>
-    <string name="login_email_btn">Войти по e-mail</string>
-    <string name="enter_your_name">Введите имя</string>
-    <string name="continue_it">Продолжить</string>
-    <string name="enter_name">Введите отображаемое имя</string>
-    <string name="room_name_hint">Название комнаты</string>
-    <string name="login_register_email">У меня нет аккаунта</string>
+    <string name="password">Password</string>
+    <string name="continue_it">Continue</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_help">Help</string>
+
+    <!-- registration -->
+    <string name="Use_your_Google_account">Use Google account</string>
+    <string name="Enter">Enter</string>
+    <string name="ok">OK</string>
+    <string name="registration_toolbar_title">Welcome</string>
+    <string name="registration_email_btn">Registration</string>
+    <string name="i_have_acc_registration_fragment">I have an account</string>
+    <string name="enter_your_name">Name</string>
+    <string name="enter_name">Group member name</string>
 
     <!-- roomChoose -->
-    <string name="choose_currency">Выберите валюту</string>
-    <string name="room_enter_title_text">Введите данные комнаты</string>
-    <string name="choose_room_alert_dialog_text">В этом окне вы можете создать свою комнату и пригласить туда друзей, либо присоединиться к уже созданой комнате</string>
-    <string name="choose_room_alert_dialog_title">Выберите действие</string>
-    <string name="choose_room_alert_dialog_positive_button">Создать</string>
-    <string name="choose_room_alert_dialog_negative_button">Присоединиться</string>
-    <string name="create_room">Создать комнату</string>
-    <string name="join_room">Присоединиться к комнате</string>
-    <string name="this_name_busy">Это название занятно</string>
-    <string name="check_room_acc">Проверьте данные комнаты</string>
-    <string name="toast_join_room">Вы присоедились к комнате %1$s"</string>
-    <string name="toast_create_room">Вы создали комнату %1$s"</string>
+    <string name="group_name_hint">Group login</string>
+    <string name="choose_currency">Choose currency</string>
+    <string name="room_enter_title_text">Group login/pass </string>
+    <string name="choose_room_alert_dialog_text">At this window u can create group and invite your friends, or join to created room</string>
+    <string name="choose_room_alert_dialog_title">Choose action</string>
+    <string name="choose_room_alert_dialog_positive_button">Create</string>
+    <string name="choose_room_alert_dialog_negative_button">Join</string>
+    <string name="create_room">Create group</string>
+    <string name="join_group">Join group</string>
+    <string name="this_name_busy">this login is busy</string>
+    <string name="check_room_acc">Check group login/pass</string>
+    <string name="toast_join_group">You have joined the group %1$s"</string>
+    <string name="toast_create_group">You have joined the group %1$s"</string>
     <string-array name="currency_array">
-        <item>Валюта</item>
+        <item>Currency</item>
         <item>RUB - ₽</item>
         <item>USD - $</item>
         <item>EUR - €</item>
     </string-array>
 
 
-    <!-- navDrawer -->
-    <string name="bottom_sheet_history">История вложений</string>
-    <string name="settings">Настройки</string>
-    <string name="help">Помощь</string>
-
     <!-- addNewPayment -->
-    <string name="add_new_payment_title">Добавление нового платежа</string>
-    <string name="sum">Сумма</string>
-    <string name="confirm">Подтвердить</string>
-    <string name="add_new_payment_description_hint">Назначение</string>
-    <string name="toast_payment_added">Платёж добавлен</string>
-    <string name="catch_payment_sum">Неверный формат суммы</string>
+    <string name="add_new_payment_title">Add new payment</string>
+    <string name="sum">Sum</string>
+    <string name="confirm">Сonfirm</string>
+    <string name="add_new_payment_description_hint">Description</string>
+    <string name="toast_payment_added">Payment has been added</string>
+    <string name="catch_payment_sum">Invalid amount</string>
 
     <!-- fragmentHistory -->
-    <string name="history">История</string>
+    <string name="history">History</string>
 
     <!-- fragmentInfo -->
-    <string name="value_members">Количество участников: %1$d</string>
-    <string name="room_name">Комната: %1$s</string>
-    <string name="total_members_ar_room">Пользователей в комнате: %1$d</string>
-    <string name="total_value_of_payments">Всего платежей: %1$d</string>
-    <string name="total_user_payed">Ваши траты: %1$s%2$s</string>
-    <string name="room_info">Информация о комнате</string>
-    <string name="room_pass">Пароль: %1$s</string>
-         <string name="info_password_btn">Напомнить пароль</string>
-    <string name="room_current">Текущая валюта:%1$s</string>
+
+    <string name="room_name">Group: %1$s</string>
+    <string name="total_members_ar_room">Users in group: %1$d</string>
+    <string name="total_value_of_payments">number of payments: %1$d</string>
+    <string name="total_user_payed">you spent: %1$s%2$s</string>
+    <string name="room_info">Group info</string>
+    <string name="room_pass">Password: %1$s</string>
+    <string name="info_password_btn">Remind a password</string>
+    <string name="room_current">Current currency:%1$s</string>
 
     <!-- settings -->
-    <string name="user_name">Имя пользователя : %1$s</string>
-    <string name="edit">Редактировать</string>
-    <string name="name_changed">Имя изменено</string>
-    <string name="name_cant_be_empty_toast">Имя не может быть пустым</string>
-    <string name="exit_room">Выйти из комнаты</string>
-    <string name="Change_acc">Сменить аккаунт</string>
-    <string name="settings_change_language_btn">Изменить язык</string>
+    <string name="user_name">Username : %1$s</string>
+    <string name="edit">Change name</string>
+    <string name="name_changed">Name has been changed</string>
+    <string name="name_cant_be_empty_toast">Username can not be empty</string>
+    <string name="exit_room">Leave group</string>
+    <string name="Change_acc">Change account</string>
+    <string name="settings_change_language_btn">Change language</string>
+    <string name="choose_ur_language">Choose language</string>
 
     <!-- help -->
-    <string name="my_email">E-mail для связи: mudryakov21@mail.ru</string>
-    <string name="help_main_text">Душещипательная история почему програмист не должен умереть с голоду, а так же контактный емейл и прочая инфа. Чем в казино всё проебать, разраба лучше поддержать!</string>
-    <string name="donate_btn_text">Поддержать разработчика</string>
+    <string name="my_email">Contact e-mail: mudryakov21@mail.ru</string>
+    <string name="help_main_text">Thank you for choosing my application, I hope it will be comfortable and useful for You. If you have any suggestions, comments, or any other questions, please contact me</string>
+    <string name="donate_btn_text">make a donation</string>
 
     <!-- internetCheck -->
-    <string name="internet_alert_dialog_title">Отсутсвует интернет соединение</string>
-    <string name="internet_alert_dialog_message">Проверьте подключение к интернету и попробуйте снова</string>
-    <string name="ok">Ок</string>
+    <string name="internet_alert_dialog_title">No internet connection</string>
+    <string name="internet_alert_dialog_message">Check your Internet connection and try again</string>
 
-    <!-- emailRegistration -->
-    <string name="email_registration_btn">Зарегистрироваться</string>
-    <string name="new_account_register">Создать аккаунт</string>
-    <string name="title_email_registration">Введите e-mail и пароль</string>
 
-    <!-- exeptionTexts -->
-    <string name="invalid_password">Неверный пароль</string>
-    <string name="exception_check_credentials">Проверьте правильность данных</string>
-    <string name="exception_login_user_invalid">Такого пользователя не существует</string>
-    <string name="something_going_wrong">Что то пошло не так</string>
-    <string name="exception_check_email">Проверьте правильность e-mail адреса</string>
-    <string name="exception_pass_must_be_six_letters">Длинна пароля должна быть не меннее 6 символов</string>
-    <string name="exception_email_busy">Этот e-mail адрес занят</string>
+    <!-- emailLogin -->
+    <string name="email_login_btn">Login</string>
+    <string name="new_account_login">E-mail login</string>
+    <string name="title_email_login">Enter your email and password</string>
+
+    <!-- exceptionTexts -->
+    <string name="invalid_password">Wrong password</string>
+    <string name="exception_check_credentials">Check that the data is correct</string>
+    <string name="exception_login_user_invalid">This user is not registered</string>
+    <string name="something_going_wrong">Oops something going wrong</string>
+    <string name="exception_check_email">Check e-mail address</string>
+    <string name="exception_pass_must_be_six_letters">The password must be at least 6 characters</string>
+    <string name="exception_email_busy">This e-mail is busy</string>
 
     <!-- currency -->
     <string name="RUB">₽</string>
     <string name="USD">$</string>
     <string name="EUR">€</string>
 
+    <!-- singlePayments -->
+    <string name="confirm_delete">Confirm delete</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="alert_dialog_message_delete">Do you really want to delete a payment from %1$s?</string>
+    <string name="payment_has_been_deleted_toast">Payment has been deleted</string>
+    <string name="toast_at_delete_menu">The function is unlocked, swipe the payment to the right to delete it</string>
+    <string name="delete_payment_menu">Delete payments</string>
+
     <!-- languages -->
     <string name="language_english" translatable="false">English</string>
     <string name="language_russian" translatable="false">Русский</string>
-    <string name="choose_ur_language">Выберите язык</string>
-
-    <!-- singlePayments -->
-    <string name="confirm_delete">Подтвердите удаление</string>
-    <string name="yes">Да</string>
-    <string name="no">Нет</string>
-    <string name="alert_dialog_message_delete">Вы действительно хотите удалить платёж от %1$s?</string>
-    <string name="payment_has_been_deleted_toast">Платёж удалён</string>
-
 
 
 </resources>

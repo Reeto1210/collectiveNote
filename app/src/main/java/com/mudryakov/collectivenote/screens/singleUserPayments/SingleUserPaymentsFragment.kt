@@ -1,11 +1,11 @@
 package com.mudryakov.collectivenote.screens.singleUserPayments
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.graphics.*
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
 class SingleUserPaymentsFragment : BaseFragmentBack() {
     private var _Binding: SinglePaymentFragmentBinding? = null
     private val mBinding get() = _Binding!!
@@ -30,7 +31,7 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
     lateinit var mRecycle: RecyclerView
     lateinit var mPaymentObserver: Observer<List<PaymentModel>>
     var userId = ""
-    var isAvailable = true
+    var isAvailable = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +50,7 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
     }
 
     private fun initObserver() {
-              mViewModel = ViewModelProvider(this).get(SingleUserPaymentViewModel::class.java)
+        mViewModel = ViewModelProvider(this).get(SingleUserPaymentViewModel::class.java)
         mPaymentObserver = Observer {
             var isEmpty = true
             it.forEach { payment ->
@@ -60,9 +61,6 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
                 }
                 mRecycle.smoothScrollToPosition(0)
             }
-
-
-
             mBinding.singlePaymentProgressBar.makeInvisible()
             if (isEmpty) mBinding.singlePaymentsEmpty.makeVisible()
             else mBinding.singlePaymentsEmpty.makeGone()
@@ -70,62 +68,100 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
         mViewModel.singleUserPayments.observe(this, mPaymentObserver)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initRecycle() {
         mAdapter = SinglePaymentAdapter()
         mRecycle = mBinding.singlePaymentsRecycle
         mRecycle.layoutManager = LinearLayoutManager(APP_ACTIVITY)
         mRecycle.adapter = mAdapter
         if (userId == CURRENT_UID) {
-
-            val mItemTouchHelper = object :
-                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-
-                override fun isItemViewSwipeEnabled(): Boolean {
-                    return isAvailable
-                }
-
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val position = viewHolder.adapterPosition
-                    val currentPayment =
-                        mAdapter?.listOfpayments?.get(position)
-                    val dialogBuilder = AlertDialog.Builder(APP_ACTIVITY)
-                    dialogBuilder
-                        .setTitle(getString(R.string.confirm_delete))
-                        .setMessage(
-                            getString(
-                                R.string.alert_dialog_message_delete,
-                                currentPayment?.time?.toString()?.transformToDate()
-                            )
-                        )
-                        .setPositiveButton(getString(R.string.yes)) { _: DialogInterface, _: Int ->
-                            mAdapter?.deleteItem(position)
-                            if (currentPayment != null) {
-                                deletePaymentFromFirebase(currentPayment)
-                            }
-                        }
-                        .setNegativeButton(getString(R.string.no)) { _: DialogInterface, _: Int ->
-                            mAdapter?.notifyItemChanged(position)
-                        }
-                        .setIcon(R.drawable.ic_baseline_delete_24)
-                        .setOnCancelListener { mAdapter?.notifyItemChanged(position) }
-                        .show()
-                }
-            }
-            val itemTouchHelper = ItemTouchHelper(mItemTouchHelper)
-            if (INTERNET) itemTouchHelper.attachToRecyclerView(mRecycle)
+            initDeleteFunction()
         }
     }
 
 
+    private fun initDeleteFunction() {
+        setHasOptionsMenu(true)
+        val icon: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.delete)
+val p = Paint()
+        val mItemTouchHelper = object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                   val iconRectF = calculateRect(viewHolder)
+                   c.drawBitmap(icon, null, iconRectF, p)
+
+                                }
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+            }
+
+
+            override fun isItemViewSwipeEnabled(): Boolean {
+                return isAvailable
+            }
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val currentPayment =
+                    mAdapter?.listOfpayments?.get(position)
+                val dialogBuilder = AlertDialog.Builder(APP_ACTIVITY)
+                dialogBuilder
+                    .setTitle(getString(R.string.confirm_delete))
+                    .setMessage(
+                        getString(
+                            R.string.alert_dialog_message_delete,
+                            currentPayment?.time?.toString()?.transformToDate()
+                        )
+                    )
+                    .setPositiveButton(getString(R.string.yes)) { _: DialogInterface, _: Int ->
+                        mAdapter?.deleteItem(position)
+                        if (currentPayment != null) {
+                            deletePaymentFromFirebase(currentPayment)
+                        }
+                    }
+                    .setNegativeButton(getString(R.string.no)) { _: DialogInterface, _: Int ->
+                        mAdapter?.notifyItemChanged(position)
+                    }
+                    .setIcon(R.drawable.ic_baseline_delete_24)
+                    .setOnCancelListener { mAdapter?.notifyItemChanged(position) }
+                    .show()
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(mItemTouchHelper)
+        if (INTERNET) itemTouchHelper.attachToRecyclerView(mRecycle)
+    }
+
+
     private fun initialization() {
+
         userId = arguments?.get("userId").toString()
         val userName = arguments?.get("userName").toString()
         APP_ACTIVITY.title = userName
@@ -146,7 +182,6 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
         }) {
 
             mViewModel.deletePayment(payment) {
-
                 showToast(R.string.payment_has_been_deleted_toast)
                 CoroutineScope(IO).launch {
                     delay(200)
@@ -155,4 +190,22 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
             }
         }
     }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+       activity?.menuInflater?.inflate(R.menu.single_payments_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+       when (item.itemId) {
+           R.id.delete_payment -> {
+               isAvailable = true
+               showToast(R.string.toast_at_delete_menu)
+           }
+       }
+        return super.onOptionsItemSelected(item)
+    }
+
+
 }

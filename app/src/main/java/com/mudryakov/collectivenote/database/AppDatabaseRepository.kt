@@ -14,8 +14,8 @@ interface AppDatabaseRepository {
     fun login(type: String, onFail:()->Unit, onSuccess: () -> Unit)
     fun emailRegistration(onFail: () -> Unit, onSuccess: () -> Unit,)
 
-    fun createNewRoom(roomName: String, roomPass: String, currencySign:String, onFail: () -> Unit, onSuccess: () -> Unit)
-    fun joinRoom(roomName: String, roomPass: String, onFail: () -> Unit, onSuccess: () -> Unit)
+    fun createNewGroup(groupName: String, groupPass: String, currencySign:String, onFail: () -> Unit, onSuccess: () -> Unit)
+    fun joinGroup(groupName: String, groupPass: String, onFail: () -> Unit, onSuccess: () -> Unit)
     fun addNewPayment(payment: PaymentModel, onSuccess: () -> Unit)
     fun changeName(name: String, onSuccess: () -> Unit)
 

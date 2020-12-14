@@ -1,5 +1,7 @@
 package com.mudryakov.collectivenote.screens.singleUserPayments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.models.PaymentModel
-import com.mudryakov.collectivenote.utility.APP_ACTIVITY
-import com.mudryakov.collectivenote.utility.ROOM_CURRENCY
-import com.mudryakov.collectivenote.utility.setImage
-import com.mudryakov.collectivenote.utility.transformToDate
+import com.mudryakov.collectivenote.utility.*
 import kotlinx.android.synthetic.main.single_user_payments_recycle_item.view.*
 
 class SinglePaymentAdapter : RecyclerView.Adapter<SinglePaymentAdapter.MyViewHolder>() {
@@ -68,7 +67,6 @@ class SinglePaymentAdapter : RecyclerView.Adapter<SinglePaymentAdapter.MyViewHol
             AnimationUtils.loadAnimation(APP_ACTIVITY, R.anim.fast_slide_left)
         viewToAnimate.startAnimation(animation)
     }
-
 
 
 }

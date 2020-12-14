@@ -7,7 +7,7 @@
     <dimen name="verySmallMargin">4dp</dimen>
     <dimen name="small_padding">4dp</dimen>
     <dimen name="btn_corners">5dp</dimen>
-    <dimen name="login_google_image">@dimen/_32sdp</dimen>
+    <dimen name="registration_google_image">@dimen/_32sdp</dimen>
     <dimen name="big_padding">12dp</dimen>
     <dimen name="normal_text">@dimen/_16ssp</dimen>
     <dimen name="app_elevation">6dp</dimen>

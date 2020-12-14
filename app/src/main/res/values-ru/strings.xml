@@ -1,45 +1,45 @@
 <resources>
     <!-- general -->
-    <string name="app_name">Общий кошелёк</string>
-    <string name="common_app_name">Рабочее название</string>
+    <string name="app_name">Общий баланс</string>
     <string name="add_info">Заполните все поля</string>
     <string name="total_sum_payed">Всего потрачено: %1$s%2$s</string>
     <string name="list_of_payments_is_empty">Список платежей пуст</string>
     <string name="error_in_download">Произошёл сбой при скачивании файла</string>
     <string name="trouble_with_download">Ошибка загрузки</string>
     <string name="sum_currency">%1$s%2$s</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="loading_main">Название загрузки</string>
+    <string name="loading_main">Загрузка</string>
     <string name="no_internet_toast">Отсутсвует интернет соединение</string>
     <string name="ask_for_double_click_toast">Нажмите ещё раз для выхода</string>
-
-    <!-- login -->
-    <string name="title_email_login">e-mail аутентификация</string>
-    <string name="Use_your_Google_account">Использовать свой Google аккаунт</string>
-    <string name="Enter">Войти</string>
     <string name="e_mail">E-mail</string>
     <string name="password">Пароль</string>
-    <string name="login_toolbar_title">Добро пожаловать</string>
-    <string name="login_email_btn">Войти по e-mail</string>
-    <string name="enter_your_name">Введите имя</string>
     <string name="continue_it">Продолжить</string>
-    <string name="enter_name">Введите отображаемое имя</string>
-    <string name="room_name_hint">Название комнаты</string>
-    <string name="login_register_email">У меня нет аккаунта</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_help">Помощь</string>
+
+    <!-- registration -->
+    <string name="Use_your_Google_account">Использовать свой Google аккаунт</string>
+    <string name="Enter">Войти</string>
+    <string name="ok">Ок</string>
+    <string name="registration_toolbar_title">Добро пожаловать</string>
+    <string name="registration_email_btn">Зарегистрироваться</string>
+    <string name="i_have_acc_registration_fragment">У меня уже есть аккаунт</string>
+    <string name="enter_your_name">Отображаемое имя</string>
+    <string name="enter_name">Имя участника группы</string>
 
     <!-- roomChoose -->
+    <string name="group_name_hint">Название группы</string>
     <string name="choose_currency">Выберите валюту</string>
-    <string name="room_enter_title_text">Введите данные комнаты</string>
-    <string name="choose_room_alert_dialog_text">В этом окне вы можете создать свою комнату и пригласить туда друзей, либо присоединиться к уже созданой комнате</string>
+    <string name="room_enter_title_text">Введите данные группы</string>
+    <string name="choose_room_alert_dialog_text">В этом окне вы можете создать свою группу и пригласить туда друзей, либо присоединиться к уже созданой группе</string>
     <string name="choose_room_alert_dialog_title">Выберите действие</string>
     <string name="choose_room_alert_dialog_positive_button">Создать</string>
     <string name="choose_room_alert_dialog_negative_button">Присоединиться</string>
-    <string name="create_room">Создать комнату</string>
-    <string name="join_room">Присоединиться к комнате</string>
+    <string name="create_room">Создать группу</string>
+    <string name="join_group">Присоединиться к группе</string>
     <string name="this_name_busy">Это название занятно</string>
-    <string name="check_room_acc">Проверьте данные комнаты</string>
-    <string name="toast_join_room">Вы присоедились к комнате %1$s"</string>
-    <string name="toast_create_room">Вы создали комнату %1$s"</string>
+    <string name="check_room_acc">Проверьте данные группы</string>
+    <string name="toast_join_group">Вы присоедились к группе %1$s"</string>
+    <string name="toast_create_group">Вы создали группу %1$s"</string>
     <string-array name="currency_array">
         <item>Валюта</item>
         <item>RUB - ₽</item>
@@ -47,13 +47,9 @@
         <item>EUR - €</item>
     </string-array>
 
-    <!-- navDrawer -->
-    <string name="bottom_sheet_history">История вложений</string>
-    <string name="settings">Настройки</string>
-    <string name="help">Помощь</string>
 
     <!-- addNewPayment -->
-    <string name="add_new_payment_title">Добавление нового платежа</string>
+    <string name="add_new_payment_title">Добавление платежа</string>
     <string name="sum">Сумма</string>
     <string name="confirm">Подтвердить</string>
     <string name="add_new_payment_description_hint">Назначение</string>
@@ -64,42 +60,42 @@
     <string name="history">История</string>
 
     <!-- fragmentInfo -->
-    <string name="value_members">Количество участников: %1$d</string>
-    <string name="room_name">Комната: %1$s</string>
-    <string name="total_members_ar_room">Пользователей в комнате: %1$d</string>
+
+    <string name="room_name">Группа: %1$s</string>
+    <string name="total_members_ar_room">Пользователей в группе: %1$d</string>
     <string name="total_value_of_payments">Всего платежей: %1$d</string>
     <string name="total_user_payed">Ваши траты: %1$s%2$s</string>
-    <string name="room_info">Информация о комнате</string>
+    <string name="room_info">Информация о группе</string>
     <string name="room_pass">Пароль: %1$s</string>
-     <string name="info_password_btn">Напомнить пароль</string>
+    <string name="info_password_btn">Напомнить пароль</string>
     <string name="room_current">Текущая валюта:%1$s</string>
 
     <!-- settings -->
     <string name="user_name">Имя пользователя : %1$s</string>
-    <string name="edit">Редактировать</string>
+    <string name="edit">Изменить имя</string>
     <string name="name_changed">Имя изменено</string>
     <string name="name_cant_be_empty_toast">Имя не может быть пустым</string>
-    <string name="exit_room">Выйти из комнаты</string>
+    <string name="exit_room">Выйти из группы</string>
     <string name="Change_acc">Сменить аккаунт</string>
     <string name="settings_change_language_btn">Изменить язык</string>
     <string name="choose_ur_language">Выберите язык</string>
 
     <!-- help -->
     <string name="my_email">E-mail для связи: mudryakov21@mail.ru</string>
-    <string name="help_main_text">Душещипательная история почему програмист не должен умереть с голоду, а так же контактный емейл и прочая инфа. Чем в казино всё проебать, разраба лучше поддержать!</string>
+    <string name="help_main_text">Спасибо что выбрали моё приложение, надеюсь оно будет удобным и полезным для Вас. Если у Вас есть пожелания, замечания, или какой либо ещё вопрос, пожалуйста свяжитесь со мной</string>
     <string name="donate_btn_text">Поддержать разработчика</string>
 
     <!-- internetCheck -->
     <string name="internet_alert_dialog_title">Отсутсвует интернет соединение</string>
     <string name="internet_alert_dialog_message">Проверьте подключение к интернету и попробуйте снова</string>
-    <string name="ok">Ок</string>
 
-    <!-- emailRegistration -->
-    <string name="email_registration_btn">Зарегистрироваться</string>
-    <string name="new_account_register">Создать аккаунт</string>
-    <string name="title_email_registration">Введите e-mail и пароль</string>
 
-    <!-- exeptionTexts -->
+    <!-- emailLogin -->
+    <string name="email_login_btn">Присоединиться</string>
+    <string name="new_account_login">Войти по e-mail</string>
+    <string name="title_email_login">Введите e-mail и пароль</string>
+
+    <!-- exceptionTexts -->
     <string name="invalid_password">Неверный пароль</string>
     <string name="exception_check_credentials">Проверьте правильность данных</string>
     <string name="exception_login_user_invalid">Такого пользователя не существует</string>
@@ -119,6 +115,12 @@
     <string name="no">Нет</string>
     <string name="alert_dialog_message_delete">Вы действительно хотите удалить платёж от %1$s?</string>
     <string name="payment_has_been_deleted_toast">Платёж удалён</string>
+    <string name="toast_at_delete_menu">Функция разблокирована, для удаления смахните платёж вправо</string>
+    <string name="delete_payment_menu">Удаление платежей</string>
+
+    <!-- languages -->
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_russian" translatable="false">Русский</string>
 
 
 </resources>

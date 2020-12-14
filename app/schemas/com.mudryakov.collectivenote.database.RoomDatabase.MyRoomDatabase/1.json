@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c2639ba14ab8d1c7988c45008c480a75",
+    "identityHash": "6c1493b7a3a087a77625650b6677cd69",
     "entities": [
       {
         "tableName": "AllPayments",
@@ -62,7 +62,7 @@
       },
       {
         "tableName": "AllUsers",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`firebaseId` TEXT NOT NULL, `name` TEXT NOT NULL, `roomId` TEXT NOT NULL, `totalPayAtCurrentRoom` TEXT NOT NULL, PRIMARY KEY(`firebaseId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`firebaseId` TEXT NOT NULL, `name` TEXT NOT NULL, `groupId` TEXT NOT NULL, `totalPayAtCurrentGroup` TEXT NOT NULL, PRIMARY KEY(`firebaseId`))",
         "fields": [
           {
             "fieldPath": "firebaseId",
@@ -77,14 +77,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "roomId",
-            "columnName": "roomId",
+            "fieldPath": "groupId",
+            "columnName": "groupId",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "totalPayAtCurrentRoom",
-            "columnName": "totalPayAtCurrentRoom",
+            "fieldPath": "totalPayAtCurrentGroup",
+            "columnName": "totalPayAtCurrentGroup",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -102,7 +102,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c2639ba14ab8d1c7988c45008c480a75')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6c1493b7a3a087a77625650b6677cd69')"
     ]
   }
 }

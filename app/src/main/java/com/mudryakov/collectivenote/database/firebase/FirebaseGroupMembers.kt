@@ -16,7 +16,7 @@ class FirebaseGroupMembers : LiveData<List<UserModel>>() {
 
     private val listener = AppValueEventListener {
         mutableListOFUsers.clear()
-        REF_DATABASE_ROOT.child(NODE_ROOM_MEMBERS).child(CURRENT_ROOM_UID)
+        REF_DATABASE_ROOT.child(NODE_GROUP_MEMBERS).child(CURRENT_GROUP_UID)
             .addMySingleListener { DataSnapShot ->
                 list = DataSnapShot.children.map { sn -> sn.value.toString() }
                 list.forEach { id ->
@@ -33,9 +33,9 @@ class FirebaseGroupMembers : LiveData<List<UserModel>>() {
                 REF_DATABASE_ROOT.child(NODE_USERS).child(currentUser.firebaseId).child(
                     CHILD_TOTAL_PAY
                 ).child(
-                    CURRENT_ROOM_UID
+                    CURRENT_GROUP_UID
                 ).addMySingleListener {
-                    currentUser.totalPayAtCurrentRoom =
+                    currentUser.totalPayAtCurrentGroup =
                         if (it.value != null) it.value.toString() else "0"
                     mutableListOFUsers.add(currentUser)
                     if (mutableListOFUsers.size == list.size) {
@@ -50,13 +50,13 @@ class FirebaseGroupMembers : LiveData<List<UserModel>>() {
 
 
     override fun onActive() {
-        REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID)
+        REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_GROUP_UID)
             .addValueEventListener(listener)
         super.onActive()
     }
 
     override fun onInactive() {
-        REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID)
+        REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_GROUP_UID)
             .removeEventListener(listener)
         super.onInactive()
     }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/registrationFragment">
 
     <fragment
         android:id="@+id/historyFragment"
@@ -43,18 +43,18 @@
             app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.mudryakov.collectivenote.screens.login.LoginFragment"
+        android:id="@+id/registrationFragment"
+        android:name="com.mudryakov.collectivenote.screens.registration.RegistrationFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_registration" >
         <action
-            android:id="@+id/action_loginFragment_to_roomChooseFragment"
+            android:id="@+id/action_RegistrationFragment_to_groupChooseFragment"
             app:destination="@id/roomChooseFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/nav_graph"/>
         <action
-            android:id="@+id/action_loginFragment_to_emailRegistrationFragment"
-            app:destination="@id/emailRegistrationFragment"
+            android:id="@+id/action_RegistrationFragment_to_emailLoginFragment"
+            app:destination="@id/emailLoginFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
@@ -73,11 +73,11 @@
     </fragment>
     <fragment
         android:id="@+id/roomChooseFragment"
-        android:name="com.mudryakov.collectivenote.screens.roomChoose.RoomChooseFragment"
+        android:name="com.mudryakov.collectivenote.screens.groupChoose.GroopChooseFragment"
         android:label="fragment_room_choose"
-        tools:layout="@layout/fragment_room_choose" >
+        tools:layout="@layout/fragment_group_choose" >
         <action
-            android:id="@+id/action_roomChooseFragment_to_mainFragment"
+            android:id="@+id/action_groupChooseFragment_to_mainFragment"
             app:destination="@id/mainFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/nav_graph"/>
@@ -127,12 +127,12 @@
             app:popUpTo="@id/nav_graph"/>
     </fragment>
     <fragment
-        android:id="@+id/emailRegistrationFragment"
-        android:name="com.mudryakov.collectivenote.screens.emailRegistration.EmailRegistrationFragment"
-        android:label="EmailRegistrationFragment" >
+        android:id="@+id/emailLoginFragment"
+        android:name="com.mudryakov.collectivenote.screens.emailLogin.EmailLoginFragment"
+        android:label="EmailLoginFragment">
         <action
-            android:id="@+id/action_emailRegistrationFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
+            android:id="@+id/action_emaiLoginFragment_to_RegistrationFragment"
+            app:destination="@id/registrationFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/nav_graph" />
     </fragment>

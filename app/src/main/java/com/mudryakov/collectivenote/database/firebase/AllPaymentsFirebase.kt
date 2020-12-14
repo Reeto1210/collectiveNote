@@ -20,13 +20,13 @@ class AllPaymentsFirebase : LiveData<List<PaymentModel>>() {
 
     override fun onActive() {
         super.onActive()
-        REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID)
+        REF_DATABASE_ROOT.child(NODE_GROUP_PAYMENTS).child(CURRENT_GROUP_UID)
             .addValueEventListener(listener)
     }
 
     override fun onInactive() {
         super.onInactive()
-        REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID)
+        REF_DATABASE_ROOT.child(NODE_GROUP_PAYMENTS).child(CURRENT_GROUP_UID)
             .removeEventListener(listener)
     }
 

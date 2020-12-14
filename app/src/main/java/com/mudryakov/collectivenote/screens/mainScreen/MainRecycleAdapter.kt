@@ -38,8 +38,8 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>
         val currentUser = list[position]
         holder.divider.visibility = if (position == 0) View.GONE else View.VISIBLE
         holder.totalPayed.text =
-            if (currentUser.totalPayAtCurrentRoom.isNotEmpty()) APP_ACTIVITY.getString(
-                R.string.sum_currency, currentUser.totalPayAtCurrentRoom,
+            if (currentUser.totalPayAtCurrentGroup.isNotEmpty()) APP_ACTIVITY.getString(
+                R.string.sum_currency, currentUser.totalPayAtCurrentGroup,
                 ROOM_CURRENCY
             ) else "0"
         holder.username.text = currentUser.name
@@ -54,8 +54,8 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>
             notifyItemInserted(list.indexOf(user))
         } else {
             list.forEachIndexed { i: Int, userModel: UserModel ->
-                if (userModel.firebaseId == user.firebaseId && userModel.totalPayAtCurrentRoom != user.totalPayAtCurrentRoom) {
-                    userModel.totalPayAtCurrentRoom = user.totalPayAtCurrentRoom
+                if (userModel.firebaseId == user.firebaseId && userModel.totalPayAtCurrentGroup != user.totalPayAtCurrentGroup) {
+                    userModel.totalPayAtCurrentGroup = user.totalPayAtCurrentGroup
                     notifyItemChanged(i)
                 }
             }

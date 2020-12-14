@@ -19,27 +19,27 @@ import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utility.*
 
-const val CHILD_NAME = "name"
-const val CHILD_ROOM_ID = "roomId"
+
 var USERNAME: String = ""
 lateinit var EMAIL: String
 lateinit var PASSWORD: String
 
 const val NODE_UPDATE_HELPER = "updateHelper"
 const val CHILD_PASS = "password"
-const val CHILD_TOTALPAY_AT_CURRENT_ROOM = "totalPayAtCurrentRoom"
+const val CHILD_TOTAL_PAY_AT_CURRENT_GROUP = "totalPayAtCurrentGroup"
 const val NODE_USERS = "users"
-const val NODE_ROOM_DATA = "roomsData"
+const val NODE_GROUP_DATA = "groupsData"
 const val CHILD_CREATOR = "creator"
-const val NODE_ROOM_NAMES = "roomNames"
-const val NODE_ROOM_PAYMENTS = "roomsPayments"
+const val NODE_GROUP_NAMES = "groupNames"
+const val NODE_GROUP_PAYMENTS = "groupPayments"
 const val NODE_PAYMENT_IMAGES = "paymentImages"
-const val NODE_ROOM_MEMBERS = "rooms_members"
+const val NODE_GROUP_MEMBERS = "groupMembers"
 const val CHILD_TOTAL_PAY = "totalPay"
 const val CHILD_FROM_NAME = "fromName"
-const val CHILD_ROOM_CURRENCY = "roomCurrency"
-
-lateinit var CURRENT_ROOM_UID: String
+const val CHILD_GROUP_CURRENCY = "groupCurrency"
+const val CHILD_NAME = "name"
+const val CHILD_GROUP_ID = "groupId"
+lateinit var CURRENT_GROUP_UID: String
 lateinit var REF_DATABASE_ROOT: DatabaseReference
 lateinit var REF_DATABASE_STORAGE: StorageReference
 lateinit var REPOSITORY: AppDatabaseRepository
@@ -51,8 +51,8 @@ private lateinit var ON_REGISTRATION_COMPLETE: () -> Unit
 private lateinit var ON_REGISTRATION_FAIL: () -> Unit
 
 
-fun logIn(type: String, onFail: () -> Unit, onCompelete: () -> Unit) {
-    ON_REGISTRATION_COMPLETE = onCompelete
+fun logIn(type: String, onFail: () -> Unit, onComplete: () -> Unit) {
+    ON_REGISTRATION_COMPLETE = onComplete
     ON_REGISTRATION_FAIL = onFail
 
     when (type) {
@@ -105,7 +105,7 @@ fun handleSignInResult(task: Task<GoogleSignInAccount>) {
         AUTH.signInWithCredential(credential)
             .addOnSuccessListener {
                 USERNAME = account.displayName.toString()
-                AppPreference.setUserId(AUTH?.currentUser?.uid!!)
+                AppPreference.setUserId(AUTH.currentUser?.uid!!)
                 pushUserToFirebase()
             }
             .addOnFailureListener {
@@ -138,27 +138,27 @@ fun pushUserToFirebase() {
     }
 }
 
-fun pushRoomToFirebase(
-    roomName: String,
-    roomPass: String,
+fun pushGroupToFirebase(
+    groupName: String,
+    groupPass: String,
     currencySign: String,
     onFail: () -> Unit,
     function: (String) -> Unit
 ) {
     val mainHashMap = HashMap<String, Any>()
     val roomInfoHashMap = HashMap<String, Any>()
-    val roomKey = REF_DATABASE_ROOT.push().key.toString()
-    roomInfoHashMap[CHILD_ROOM_CURRENCY] = currencySign
-    roomInfoHashMap[CHILD_NAME] = roomName
-    roomInfoHashMap[CHILD_ROOM_ID] = roomKey
-    roomInfoHashMap[CHILD_PASS] = roomPass
+    val groupKey = REF_DATABASE_ROOT.push().key.toString()
+    roomInfoHashMap[CHILD_GROUP_CURRENCY] = currencySign
+    roomInfoHashMap[CHILD_NAME] = groupName
+    roomInfoHashMap[CHILD_GROUP_ID] = groupKey
+    roomInfoHashMap[CHILD_PASS] = groupPass
     roomInfoHashMap[CHILD_CREATOR] = CURRENT_UID
-    mainHashMap["$NODE_ROOM_DATA/$roomKey"] = roomInfoHashMap
-    mainHashMap["$NODE_ROOM_NAMES/$roomName"] = roomKey
+    mainHashMap["$NODE_GROUP_DATA/$groupKey"] = roomInfoHashMap
+    mainHashMap["$NODE_GROUP_NAMES/$groupName"] = groupKey
     REF_DATABASE_ROOT.updateChildren(mainHashMap)
         .addOnSuccessListener {
-            function(roomKey)
-            REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(roomKey).setValue("Created")
+            function(groupKey)
+            REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(groupKey).setValue("Created")
         }
         .addOnFailureListener {
             onFail()
@@ -166,21 +166,21 @@ fun pushRoomToFirebase(
         }
 }
 
-fun updateUserRoomId(roomKey: String, onFail: () -> Unit, onSuccess: () -> Unit) {
+fun updateUserGroupId(groupKey: String, onFail: () -> Unit, onSuccess: () -> Unit) {
 
     REF_DATABASE_ROOT.child(NODE_USERS).child(AppPreference.getUserId()).child(
-        CHILD_ROOM_ID
-    ).setValue(roomKey)
+        CHILD_GROUP_ID
+    ).setValue(groupKey)
         .addOnFailureListener {
             onFail()
             showToast(R.string.something_going_wrong)
         }
         .addOnSuccessListener {
-            REF_DATABASE_ROOT.child(NODE_ROOM_MEMBERS).child(roomKey).child(CURRENT_UID)
+            REF_DATABASE_ROOT.child(NODE_GROUP_MEMBERS).child(groupKey).child(CURRENT_UID)
                 .setValue(CURRENT_UID)
                 .addOnSuccessListener {
-                    AppPreference.setRoomId(roomKey)
-                    CURRENT_ROOM_UID = roomKey
+                    AppPreference.setGroupId(groupKey)
+                    CURRENT_GROUP_UID = groupKey
                     updatePreferenceCurrentPay { onSuccess() }
                 }
                 .addOnFailureListener {
@@ -192,11 +192,11 @@ fun updateUserRoomId(roomKey: String, onFail: () -> Unit, onSuccess: () -> Unit)
 
 fun updatePreferenceCurrentPay(function: () -> Unit) {
     REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_TOTAL_PAY)
-        .child(CURRENT_ROOM_UID).addMySingleListener {
+        .child(CURRENT_GROUP_UID).addMySingleListener {
             val totalPay = if (it.value.toString() == "null") "0.00" else it.value.toString()
             AppPreference.setTotalSumm(totalPay)
             REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
-                .child(CHILD_TOTALPAY_AT_CURRENT_ROOM)
+                .child(CHILD_TOTAL_PAY_AT_CURRENT_GROUP)
                 .setValue(totalPay)
                 .addOnSuccessListener { function() }
                 .addOnFailureListener {
@@ -209,23 +209,23 @@ fun updatePreferenceCurrentPay(function: () -> Unit) {
 
 fun updateAllUserPayments() {
     findAllUsersRooms { listOfId ->
-        findAllUsersPayments(listOfId) { roomId, paymentId ->
-            changePaymentFromName(roomId, paymentId)
+        findAllUsersPayments(listOfId) { groupId, paymentId ->
+            changePaymentFromName(groupId, paymentId)
         }
     }
 }
 
 fun changePaymentFromName(roomId: String, paymentId: String) {
-    REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(roomId).child(paymentId)
+    REF_DATABASE_ROOT.child(NODE_GROUP_PAYMENTS).child(roomId).child(paymentId)
         .child(CHILD_FROM_NAME).setValue(AppPreference.getUserName())
 }
 
 fun findAllUsersPayments(
     listOfId: List<String>,
-    function: (roomId: String, paymentId: String) -> Unit
+    function: (groupId: String, paymentId: String) -> Unit
 ) {
     listOfId.forEach { id ->
-        REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(id).addMySingleListener {
+        REF_DATABASE_ROOT.child(NODE_GROUP_PAYMENTS).child(id).addMySingleListener {
             val list = it.children.map { payment ->
                 payment.getValue(PaymentModel::class.java) ?: PaymentModel()
             }
@@ -241,7 +241,7 @@ fun findAllUsersPayments(
 fun findAllUsersRooms(onComplete: (List<String>) -> Unit) {
     REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_TOTAL_PAY)
         .addMySingleListener {
-            val list = it.children.map { room -> room.key.toString() }
+            val list = it.children.map { group -> group.key.toString() }
             onComplete(list)
         }
 }

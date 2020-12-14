@@ -67,8 +67,8 @@ class MainFragment : Fragment() {
 
     private fun initCurrency() {
         if (AppPreference.getCurrency() == FAIL) {
-            REF_DATABASE_ROOT.child(NODE_ROOM_DATA).child(CURRENT_ROOM_UID).child(
-                CHILD_ROOM_CURRENCY
+            REF_DATABASE_ROOT.child(NODE_GROUP_DATA).child(CURRENT_GROUP_UID).child(
+                CHILD_GROUP_CURRENCY
             ).addMySingleListener {
                 val currentCurrency = it.value.toString()
                 AppPreference.setCurrency(currentCurrency)
@@ -87,7 +87,7 @@ class MainFragment : Fragment() {
         mObserver = Observer { list ->
             var totalSum = "0.00"
             list.forEach {
-                totalSum = calculateSum(totalSum, it.totalPayAtCurrentRoom)
+                totalSum = calculateSum(totalSum, it.totalPayAtCurrentGroup)
                 mAdapter?.addItem(it)
             }
             mBinding.loadingLayout.visibility = View.GONE
@@ -101,7 +101,7 @@ class MainFragment : Fragment() {
     private fun initialization() {
         APP_ACTIVITY.back = false
         APP_ACTIVITY.title = APP_ACTIVITY.getString(R.string.app_name)
-        CURRENT_ROOM_UID = AppPreference.getRoomId()
+        CURRENT_GROUP_UID = AppPreference.getRoomId()
         mViewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
         initDrawer()
         initFabNewPayment()

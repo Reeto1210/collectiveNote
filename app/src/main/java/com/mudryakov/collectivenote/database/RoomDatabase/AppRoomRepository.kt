@@ -29,17 +29,17 @@ class AppRoomRepository(private val dao: myDao):AppDatabaseRepository {
     override fun emailRegistration(onFail: () -> Unit, onSuccess: () -> Unit) {
           }
 
-    override fun createNewRoom(
-        roomName: String,
-        roomPass: String,
+    override fun createNewGroup(
+        groupName: String,
+        groupPass: String,
         currencySign: String,
         onFail: () -> Unit,
         onSuccess: () -> Unit
     ) {}
 
-    override fun joinRoom(
-        roomName: String,
-        roomPass: String,
+    override fun joinGroup(
+        groupName: String,
+        groupPass: String,
         onFail: () -> Unit,
         onSuccess: () -> Unit
     ) {}

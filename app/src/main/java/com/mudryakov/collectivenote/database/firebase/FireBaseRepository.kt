@@ -21,19 +21,19 @@ class FireBaseRepository : AppDatabaseRepository {
     override fun deletePayment(payment: PaymentModel, onSuccess: () -> Unit) {
         val refCurrentUser = REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
 
-        REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID)
+        REF_DATABASE_ROOT.child(NODE_GROUP_PAYMENTS).child(CURRENT_GROUP_UID)
             .child(payment.firebaseId).removeValue()
             .addOnFailureListener { showToast(R.string.something_going_wrong)}
             .addOnSuccessListener {
                 val totalSum = calculateMinus(AppPreference.getTotalSumm(), payment.summ)
 
-                refCurrentUser.child(CHILD_TOTAL_PAY).child(CURRENT_ROOM_UID).setValue(totalSum)
+                refCurrentUser.child(CHILD_TOTAL_PAY).child(CURRENT_GROUP_UID).setValue(totalSum)
                     .addOnSuccessListener {
                         refCurrentUser.child(
-                            CHILD_TOTALPAY_AT_CURRENT_ROOM
+                            CHILD_TOTAL_PAY_AT_CURRENT_GROUP
                         ).setValue(totalSum).addOnSuccessListener {
                             AppPreference.setTotalSumm(totalSum)
-                            REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID)
+                            REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_GROUP_UID)
                                 .setValue(payment.firebaseId)
                             onSuccess()
                         }
@@ -50,20 +50,20 @@ class FireBaseRepository : AppDatabaseRepository {
         createNewEmailUser(onFail, onSuccess)
     }
 
-    override fun createNewRoom(
-        roomName: String,
-        roomPass: String,
+    override fun createNewGroup(
+        groupName: String,
+        groupPass: String,
         currencySign: String,
         onFail: () -> Unit,
         onSuccess: () -> Unit
     ) {
-        REF_DATABASE_ROOT.child(NODE_ROOM_NAMES).addMySingleListener { DataSnapshot ->
-            if (DataSnapshot.hasChild(roomName)) {
+        REF_DATABASE_ROOT.child(NODE_GROUP_NAMES).addMySingleListener { DataSnapshot ->
+            if (DataSnapshot.hasChild(groupName)) {
                 showToast(R.string.this_name_busy)
                 onFail()
             } else {
-                pushRoomToFirebase(roomName, roomPass, currencySign, onFail) {
-                    updateUserRoomId(it, onFail) {
+                pushGroupToFirebase(groupName, groupPass, currencySign, onFail) {
+                    updateUserGroupId(it, onFail) {
                         onSuccess()
                     }
                 }
@@ -71,24 +71,24 @@ class FireBaseRepository : AppDatabaseRepository {
         }
     }
 
-    override fun joinRoom(
-        roomName: String,
-        roomPass: String,
+    override fun joinGroup(
+        groupName: String,
+        groupPass: String,
         onFail: () -> Unit,
         onSuccess: () -> Unit
     ) {
         lateinit var tryingId: String
-        REF_DATABASE_ROOT.child(NODE_ROOM_NAMES).child(roomName)
+        REF_DATABASE_ROOT.child(NODE_GROUP_NAMES).child(groupName)
             .addListenerForSingleValueEvent(AppValueEventListener {
                 tryingId = it.value.toString()
-                REF_DATABASE_ROOT.child(NODE_ROOM_DATA).child(tryingId).child(CHILD_PASS)
+                REF_DATABASE_ROOT.child(NODE_GROUP_DATA).child(tryingId).child(CHILD_PASS)
                     .addListenerForSingleValueEvent(AppValueEventListener { DataSnapshot ->
-                        if (DataSnapshot.value == roomPass) {
+                        if (DataSnapshot.value == groupPass) {
 
                             REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(tryingId).setValue(
                                 tryingId
                             ).addOnSuccessListener {
-                                updateUserRoomId(tryingId, onFail) {
+                                updateUserGroupId(tryingId, onFail) {
                                     onSuccess()
                                 }
                             }
@@ -108,7 +108,7 @@ class FireBaseRepository : AppDatabaseRepository {
 
     override fun addNewPayment(payment: PaymentModel, onSuccess: () -> Unit) {
         val totalSum = calculateSum(AppPreference.getTotalSumm(), payment.summ)
-        val refCurrentRoom = REF_DATABASE_ROOT.child(NODE_ROOM_PAYMENTS).child(CURRENT_ROOM_UID)
+        val refCurrentRoom = REF_DATABASE_ROOT.child(NODE_GROUP_PAYMENTS).child(CURRENT_GROUP_UID)
         val refCurrentUser = REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
         val key = refCurrentRoom.push().key.toString()
         payment.firebaseId = key
@@ -117,14 +117,14 @@ class FireBaseRepository : AppDatabaseRepository {
         refCurrentRoom.child(key).setValue(payment)
             .addOnSuccessListener {
                 refCurrentUser.child(CHILD_TOTAL_PAY).child(
-                    CURRENT_ROOM_UID
+                    CURRENT_GROUP_UID
                 )
                     .setValue(totalSum)
                     .addOnSuccessListener {
-                       refCurrentUser.child(CHILD_TOTALPAY_AT_CURRENT_ROOM)
+                       refCurrentUser.child(CHILD_TOTAL_PAY_AT_CURRENT_GROUP)
                            .setValue(totalSum)
                             .addOnSuccessListener {
-                                REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_ROOM_UID)
+                                REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_GROUP_UID)
                                     .setValue(key+ "1")
                                 AppPreference.setTotalSumm(totalSum)
                                 onSuccess()
@@ -165,7 +165,7 @@ class FireBaseRepository : AppDatabaseRepository {
     }
 
     override fun remindPassword(onSuccess: (String) -> Unit) {
-        REF_DATABASE_ROOT.child(NODE_ROOM_DATA).child(CURRENT_ROOM_UID).child(CHILD_PASS)
+        REF_DATABASE_ROOT.child(NODE_GROUP_DATA).child(CURRENT_GROUP_UID).child(CHILD_PASS)
             .addMySingleListener {
                 onSuccess(it.value.toString())
             }

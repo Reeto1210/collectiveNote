@@ -1,6 +1,7 @@
-package com.mudryakov.collectivenote.screens.login
+package com.mudryakov.collectivenote.screens.registration
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -14,25 +15,25 @@ import com.mudryakov.collectivenote.utility.TYPE_EMAIL
 import com.mudryakov.collectivenote.utility.TYPE_GOOGLE_ACCOUNT
 import com.mudryakov.collectivenote.utility.AppPreference
 
-class LoginViewModel(application: Application) : AndroidViewModel(application) {
-    val mContext = application.applicationContext
+class RegistrationViewModel(application: Application) : AndroidViewModel(application) {
+    private val mContext: Context = application.applicationContext
 
-    fun login(type: String, email: String = "", password: String = "", onFail:()->Unit, onSucces: () -> Unit
+    fun registration(type: String, email: String = "", password: String = "", onFail:()->Unit, onSucces: () -> Unit
     ) {
         when (type) {
             TYPE_GOOGLE_ACCOUNT -> REPOSITORY.login(TYPE_GOOGLE_ACCOUNT, onFail,onSucces)
             TYPE_EMAIL -> {
                 EMAIL = email
                 PASSWORD = password
-                REPOSITORY.login(TYPE_EMAIL, onFail, onSucces)
+                REPOSITORY.emailRegistration(onFail, onSucces)
             }
         }
     }
 
 
-    fun changeName(name: String, onSucces: () -> Unit) {
+    fun changeName(name: String, onSuccess: () -> Unit) {
         REPOSITORY.changeName(name) {
-            onSucces()
+            onSuccess()
         }
     }
 

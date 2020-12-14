@@ -3,7 +3,7 @@ package com.mudryakov.collectivenote.screens.singleUserPayments
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.mudryakov.collectivenote.database.firebase.CURRENT_ROOM_UID
+import com.mudryakov.collectivenote.database.firebase.CURRENT_GROUP_UID
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.database.firebase.REPOSITORY
 import com.mudryakov.collectivenote.database.firebase.ROOM_REPOSITORY
@@ -22,11 +22,11 @@ class SingleUserPaymentViewModel(application: Application) : AndroidViewModel(ap
         }
     }
 
-    fun updateUserInRoom() = viewModelScope.launch {
+    private fun updateUserInRoom() = viewModelScope.launch {
         val curUser = UserModel(
             CURRENT_UID,
             AppPreference.getUserName(),
-            CURRENT_ROOM_UID,
+            CURRENT_GROUP_UID,
             AppPreference.getTotalSumm()
         )
         ROOM_REPOSITORY.updateUser(curUser)

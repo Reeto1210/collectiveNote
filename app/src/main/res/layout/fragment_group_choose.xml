@@ -8,9 +8,9 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="0dp"
     android:animateLayoutChanges="true"
-    tools:context=".screens.roomChoose.RoomChooseFragment">
+    tools:context=".screens.groupChoose.GroopChooseFragment">
 
 
     <ProgressBar
@@ -21,10 +21,10 @@
         android:layout_margin="@dimen/app_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/room_choose_password" />
+        app:layout_constraintTop_toBottomOf="@id/group_choose_password" />
 
     <TextView
-        android:id="@+id/room_choose_title"
+        android:id="@+id/group_choose_title"
         style="@style/title_style"
         android:text="@string/room_enter_title_text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,45 +32,45 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/room_choose_name"
+        android:id="@+id/group_choose_name"
         style="@style/input_text_style"
-        android:hint="@string/room_name_hint"
+        android:hint="@string/group_name_hint"
         android:maxLength="15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/room_choose_title"
+        app:layout_constraintTop_toBottomOf="@id/group_choose_title"
         tools:ignore="Autofill,TextFields" />
 
 
     <com.mudryakov.collectivenote.utility.MySpinner
         android:visibility="gone"
-        android:id="@+id/room_choose_spinner"
+        android:id="@+id/group_choose_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/app_margin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/room_choose_name" />
+        app:layout_constraintTop_toBottomOf="@+id/group_choose_name" />
 
     <EditText
 
-        android:id="@+id/room_choose_password"
+        android:id="@+id/group_choose_password"
         style="@style/input_text_style"
         android:hint="@string/password"
         android:maxLength="15"
-        app:layout_constraintEnd_toStartOf="@+id/room_choose_spinner"
+        app:layout_constraintEnd_toStartOf="@+id/group_choose_spinner"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/room_choose_name"
+        app:layout_constraintTop_toBottomOf="@+id/group_choose_name"
         tools:ignore="Autofill,TextFields" />
 
     <TextView
 
-        android:id="@+id/room_choose_continue"
+        android:id="@+id/group_choose_continue"
         style="@style/btn_style"
         android:text="@string/continue_it"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/room_choose_password" />
+        app:layout_constraintTop_toBottomOf="@id/group_choose_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

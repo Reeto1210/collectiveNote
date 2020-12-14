@@ -1,4 +1,4 @@
-package com.mudryakov.collectivenote.screens.roomChoose
+package com.mudryakov.collectivenote.screens.groupChoose
 
 import android.content.Context
 import android.view.View
@@ -19,7 +19,7 @@ class MyArrayAdapter(context: Context, layoutId: Int, array: Array<String>) : Ar
                 tv.makeGone()
                     tv
         } else {
-          super.getDropDownView(position, null, parent);
+          super.getDropDownView(position, null, parent)
        }
    }
 

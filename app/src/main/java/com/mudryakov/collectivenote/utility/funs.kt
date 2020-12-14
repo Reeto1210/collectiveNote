@@ -1,16 +1,21 @@
+@file:Suppress("DEPRECATION")
+
 package com.mudryakov.collectivenote.utility
 
 
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.RectF
 import android.net.Uri
+import android.view.Display
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.mudryakov.collectivenote.MainActivity
@@ -125,9 +130,10 @@ fun calculateSum(firstString: String, secondString: String): String {
     else {
 
         val result = (n1 + n2).toString()
-              if (result == "0") return "0.00"
-     val  i = result.dropLast(2) + "." + result.substring(result.lastIndex - 1
-     )
+        if (result == "0") return "0.00"
+        val i = result.dropLast(2) + "." + result.substring(
+            result.lastIndex - 1
+        )
         return i
 
     }
@@ -149,13 +155,12 @@ fun calculateMinus(firstString: String, secondString: String): String {
 }
 
 
-
 fun initHomeUpFalse() {
     APP_ACTIVITY.actionBar?.setDisplayHomeAsUpEnabled(false)
     APP_ACTIVITY.back = false
 }
 
-fun buildRoomChooseDialog(click: (String) -> Unit) {
+fun buildGroupChooseDialog(click: (String) -> Unit) {
     val builder = AlertDialog.Builder(APP_ACTIVITY)
     builder.setTitle(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_title))
         .setMessage(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_text))
@@ -187,4 +192,20 @@ fun convertSum(sum: String): String {
             }
         }
     }
+}
+
+fun calculateRect(viewHolder: RecyclerView.ViewHolder): RectF {
+    val holderItem = viewHolder.itemView
+    val iconSize = (holderItem.bottom.toFloat() - holderItem.top.toFloat())*(0.8f)
+    val display: Display = APP_ACTIVITY.windowManager.defaultDisplay
+    val yCenter = holderItem.bottom - (holderItem.bottom-holderItem.top)/2f
+    val xCenter = (display.width) / 2f
+   return  RectF(
+        xCenter - iconSize / 2,
+        yCenter - iconSize/2,
+        xCenter + iconSize / 2,
+        yCenter + iconSize/2
+
+    )
+
 }

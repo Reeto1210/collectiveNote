@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
 data class UserModel(
     @PrimaryKey val firebaseId: String = "",
     @ColumnInfo var name: String = "",
-    @ColumnInfo var roomId:String ="",
-    @ColumnInfo var totalPayAtCurrentRoom:String =""
+    @ColumnInfo var groupId:String ="",
+    @ColumnInfo var totalPayAtCurrentGroup:String =""
 
     ){
     override fun equals(other: Any?): Boolean {

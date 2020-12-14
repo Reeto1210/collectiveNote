@@ -15,10 +15,11 @@
     <color name="color_image_history">#A3A2A2</color>
     <color name="color_loading_main">#FFFFFF</color>
 
-    <color name="main_color">#2D40BD</color>
-    <color name="main_color_dark">#1C2771</color>
+    <color name="main_color">#1712A3</color>
+    <color name="main_color_dark">#110E6E</color>
     <color name="main_color_secondary">#03B8A6</color>
     <color name="main_color_secondary_variant">#00887B</color>
+
 
 
 

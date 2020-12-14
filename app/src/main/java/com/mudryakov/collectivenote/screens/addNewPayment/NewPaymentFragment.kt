@@ -42,7 +42,6 @@ class NewPaymentFragment : BaseFragmentBack() {
             var sum = mBinding.addNewPaymentSumm.text.toString().replace(',','.')
             val description = mBinding.addNewPaymentDescription.text.toString()
             try {
-
                 sum = convertSum(sum)
                 if (sum.isNotEmpty() && description.isNotEmpty())
                     checkInternetConnection({restartActivity()}) {
@@ -51,7 +50,7 @@ class NewPaymentFragment : BaseFragmentBack() {
                         mViewModel.addNewPayment(sum, description, imageUri) {
                             showToast(R.string.toast_payment_added)
                         }
-                    }
+                    } else showToast(R.string.add_info)
             } catch (e: Exception) {
                 mBinding.addNewPaymentSumm.setText("")
                 showToast(R.string.catch_payment_sum)

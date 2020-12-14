@@ -13,10 +13,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
-    tools:context=".screens.login.LoginFragment">
+    tools:context=".screens.registration.RegistrationFragment">
 
     <ProgressBar
-        android:id="@+id/fragment_login_progress_bar"
+        android:id="@+id/fragment_registration_progress_bar"
         android:layout_width="@dimen/small_corner_progress_bar_size"
         android:layout_height="@dimen/small_corner_progress_bar_size"
         android:layout_margin="@dimen/verySmallMargin"
@@ -26,48 +26,48 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/first_login"
+        android:id="@+id/first_registration"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp">
 
         <TextView
-            android:id="@+id/login_email_title"
-            android:layout_width="wrap_content"
+           android:gravity="center"
+            android:id="@+id/registration_email_title"
+            style="@style/title_style"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/app_margin"
             android:text="@string/title_email_login"
-            android:textColor="@color/main_color_secondary_variant"
-            android:textSize="@dimen/Large_text"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
 
-            android:id="@+id/login_input_email"
+            android:id="@+id/registration_input_email"
             style="@style/input_text_style"
             android:hint="@string/e_mail"
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login_email_title"
+            app:layout_constraintTop_toBottomOf="@id/registration_email_title"
             tools:ignore="Autofill" />
 
         <EditText
 
-            android:id="@+id/login_input_password"
+            android:id="@+id/registration_input_password"
             style="@style/input_text_style"
             android:hint="@string/password"
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_input_email"
+            app:layout_constraintTop_toBottomOf="@+id/registration_input_email"
             tools:ignore="Autofill" />
 
         <TextView
-            android:id="@+id/login_tip"
+            android:id="@+id/registration_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/app_margin"
@@ -77,19 +77,19 @@
             android:textSize="@dimen/small_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login_input_password" />
+            app:layout_constraintTop_toBottomOf="@id/registration_input_password" />
 
         <TextView
-            android:id="@+id/login_email_btn"
+            android:id="@+id/registration_email_btn"
             style="@style/btn_style"
-            android:text="@string/login_email_btn"
+            android:text="@string/registration_email_btn"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login_input_password" />
+            app:layout_constraintTop_toBottomOf="@id/registration_input_password" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/login_btn_signInGoogle"
+            android:id="@+id/registration_btn_signInGoogle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/app_margin"
@@ -98,7 +98,7 @@
             android:elevation="@dimen/app_elevation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_tip">
+            app:layout_constraintTop_toBottomOf="@+id/registration_tip">
 
             <TextView
                 android:id="@+id/btn_text"
@@ -114,8 +114,8 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:layout_width="@dimen/login_google_image"
-                android:layout_height="@dimen/login_google_image"
+                android:layout_width="@dimen/registration_google_image"
+                android:layout_height="@dimen/registration_google_image"
                 android:layout_marginStart="@dimen/app_margin"
                 android:layout_marginTop="@dimen/verySmallMargin"
                 android:layout_marginEnd="@dimen/app_margin"
@@ -129,12 +129,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/login_no_account"
+            android:id="@+id/registration_no_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/app_margin"
             android:padding="@dimen/big_padding"
-            android:text="@string/login_register_email"
+            android:text="@string/i_have_acc_registration_fragment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +145,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
-        android:id="@+id/login_change_name"
+        android:id="@+id/registration_change_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -162,7 +162,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/login_change_name_input_text"
+            android:id="@+id/registration_change_name_input_text"
             style="@style/input_text_style"
             android:hint="@string/enter_your_name"
             android:inputType="textPersonName"
@@ -173,13 +173,13 @@
             tools:ignore="Autofill" />
 
         <TextView
-            android:id="@+id/login_change_name_btn"
+            android:id="@+id/registration_change_name_btn"
             style="@style/btn_style"
             android:text="@string/continue_it"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_change_name_input_text" />
+            app:layout_constraintTop_toBottomOf="@+id/registration_change_name_input_text" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
