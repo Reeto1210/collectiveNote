@@ -161,6 +161,7 @@ fun initHomeUpFalse() {
 }
 
 fun buildGroupChooseDialog(click: (String) -> Unit) {
+   APP_ACTIVITY.back = false
     val builder = AlertDialog.Builder(APP_ACTIVITY)
     builder.setTitle(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_title))
         .setMessage(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_text))
@@ -171,6 +172,7 @@ fun buildGroupChooseDialog(click: (String) -> Unit) {
             click(MEMBER)
         }
         .setCancelable(false)
+        .setIcon(R.drawable.ic_baseline_groups_24)
         .show()
 }
 
@@ -194,18 +196,18 @@ fun convertSum(sum: String): String {
     }
 }
 
-fun calculateRect(viewHolder: RecyclerView.ViewHolder): RectF {
+fun calculateRect(viewHolder: RecyclerView.ViewHolder, dX: Float): RectF {
     val holderItem = viewHolder.itemView
     val iconSize = (holderItem.bottom.toFloat() - holderItem.top.toFloat())*(0.8f)
     val display: Display = APP_ACTIVITY.windowManager.defaultDisplay
     val yCenter = holderItem.bottom - (holderItem.bottom-holderItem.top)/2f
     val xCenter = (display.width) / 2f
-   return  RectF(
-        xCenter - iconSize / 2,
-        yCenter - iconSize/2,
-        xCenter + iconSize / 2,
-        yCenter + iconSize/2
-
+    val coef = (dX/display.width)/2
+        return  RectF(
+        xCenter - iconSize*coef,
+        yCenter - iconSize*coef,
+        xCenter + iconSize*coef,
+        yCenter + iconSize*coef
     )
 
 }

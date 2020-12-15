@@ -100,7 +100,7 @@ val p = Paint()
             ) {
 
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                   val iconRectF = calculateRect(viewHolder)
+                   val iconRectF = calculateRect(viewHolder,dX)
                    c.drawBitmap(icon, null, iconRectF, p)
 
                                 }

@@ -131,7 +131,6 @@ class MainFragment : Fragment() {
         _Binding = null
         mViewModel.allMembers.removeObserver(mObserver)
         APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        restartIfInternetChanged()
         super.onDestroyView()
     }
 

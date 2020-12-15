@@ -1,4 +1,4 @@
-package com.mudryakov.collectivenote.screens.roomInfo
+package com.mudryakov.collectivenote.screens.groupInfo
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,10 +14,10 @@ import com.mudryakov.collectivenote.screens.BaseFragmentBack
 import com.mudryakov.collectivenote.utility.*
 
 
-class RoomInfoFragment : BaseFragmentBack() {
+class GroupInfoFragment : BaseFragmentBack() {
     private var _Binding: FragmentRoomInfoBinding? = null
     private val mBinding get() = _Binding!!
-    private lateinit var mViewModel: RoomInfoViewModel
+    private lateinit var mViewModel: GroupInfoViewModel
     private lateinit var mObserverPayments: Observer<List<PaymentModel>>
     private lateinit var mObserverMembers: Observer<List<UserModel>>
     private var totalSum = ""
@@ -66,7 +66,7 @@ class RoomInfoFragment : BaseFragmentBack() {
 
     private fun initialization() {
         APP_ACTIVITY.title = getString(R.string.room_info)
-        mViewModel = ViewModelProvider(this).get(RoomInfoViewModel::class.java)
+        mViewModel = ViewModelProvider(this).get(GroupInfoViewModel::class.java)
         mBinding.infoIconPass.setOnClickListener {
             checkInternetConnection({ showNoInternetToast() }) {
                 mBinding.infoIconPass.setImageResource(R.drawable.loading_pass)

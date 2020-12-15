@@ -37,7 +37,7 @@
             app:destination="@id/singleUserPayments" />
         <action
             android:id="@+id/action_mainFragment_to_roomInfoFragment"
-            app:destination="@id/roomInfoFragment" />
+            app:destination="@id/GroupInfoFragment" />
         <action
             android:id="@+id/action_mainFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
@@ -49,9 +49,8 @@
         tools:layout="@layout/fragment_registration" >
         <action
             android:id="@+id/action_RegistrationFragment_to_groupChooseFragment"
-            app:destination="@id/roomChooseFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/nav_graph"/>
+            app:destination="@id/groupChooseFragment"
+            />
         <action
             android:id="@+id/action_RegistrationFragment_to_emailLoginFragment"
             app:destination="@id/emailLoginFragment"
@@ -72,15 +71,15 @@
             app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
-        android:id="@+id/roomChooseFragment"
-        android:name="com.mudryakov.collectivenote.screens.groupChoose.GroopChooseFragment"
-        android:label="fragment_room_choose"
-        tools:layout="@layout/fragment_group_choose" >
+        android:id="@+id/groupChooseFragment"
+        android:name="com.mudryakov.collectivenote.screens.groupChoose.GroupChooseFragment"
+        android:label="fragment_group_choose"
+        tools:layout="@layout/fragment_group_choose">
         <action
             android:id="@+id/action_groupChooseFragment_to_mainFragment"
             app:destination="@id/mainFragment"
             app:launchSingleTop="true"
-            app:popUpTo="@id/nav_graph"/>
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
@@ -105,15 +104,15 @@
             app:popUpTo="@id/nav_graph"/>
     </fragment>
     <fragment
-        android:id="@+id/roomInfoFragment"
-        android:name="com.mudryakov.collectivenote.screens.roomInfo.RoomInfoFragment"
-        android:label="fragment_room_info"
-        tools:layout="@layout/fragment_room_info" >
+        android:id="@+id/GroupInfoFragment"
+        android:name="com.mudryakov.collectivenote.screens.groupInfo.GroupInfoFragment"
+        android:label="fragment_group_info"
+        tools:layout="@layout/fragment_room_info">
         <action
             android:id="@+id/action_roomInfoFragment_to_mainFragment"
             app:destination="@id/mainFragment"
             app:launchSingleTop="true"
-            app:popUpTo="@id/nav_graph"/>
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

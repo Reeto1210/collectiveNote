@@ -11,16 +11,21 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.databinding.FragmentGroupChooseBinding
 import com.mudryakov.collectivenote.utility.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 import java.util.*
 
 
-class GroopChooseFragment : Fragment() {
+class GroupChooseFragment : Fragment() {
     var _Binding: FragmentGroupChooseBinding? = null
     val mBinding get() = _Binding!!
     lateinit var mViewModel: GroupChooseViewModel
     var messageText = ""
     var currencySign = ""
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,6 +33,7 @@ class GroopChooseFragment : Fragment() {
         _Binding = FragmentGroupChooseBinding.inflate(layoutInflater)
         return mBinding.root
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -38,6 +44,7 @@ class GroopChooseFragment : Fragment() {
             navNext()
         } else {
             buildGroupChooseDialog { enterRoom(it) }
+
         }
     }
 
@@ -58,12 +65,13 @@ class GroopChooseFragment : Fragment() {
     }
 
     private fun initialization() {
+        APP_ACTIVITY.back = true
         APP_ACTIVITY.title = AppPreference.getUserName()
         mViewModel = ViewModelProvider(APP_ACTIVITY).get(GroupChooseViewModel::class.java)
     }
 
     private fun enterRoom(userType: String) {
-        when (userType) {
+            when (userType) {
             CREATOR -> createGroup()
             else -> joinGroup()
         }

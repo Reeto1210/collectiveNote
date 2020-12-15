@@ -67,8 +67,7 @@
     <string name="total_user_payed">Ваши траты: %1$s%2$s</string>
     <string name="room_info">Информация о группе</string>
     <string name="room_pass">Пароль: %1$s</string>
-    <string name="info_password_btn">Напомнить пароль</string>
-    <string name="room_current">Текущая валюта:%1$s</string>
+    <string name="room_current">Текущая валюта: %1$s</string>
 
     <!-- settings -->
     <string name="user_name">Имя пользователя : %1$s</string>
@@ -118,9 +117,6 @@
     <string name="toast_at_delete_menu">Функция разблокирована, для удаления смахните платёж вправо</string>
     <string name="delete_payment_menu">Удаление платежей</string>
 
-    <!-- languages -->
-    <string name="language_english" translatable="false">English</string>
-    <string name="language_russian" translatable="false">Русский</string>
 
 
 </resources>

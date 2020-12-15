@@ -108,7 +108,9 @@ class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSel
     override fun onBackPressed() {
         mDrawer.closeDrawer(mNavView)
         hideKeyboard(APP_ACTIVITY)
-          if (back)
+
+
+        if (back)
             super.onBackPressed()
         else {
             if (doubleClick) super.onBackPressed()
@@ -121,6 +123,7 @@ class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSel
                 }
             }
         }
+
     }
 
     override fun onStop() {

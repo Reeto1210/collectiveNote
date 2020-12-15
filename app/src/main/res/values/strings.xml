@@ -30,7 +30,7 @@
     <string name="group_name_hint">Group login</string>
     <string name="choose_currency">Choose currency</string>
     <string name="room_enter_title_text">Group login/pass </string>
-    <string name="choose_room_alert_dialog_text">At this window u can create group and invite your friends, or join to created room</string>
+    <string name="choose_room_alert_dialog_text">At this window u can create group and invite your friends, or join to created group</string>
     <string name="choose_room_alert_dialog_title">Choose action</string>
     <string name="choose_room_alert_dialog_positive_button">Create</string>
     <string name="choose_room_alert_dialog_negative_button">Join</string>
@@ -67,8 +67,7 @@
     <string name="total_user_payed">you spent: %1$s%2$s</string>
     <string name="room_info">Group info</string>
     <string name="room_pass">Password: %1$s</string>
-    <string name="info_password_btn">Remind a password</string>
-    <string name="room_current">Current currency:%1$s</string>
+    <string name="room_current">Current currency: %1$s</string>
 
     <!-- settings -->
     <string name="user_name">Username : %1$s</string>
