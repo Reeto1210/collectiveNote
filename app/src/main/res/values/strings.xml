@@ -1,6 +1,6 @@
 <resources>
     <!-- general -->
-    <string name="app_name">Collective Balance</string>
+    <string name="app_name">Collective wallet</string>
     <string name="add_info">Fill in all the fields </string>
     <string name="total_sum_payed">Total paid: %1$s%2$s</string>
     <string name="list_of_payments_is_empty">List is empty</string>
@@ -25,8 +25,11 @@
     <string name="i_have_acc_registration_fragment">I have an account</string>
     <string name="enter_your_name">Name</string>
     <string name="enter_name">Group member name</string>
+    <string name="privacy_police_text">By registering you accept our</string>
+    <string name="privacy_police_address">privacy police</string>
+    <string name="private_police_url" translatable="false">https://github.com/Reeto1210/collectiveNote/blob/master/readme.txt</string>
 
-    <!-- roomChoose -->
+     <!-- groupChoose -->
     <string name="group_name_hint">Group login</string>
     <string name="choose_currency">Choose currency</string>
     <string name="room_enter_title_text">Group login/pass </string>
@@ -117,9 +120,7 @@
     <string name="toast_at_delete_menu">The function is unlocked, swipe the payment to the right to delete it</string>
     <string name="delete_payment_menu">Delete payments</string>
 
-    <!-- languages -->
-    <string name="language_english" translatable="false">English</string>
-    <string name="language_russian" translatable="false">Русский</string>
+
 
 
 </resources>

@@ -78,6 +78,7 @@ fun ImageView.setImage(url: String) {
 
 fun restartActivity() {
     val intent = Intent(APP_ACTIVITY, MainActivity::class.java)
+   APP_ACTIVITY.back = false
     APP_ACTIVITY.finish()
     APP_ACTIVITY.startActivity(intent)
     REPOSITORY = FireBaseRepository()
@@ -161,8 +162,7 @@ fun initHomeUpFalse() {
 }
 
 fun buildGroupChooseDialog(click: (String) -> Unit) {
-   APP_ACTIVITY.back = false
-    val builder = AlertDialog.Builder(APP_ACTIVITY)
+   val builder = AlertDialog.Builder(APP_ACTIVITY)
     builder.setTitle(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_title))
         .setMessage(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_text))
         .setPositiveButton(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_positive_button)) { _: DialogInterface, _: Int ->

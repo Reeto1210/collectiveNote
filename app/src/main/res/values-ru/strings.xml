@@ -1,6 +1,6 @@
 <resources>
     <!-- general -->
-    <string name="app_name">Общий баланс</string>
+    <string name="app_name">Общий кошелёк</string>
     <string name="add_info">Заполните все поля</string>
     <string name="total_sum_payed">Всего потрачено: %1$s%2$s</string>
     <string name="list_of_payments_is_empty">Список платежей пуст</string>
@@ -25,6 +25,8 @@
     <string name="i_have_acc_registration_fragment">У меня уже есть аккаунт</string>
     <string name="enter_your_name">Отображаемое имя</string>
     <string name="enter_name">Имя участника группы</string>
+    <string name="privacy_police_text">При регистрации Вы принимаете нашу</string>
+    <string name="privacy_police_address">политику конфидециальности</string>
 
     <!-- roomChoose -->
     <string name="group_name_hint">Название группы</string>

@@ -11,8 +11,6 @@ var INTERNET = false
 lateinit var USER: UserModel
 var ROOM_CURRENCY = ""
 lateinit var APP_ACTIVITY:MainActivity
-const val ENGLISH = "en"
-const val RUSSIAN = "ru"
 const val EMPTY = "empty"
 const val CROP_IMAGE_SIZE = 900
 const val FAIL = "fail"

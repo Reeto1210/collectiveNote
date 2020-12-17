@@ -1,188 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fillViewport="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-<androidx.constraintlayout.widget.ConstraintLayout
-
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
-    tools:context=".screens.registration.RegistrationFragment">
-
-    <ProgressBar
-        android:id="@+id/fragment_registration_progress_bar"
-        android:layout_width="@dimen/small_corner_progress_bar_size"
-        android:layout_height="@dimen/small_corner_progress_bar_size"
-        android:layout_margin="@dimen/verySmallMargin"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/first_registration"
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        tools:context=".screens.registration.RegistrationFragment">
 
-        <TextView
-           android:gravity="center"
-            android:id="@+id/registration_email_title"
-            style="@style/title_style"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/title_email_login"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-
-            android:id="@+id/registration_input_email"
-            style="@style/input_text_style"
-            android:hint="@string/e_mail"
-            android:inputType="textEmailAddress"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/registration_email_title"
-            tools:ignore="Autofill" />
-
-        <EditText
-
-            android:id="@+id/registration_input_password"
-            style="@style/input_text_style"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registration_input_email"
-            tools:ignore="Autofill" />
-
-        <TextView
-            android:id="@+id/registration_tip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/app_margin"
-            android:gravity="center"
-            android:text="@string/Use_your_Google_account"
-            android:textColor="@color/main_color_secondary_variant"
-            android:textSize="@dimen/small_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/registration_input_password" />
-
-        <TextView
-            android:id="@+id/registration_email_btn"
-            style="@style/btn_style"
-            android:text="@string/registration_email_btn"
+        <ProgressBar
+            android:id="@+id/fragment_registration_progress_bar"
+            android:layout_width="@dimen/small_corner_progress_bar_size"
+            android:layout_height="@dimen/small_corner_progress_bar_size"
+            android:layout_margin="@dimen/verySmallMargin"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/registration_input_password" />
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/registration_btn_signInGoogle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/app_margin"
-            android:layout_marginEnd="@dimen/app_margin"
-            android:background="@drawable/background_for_custom_buttons"
-            android:elevation="@dimen/app_elevation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registration_tip">
+            android:id="@+id/first_registration"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp">
 
             <TextView
-                android:id="@+id/btn_text"
+                android:id="@+id/registration_email_title"
+                style="@style/title_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/title_email_login"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+
+                android:id="@+id/registration_input_email"
+                style="@style/input_text_style"
+                android:hint="@string/e_mail"
+                android:inputType="textEmailAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/registration_email_title"
+                tools:ignore="Autofill" />
+
+            <EditText
+
+                android:id="@+id/registration_input_password"
+                style="@style/input_text_style"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/registration_input_email"
+                tools:ignore="Autofill" />
+
+            <TextView
+                android:id="@+id/registration_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/app_margin"
-                android:text="@string/Enter"
-                android:textColor="@color/white"
-                android:textSize="@dimen/Large_text"
-                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/Use_your_Google_account"
+                android:textColor="@color/main_color_secondary_variant"
+                android:textSize="@dimen/small_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/registration_input_password" />
+
+            <TextView
+                android:id="@+id/registration_email_btn"
+                style="@style/btn_style"
+                android:text="@string/registration_email_btn"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/registration_input_password" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/registration_btn_signInGoogle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/app_margin"
+                android:layout_marginEnd="@dimen/app_margin"
+                android:background="@drawable/background_for_custom_buttons"
+                android:elevation="@dimen/app_elevation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/registration_tip">
+
+                <TextView
+                    android:id="@+id/btn_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/app_margin"
+                    android:text="@string/Enter"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/Large_text"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="@dimen/registration_google_image"
+                    android:layout_height="@dimen/registration_google_image"
+                    android:layout_marginStart="@dimen/app_margin"
+                    android:layout_marginTop="@dimen/verySmallMargin"
+                    android:layout_marginEnd="@dimen/app_margin"
+                    android:layout_marginBottom="@dimen/verySmallMargin"
+                    android:src="@drawable/google_logo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/registration_no_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/big_padding"
+                android:text="@string/i_have_acc_registration_fragment"
+                app:layout_constraintBottom_toTopOf="@+id/privacy_police_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/privacy_police_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/privacy_police_text"
+                app:layout_constraintBottom_toTopOf="@+id/privacy_police_address"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/privacy_police_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/app_margin"
+                android:layout_marginBottom="@dimen/app_margin"
+                android:gravity="center"
+                android:text="@string/privacy_police_address"
+                android:textColor="@color/main_color_secondary_variant"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <ImageView
-                android:layout_width="@dimen/registration_google_image"
-                android:layout_height="@dimen/registration_google_image"
-                android:layout_marginStart="@dimen/app_margin"
-                android:layout_marginTop="@dimen/verySmallMargin"
-                android:layout_marginEnd="@dimen/app_margin"
-                android:layout_marginBottom="@dimen/verySmallMargin"
-                android:src="@drawable/google_logo"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_text"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/registration_no_account"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:id="@+id/registration_change_name"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/app_margin"
-            android:padding="@dimen/big_padding"
-            android:text="@string/i_have_acc_registration_fragment"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/alert_change_name_title"
+                style="@style/title_style"
+                android:text="@string/enter_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/registration_change_name_input_text"
+                style="@style/input_text_style"
+                android:hint="@string/enter_your_name"
+                android:inputType="textPersonName"
+                android:maxLength="30"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/alert_change_name_title"
+                tools:ignore="Autofill" />
+
+            <TextView
+                android:id="@+id/registration_change_name_btn"
+                style="@style/btn_style"
+                android:text="@string/continue_it"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/registration_change_name_input_text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-
-        android:id="@+id/registration_change_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/alert_change_name_title"
-            style="@style/title_style"
-            android:text="@string/enter_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/registration_change_name_input_text"
-            style="@style/input_text_style"
-            android:hint="@string/enter_your_name"
-            android:inputType="textPersonName"
-            android:maxLength="30"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/alert_change_name_title"
-            tools:ignore="Autofill" />
-
-        <TextView
-            android:id="@+id/registration_change_name_btn"
-            style="@style/btn_style"
-            android:text="@string/continue_it"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registration_change_name_input_text" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

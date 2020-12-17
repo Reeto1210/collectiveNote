@@ -1,6 +1,8 @@
 package com.mudryakov.collectivenote.screens.registration
 
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -46,7 +48,15 @@ class RegistrationFragment : Fragment() {
         animateButtons()
         checkSignIn()
         hideKeyboard(APP_ACTIVITY)
+   initPoliceClick()
     }
+
+    private fun initPoliceClick() {
+       mBinding.privacyPoliceAddress.setOnClickListener {
+           val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.private_police_url)))
+           startActivity(browserIntent)
+       }
+           }
 
     private fun checkSignIn() {
         if (AppPreference.getSignIn()) {
@@ -59,6 +69,7 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun showChangeNameLayout() {
+       hideKeyboard(APP_ACTIVITY)
         mBinding.firstRegistration.makeGone()
         changeName { fastNavigate(R.id.action_RegistrationFragment_to_groupChooseFragment) }
     }
@@ -71,6 +82,8 @@ class RegistrationFragment : Fragment() {
                 object : KeyboardVisibilityEventListener {
                     override fun onVisibilityChanged(isOpen: Boolean) {
                         if (isOpen) {
+                            mBinding.privacyPoliceAddress.startRegisterAnimation(false)
+                            mBinding.privacyPoliceText.startRegisterAnimation(false)
                             mBinding.registrationBtnSignInGoogle.startRegisterAnimation(false)
                             mBinding.registrationTip.startRegisterAnimation(false)
                             mBinding.registrationEmailBtn.startRegisterAnimation(true)
@@ -80,6 +93,8 @@ class RegistrationFragment : Fragment() {
                             mBinding.registrationTip.startRegisterAnimation(true)
                             mBinding.registrationEmailBtn.startRegisterAnimation(false)
                             mBinding.registrationNoAccount.startRegisterAnimation(true)
+                            mBinding.privacyPoliceAddress.startRegisterAnimation(true)
+                            mBinding.privacyPoliceText.startRegisterAnimation(true)
                         }
                     }
                 }

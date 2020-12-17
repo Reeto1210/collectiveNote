@@ -1,30 +1,30 @@
 package com.mudryakov.collectivenote
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
-import androidx.core.view.ViewCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.customview.widget.ViewDragHelper
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.navigation.NavigationView
-import com.mudryakov.collectivenote.database.firebase.AUTH
 import com.mudryakov.collectivenote.database.firebase.handleSignInResult
 import com.mudryakov.collectivenote.databinding.ActivityMainBinding
 import com.mudryakov.collectivenote.utility.*
-import com.ninenox.kotlinlocalemanager.AppCompatActivityBase
-import com.ninenox.kotlinlocalemanager.ApplicationLocale
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
+import java.util.*
 
 
-class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var _Binding: ActivityMainBinding? = null
     val mBinding get() = _Binding!!
     lateinit var navController: NavController
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _Binding = ActivityMainBinding.inflate(layoutInflater)
+            _Binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         setSupportActionBar(mBinding.mainToolbar)
         APP_ACTIVITY = this
@@ -132,12 +132,6 @@ class MainActivity : AppCompatActivityBase(), NavigationView.OnNavigationItemSel
         } catch (e: Exception) {
         }
         super.onStop()
-    }
-
-
-    fun changeLocale(language: String) {
-        ApplicationLocale.localeManager!!.setNewLocale(this, language)
-        restartActivity()
     }
 
 

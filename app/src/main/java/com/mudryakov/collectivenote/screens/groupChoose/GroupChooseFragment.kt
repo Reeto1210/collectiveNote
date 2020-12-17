@@ -64,6 +64,7 @@ class GroupChooseFragment : Fragment() {
         }
     }
 
+
     private fun initialization() {
         APP_ACTIVITY.back = true
         APP_ACTIVITY.title = AppPreference.getUserName()
@@ -71,7 +72,8 @@ class GroupChooseFragment : Fragment() {
     }
 
     private fun enterRoom(userType: String) {
-            when (userType) {
+
+           when (userType) {
             CREATOR -> createGroup()
             else -> joinGroup()
         }
