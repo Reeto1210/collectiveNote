@@ -101,10 +101,9 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
-                val currentPayment = mAdapter?.listOfpayments?.get(viewHolder.adapterPosition)
-                 val isHasImage = currentPayment?.imageUrl != "empty"
+
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                    val iconRectF = calculateRect(viewHolder, dX, isHasImage)
+                    val iconRectF = calculateRect(viewHolder, dX)
                     c.drawBitmap(icon, null, iconRectF, p)
 
                 }
