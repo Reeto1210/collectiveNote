@@ -15,6 +15,7 @@
     <string name="continue_it">Continue</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_help">Help</string>
+    <string name="share_menu">Share</string>
 
     <!-- registration -->
     <string name="Use_your_Google_account">Use Google account</string>
@@ -86,6 +87,7 @@
     <string name="my_email">Contact e-mail: mudryakov21@mail.ru</string>
     <string name="help_main_text">Thank you for choosing my application, I hope it will be comfortable and useful for You. If you have any suggestions, comments, or any other questions, please contact me</string>
     <string name="donate_btn_text">make a donation</string>
+    <string name="thx_for_support">Thanks you for the supporting this app!</string>
 
     <!-- internetCheck -->
     <string name="internet_alert_dialog_title">No internet connection</string>
@@ -119,7 +121,6 @@
     <string name="payment_has_been_deleted_toast">Payment has been deleted</string>
     <string name="toast_at_delete_menu">The function is unlocked, swipe the payment to the right to delete it</string>
     <string name="delete_payment_menu">Delete payments</string>
-
 
 
 

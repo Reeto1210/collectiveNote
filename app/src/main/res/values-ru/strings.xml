@@ -70,7 +70,7 @@
     <string name="room_info">Информация о группе</string>
     <string name="room_pass">Пароль: %1$s</string>
     <string name="room_current">Текущая валюта: %1$s</string>
-
+    <string name="share_menu">Поделиться</string>
     <!-- settings -->
     <string name="user_name">Имя пользователя : %1$s</string>
     <string name="edit">Изменить имя</string>
@@ -85,6 +85,7 @@
     <string name="my_email">E-mail для связи: mudryakov21@mail.ru</string>
     <string name="help_main_text">Спасибо что выбрали моё приложение, надеюсь оно будет удобным и полезным для Вас. Если у Вас есть пожелания, замечания, или какой либо ещё вопрос, пожалуйста свяжитесь со мной</string>
     <string name="donate_btn_text">Поддержать разработчика</string>
+    <string name="thx_for_support">Спасибо за поддержку приложения!</string>
 
     <!-- internetCheck -->
     <string name="internet_alert_dialog_title">Отсутсвует интернет соединение</string>

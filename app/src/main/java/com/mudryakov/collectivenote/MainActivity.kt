@@ -1,8 +1,6 @@
 package com.mudryakov.collectivenote
 
-import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
@@ -21,7 +19,6 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
-import java.util.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -37,7 +34,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-            _Binding = ActivityMainBinding.inflate(layoutInflater)
+        _Binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         setSupportActionBar(mBinding.mainToolbar)
         APP_ACTIVITY = this
@@ -47,7 +44,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mDrawer = mBinding.myDrawer
         mNavView = mBinding.myNavView
         mNavView.itemIconTintList = null
-          }
+    }
 
 
     override fun onStart() {
@@ -57,7 +54,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setDrawerEdge()
         mNavView.setNavigationItemSelectedListener(this)
         APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-       }
+    }
 
 
     private fun setDrawerEdge() {
@@ -75,6 +72,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
+
     @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -87,7 +85,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onSupportNavigateUp(): Boolean {
         if (back) onBackPressed()
-        else mDrawer.openDrawer(mNavView)
+        else if (DRAWER_ENABLED) mDrawer.openDrawer(mNavView)
         return true
     }
 
@@ -101,15 +99,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 else showNoInternetToast()
             }
             R.id.drawer_help -> fastNavigate(R.id.action_mainFragment_to_helpFragment)
+            R.id.drawer_share -> shareApp()
         }
         return true
+    }
+
+    private fun shareApp() {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, "Посмотри что я нашёл google.com")
+        }
+        val shareIntent = Intent.createChooser(intent, getString(R.string.share_menu))
+        try {
+            startActivity(shareIntent)
+        } catch (e: Exception) {
+            showToast(R.string.something_going_wrong)
+        }
     }
 
     override fun onBackPressed() {
         mDrawer.closeDrawer(mNavView)
         hideKeyboard(APP_ACTIVITY)
-
-
         if (back)
             super.onBackPressed()
         else {
@@ -127,7 +138,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onStop() {
-       try {
+        try {
             fastNavigate(R.id.action_settingsFragment_to_mainFragment)
         } catch (e: Exception) {
         }

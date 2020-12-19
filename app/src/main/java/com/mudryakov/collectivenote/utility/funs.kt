@@ -196,13 +196,13 @@ fun convertSum(sum: String): String {
     }
 }
 
-fun calculateRect(viewHolder: RecyclerView.ViewHolder, dX: Float): RectF {
+fun calculateRect(viewHolder: RecyclerView.ViewHolder, dX: Float, isHasImage: Boolean): RectF {
     val holderItem = viewHolder.itemView
     val iconSize = (holderItem.bottom.toFloat() - holderItem.top.toFloat())*(0.8f)
     val display: Display = APP_ACTIVITY.windowManager.defaultDisplay
     val yCenter = holderItem.bottom - (holderItem.bottom-holderItem.top)/2f
     val xCenter = (display.width) / 2f
-    val coef = (dX/display.width)/2
+    val coef = if (isHasImage) ((dX/display.width)/2)*0.5f else ((dX/display.width)/2)
         return  RectF(
         xCenter - iconSize*coef,
         yCenter - iconSize*coef,

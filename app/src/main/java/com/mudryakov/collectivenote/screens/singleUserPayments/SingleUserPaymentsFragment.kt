@@ -3,7 +3,10 @@ package com.mudryakov.collectivenote.screens.singleUserPayments
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.*
 import androidx.lifecycle.Observer
@@ -83,7 +86,7 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
     private fun initDeleteFunction() {
         setHasOptionsMenu(true)
         val icon: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.delete)
-val p = Paint()
+        val p = Paint()
         val mItemTouchHelper = object :
             ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
 
@@ -98,12 +101,13 @@ val p = Paint()
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
-
+                val currentPayment = mAdapter?.listOfpayments?.get(viewHolder.adapterPosition)
+                 val isHasImage = currentPayment?.imageUrl != "empty"
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                   val iconRectF = calculateRect(viewHolder,dX)
-                   c.drawBitmap(icon, null, iconRectF, p)
+                    val iconRectF = calculateRect(viewHolder, dX, isHasImage)
+                    c.drawBitmap(icon, null, iconRectF, p)
 
-                                }
+                }
                 super.onChildDraw(
                     c,
                     recyclerView,
@@ -193,17 +197,17 @@ val p = Paint()
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-       activity?.menuInflater?.inflate(R.menu.single_payments_menu, menu)
+        activity?.menuInflater?.inflate(R.menu.single_payments_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-       when (item.itemId) {
-           R.id.delete_payment -> {
-               isAvailable = true
-               showToast(R.string.toast_at_delete_menu)
-           }
-       }
+        when (item.itemId) {
+            R.id.delete_payment -> {
+                isAvailable = true
+                showToast(R.string.toast_at_delete_menu)
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 

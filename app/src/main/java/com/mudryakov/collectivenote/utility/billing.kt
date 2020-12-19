@@ -1,43 +1,105 @@
 package com.mudryakov.collectivenote.utility
 
 import com.android.billingclient.api.*
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.withContext
+import com.mudryakov.collectivenote.R
 
 
-fun makeDonation(){
-     val purchasesUpdateListener = PurchasesUpdatedListener{ billingResult, purchases ->
-        //someFun
+lateinit var myBillingClient: BillingClient
+var mySkuDetailMap:HashMap<String,SkuDetails> = HashMap()
+
+fun makeDonation(onSuccess: () -> Unit) {
+    val purchasesUpdateListener = PurchasesUpdatedListener { billingResult, purchases ->
+        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null)
+            onSuccess()
     }
-   val billingClient:BillingClient = BillingClient.newBuilder(APP_ACTIVITY)
+
+    val myBillingClientStateListener = object : BillingClientStateListener {
+        override fun onBillingSetupFinished(p0: BillingResult) {
+            if (p0.responseCode ==  BillingClient.BillingResponseCode.OK){
+                println("ok1")
+                querySkuDetails()
+            }
+        }
+
+        override fun onBillingServiceDisconnected() {
+           myBillingClient.endConnection()
+            showToast(R.string.something_going_wrong)
+        }
+
+    }
+
+     myBillingClient = BillingClient.newBuilder(APP_ACTIVITY)
         .setListener(purchasesUpdateListener)
         .enablePendingPurchases()
         .build()
+    myBillingClient.startConnection(myBillingClientStateListener)
 
-  //  val myBillingClientStateListener = object:BillingClientStateListener{
-     //   override fun onBillingSetupFinished(p0: BillingResult) {
-           // if(p0.responseCode == BillingClient.BillingResponseCode.OK)
-         //      startDonataionQuery(billingClient)
-      //  }
-
-
-
-      //  override fun onBillingServiceDisconnected() {
-
-      //  }
-
-  //  }
 
 }
 
- fun startDonataionQuery() {
-    TODO("Not yet implemented")
+private fun querySkuDetails() {
+    val skuDetailsParamsBuilder = SkuDetailsParams.newBuilder()
+    val skuList: MutableList<String> = mutableListOf("sku_donate")
+    skuDetailsParamsBuilder.setSkusList(skuList).setType(BillingClient.SkuType.INAPP)
+    myBillingClient.querySkuDetailsAsync(skuDetailsParamsBuilder.build()) { billingResult, skuDetailsList ->
+        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK&& skuDetailsList !=null){
+            println("ok2")
+            for (skuDetails in skuDetailsList) {
+                mySkuDetailMap[skuDetails.sku] = skuDetails
+                println("ok3")
+                println(mySkuDetailMap[skuDetails.sku])
+            }
+        }
+        val  billingFlowParams = mySkuDetailMap["sku_donate"]?.let {
+            BillingFlowParams.newBuilder()
+                .setSkuDetails(it)
+                .build()
+        }
+
+        if (billingFlowParams != null) {
+            myBillingClient.launchBillingFlow(APP_ACTIVITY, billingFlowParams)
+        }
+        println("ok4")
+
+    }
+
 }
-// fun querySkuDetails(billingClient:BillingClient){
- //   val skuList = mutableListOf("donation")
-  //  val params = SkuDetailsParams.newBuilder()
-   // params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP)
-   // withContext(IO){
-     //   billingClient.querySkuDetailsAsync(params.build()){ billingResult, mutableList -> }
-   // }
-//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

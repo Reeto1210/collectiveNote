@@ -8,7 +8,7 @@
             android:id="@+id/drawer_history"
             android:icon="@drawable/ic_history_drawer"
             android:title="@string/history" />
-               <item
+        <item
             android:id="@+id/drawer_info"
             android:icon="@drawable/ic_drawer_info"
             android:title="@string/room_info" />
@@ -16,13 +16,18 @@
             android:id="@+id/drawer_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/menu_settings" />
-    </group>
-
-    <group android:id="@+id/bottom_menu">
         <item
             android:id="@+id/drawer_help"
             android:icon="@drawable/ic_help"
             android:title="@string/menu_help" />
+    </group>
+
+    <group android:id="@+id/bottom_menu">
+        <item
+            android:id="@+id/drawer_share"
+            android:icon="@drawable/ic_baseline_share_24"
+            android:title="@string/share_menu" />
+
     </group>
 
 </menu>

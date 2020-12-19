@@ -9,6 +9,7 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.databinding.FragmentHelpBinding
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
 import com.mudryakov.collectivenote.utility.APP_ACTIVITY
+import com.mudryakov.collectivenote.utility.showToast
 import java.math.BigDecimal
 
 
@@ -31,11 +32,13 @@ class HelpFragment : BaseFragmentBack() {
     }
 
     private fun initialization() {
-        APP_ACTIVITY.title = getString(R.string.help_main_text)
+        APP_ACTIVITY.title = getString(R.string.menu_help)
         mViewModel = ViewModelProvider(this).get(HelpFragmentViewModel::class.java)
 
     mBinding.donateBtn.setOnClickListener {
-        //дать денег мне любимому
+       mViewModel.helpDonation {
+           showToast(R.string.thx_for_support)
+       }
     }
 
     }

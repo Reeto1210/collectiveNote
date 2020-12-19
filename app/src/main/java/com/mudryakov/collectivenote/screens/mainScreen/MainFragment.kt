@@ -38,8 +38,8 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-         if (!INTERNET) {
-           noInternetAction()
+        if (!INTERNET) {
+            noInternetAction()
         } else {
             initialization()
             restartIfInternetChanged()
@@ -50,7 +50,7 @@ class MainFragment : Fragment() {
         checkInternetConnection({ noInternetMode() }) {
             if (REPOSITORY is AppRoomRepository)
                 restartActivity()
-             else {
+            else {
                 INTERNET = true
                 initialization()
             }
@@ -94,6 +94,7 @@ class MainFragment : Fragment() {
             mBinding.mainFragmentTotalPaymentRoom.text =
                 getString(R.string.total_sum_payed, totalSum, ROOM_CURRENCY)
             APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            DRAWER_ENABLED = true
         }
         mViewModel.allMembers.observe(this, mObserver)
     }

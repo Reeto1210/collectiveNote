@@ -2,6 +2,7 @@ package com.mudryakov.collectivenote.utility
 
 import com.mudryakov.collectivenote.MainActivity
 import com.mudryakov.collectivenote.models.UserModel
+var DRAWER_ENABLED = false
 const val CREATOR ="creator"
 const val MEMBER = "member"
 const val SIGN_CODE_REQUEST = 1488
