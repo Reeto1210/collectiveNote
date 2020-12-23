@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val intent = Intent().apply {
             action = Intent.ACTION_SEND
             type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, "Посмотри что я нашёл google.com")
+            putExtra(Intent.EXTRA_TEXT, "Привет, присоединяйся https://play.google.com/store/apps/details?id=com.mudryakov.collectivenote")
         }
         val shareIntent = Intent.createChooser(intent, getString(R.string.share_menu))
         try {
