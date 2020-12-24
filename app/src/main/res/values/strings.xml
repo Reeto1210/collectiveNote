@@ -121,7 +121,7 @@
     <string name="payment_has_been_deleted_toast">Payment has been deleted</string>
     <string name="toast_at_delete_menu">The function is unlocked, swipe the payment to the right to delete it</string>
     <string name="delete_payment_menu">Delete payments</string>
-
+    <string name="share_message">Hi, join me here https://play.google.com/store/apps/details?id=com.mudryakov.collectivenote</string>
 
 
 </resources>

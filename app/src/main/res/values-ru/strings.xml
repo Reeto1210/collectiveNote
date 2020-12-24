@@ -15,6 +15,7 @@
     <string name="continue_it">Продолжить</string>
     <string name="menu_settings">Настройки</string>
     <string name="menu_help">Помощь</string>
+    <string name="share_message">Привет, присоединяйся https://play.google.com/store/apps/details?id=com.mudryakov.collectivenote</string>
 
     <!-- registration -->
     <string name="Use_your_Google_account">Использовать свой Google аккаунт</string>

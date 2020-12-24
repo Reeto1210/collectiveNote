@@ -113,8 +113,9 @@ class FireBaseRepository : AppDatabaseRepository {
         val key = refCurrentRoom.push().key.toString()
         payment.firebaseId = key
         payment.time = ServerValue.TIMESTAMP
+ val paymentHash = transformModelToHash(payment)
 
-        refCurrentRoom.child(key).setValue(payment)
+        refCurrentRoom.child(key).setValue(paymentHash)
             .addOnSuccessListener {
                 refCurrentUser.child(CHILD_TOTAL_PAY).child(
                     CURRENT_GROUP_UID
@@ -133,6 +134,8 @@ class FireBaseRepository : AppDatabaseRepository {
             }
             .addOnFailureListener { showToast(R.string.something_going_wrong) }
     }
+
+
 
 
     override fun changeName(name: String, onSuccess: () -> Unit) {

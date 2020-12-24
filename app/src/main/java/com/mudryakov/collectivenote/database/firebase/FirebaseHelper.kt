@@ -16,7 +16,6 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
 import com.mudryakov.collectivenote.database.RoomDatabase.AppRoomRepository
 import com.mudryakov.collectivenote.models.PaymentModel
-import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utility.*
 
 
@@ -24,6 +23,13 @@ var USERNAME: String = ""
 lateinit var EMAIL: String
 lateinit var PASSWORD: String
 
+
+const val CHILD_IMAGE_URL = "imageUrl"
+const val CHILD_SUM = "summ"
+const val CHILD_TIME = "time"
+const val CHILD_FROM_ID = "fromId"
+const val CHILD_DESCRIPTION = "description"
+const val CHILD_FIREBASE_ID = "firebaseId"
 const val NODE_UPDATE_HELPER = "updateHelper"
 const val CHILD_PASS = "password"
 const val CHILD_TOTAL_PAY_AT_CURRENT_GROUP = "totalPayAtCurrentGroup"
@@ -122,11 +128,15 @@ fun handleSignInResult(task: Task<GoogleSignInAccount>) {
 
 
 fun pushUserToFirebase() {
+    val userHashMap = hashMapOf<String, String>()
+    userHashMap[CHILD_FIREBASE_ID] = CURRENT_UID
+    userHashMap[CHILD_NAME] = USERNAME
     CURRENT_UID = AppPreference.getUserId()
-    USER = UserModel(CURRENT_UID, USERNAME)
+
+
     REF_DATABASE_ROOT.child(NODE_USERS).addMySingleListener {
         if (!it.hasChild(CURRENT_UID)) {
-            REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).setValue(USER)
+            REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).setValue(userHashMap)
                 .addOnFailureListener {
                     showToast(R.string.something_going_wrong)
                     ON_REGISTRATION_FAIL()

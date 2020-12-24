@@ -20,10 +20,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.mudryakov.collectivenote.MainActivity
 import com.mudryakov.collectivenote.R
-import com.mudryakov.collectivenote.database.firebase.FireBaseRepository
-import com.mudryakov.collectivenote.database.firebase.NODE_PAYMENT_IMAGES
-import com.mudryakov.collectivenote.database.firebase.REF_DATABASE_STORAGE
-import com.mudryakov.collectivenote.database.firebase.REPOSITORY
+import com.mudryakov.collectivenote.database.firebase.*
+import com.mudryakov.collectivenote.models.PaymentModel
 import com.squareup.picasso.Picasso
 import java.io.File
 import java.text.SimpleDateFormat
@@ -78,7 +76,7 @@ fun ImageView.setImage(url: String) {
 
 fun restartActivity() {
     val intent = Intent(APP_ACTIVITY, MainActivity::class.java)
-   APP_ACTIVITY.back = false
+    APP_ACTIVITY.back = false
     APP_ACTIVITY.finish()
     APP_ACTIVITY.startActivity(intent)
     REPOSITORY = FireBaseRepository()
@@ -162,7 +160,7 @@ fun initHomeUpFalse() {
 }
 
 fun buildGroupChooseDialog(click: (String) -> Unit) {
-   val builder = AlertDialog.Builder(APP_ACTIVITY)
+    val builder = AlertDialog.Builder(APP_ACTIVITY)
     builder.setTitle(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_title))
         .setMessage(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_text))
         .setPositiveButton(APP_ACTIVITY.getString(R.string.choose_room_alert_dialog_positive_button)) { _: DialogInterface, _: Int ->
@@ -198,16 +196,30 @@ fun convertSum(sum: String): String {
 
 fun calculateRect(viewHolder: RecyclerView.ViewHolder, dX: Float): RectF {
     val holderItem = viewHolder.itemView
-    val iconSize = (holderItem.bottom.toFloat() - holderItem.top.toFloat())*(0.8f)
+    val iconSize = (holderItem.bottom.toFloat() - holderItem.top.toFloat()) * (0.8f)
     val display: Display = APP_ACTIVITY.windowManager.defaultDisplay
-    val yCenter = holderItem.bottom - (holderItem.bottom-holderItem.top)/2f
+    val yCenter = holderItem.bottom - (holderItem.bottom - holderItem.top) / 2f
     val xCenter = (display.width) / 2f
-    val coef = (dX/display.width)/2
-        return  RectF(
-        xCenter - iconSize*coef,
-        yCenter - iconSize*coef,
-        xCenter + iconSize*coef,
-        yCenter + iconSize*coef
+    val coef = (dX / display.width) / 2
+    return RectF(
+        xCenter - iconSize * coef,
+        yCenter - iconSize * coef,
+        xCenter + iconSize * coef,
+        yCenter + iconSize * coef
     )
-
 }
+
+fun transformModelToHash(payment: PaymentModel): HashMap<String, Any> {
+    val paymentHash = hashMapOf<String, Any>()
+
+    paymentHash[CHILD_FIREBASE_ID] = payment.firebaseId
+    paymentHash[CHILD_SUM] = payment.summ
+    paymentHash[CHILD_DESCRIPTION] = payment.description
+    paymentHash[CHILD_TIME] = payment.time
+    paymentHash[CHILD_FROM_ID] = payment.fromId
+    paymentHash[CHILD_IMAGE_URL] = payment.imageUrl
+    paymentHash[CHILD_FROM_NAME] = payment.fromName
+    return paymentHash
+}
+
+
