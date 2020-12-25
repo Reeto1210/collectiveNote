@@ -5,7 +5,7 @@ import com.mudryakov.collectivenote.R
 
 
 lateinit var myBillingClient: BillingClient
-var mySkuDetailMap:HashMap<String,SkuDetails> = HashMap()
+var mySkuDetailMap: HashMap<String, SkuDetails> = HashMap()
 
 fun makeDonation(onSuccess: () -> Unit) {
     val purchasesUpdateListener = PurchasesUpdatedListener { billingResult, purchases ->
@@ -15,26 +15,22 @@ fun makeDonation(onSuccess: () -> Unit) {
 
     val myBillingClientStateListener = object : BillingClientStateListener {
         override fun onBillingSetupFinished(p0: BillingResult) {
-            if (p0.responseCode ==  BillingClient.BillingResponseCode.OK){
-                println("ok1")
-                querySkuDetails()
+            if (p0.responseCode == BillingClient.BillingResponseCode.OK) {
+                  querySkuDetails()
             }
         }
 
         override fun onBillingServiceDisconnected() {
-           myBillingClient.endConnection()
+            myBillingClient.endConnection()
             showToast(R.string.something_going_wrong)
         }
-
     }
 
-     myBillingClient = BillingClient.newBuilder(APP_ACTIVITY)
+    myBillingClient = BillingClient.newBuilder(APP_ACTIVITY)
         .setListener(purchasesUpdateListener)
         .enablePendingPurchases()
         .build()
     myBillingClient.startConnection(myBillingClientStateListener)
-
-
 }
 
 private fun querySkuDetails() {
@@ -42,15 +38,13 @@ private fun querySkuDetails() {
     val skuList: MutableList<String> = mutableListOf("sku_donate")
     skuDetailsParamsBuilder.setSkusList(skuList).setType(BillingClient.SkuType.INAPP)
     myBillingClient.querySkuDetailsAsync(skuDetailsParamsBuilder.build()) { billingResult, skuDetailsList ->
-        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK&& skuDetailsList !=null){
-            println("ok2")
+        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
             for (skuDetails in skuDetailsList) {
                 mySkuDetailMap[skuDetails.sku] = skuDetails
-                println("ok3")
                 println(mySkuDetailMap[skuDetails.sku])
             }
         }
-        val  billingFlowParams = mySkuDetailMap["sku_donate"]?.let {
+        val billingFlowParams = mySkuDetailMap["sku_donate"]?.let {
             BillingFlowParams.newBuilder()
                 .setSkuDetails(it)
                 .build()
@@ -59,10 +53,7 @@ private fun querySkuDetails() {
         if (billingFlowParams != null) {
             myBillingClient.launchBillingFlow(APP_ACTIVITY, billingFlowParams)
         }
-        println("ok4")
-
     }
-
 }
 
 

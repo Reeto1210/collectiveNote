@@ -9,18 +9,18 @@
         android:id="@+id/historyFragment"
         android:name="com.mudryakov.collectivenote.screens.history.HistoryFragment"
         android:label="fragment_history"
-        tools:layout="@layout/fragment_history" >
+        tools:layout="@layout/fragment_history">
         <action
             android:id="@+id/action_historyFragment_to_mainFragment"
             app:destination="@id/mainFragment"
             app:launchSingleTop="true"
-            app:popUpTo="@id/nav_graph"         />
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.mudryakov.collectivenote.screens.mainScreen.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_historyFragment"
             app:destination="@id/historyFragment" />
@@ -46,11 +46,10 @@
         android:id="@+id/registrationFragment"
         android:name="com.mudryakov.collectivenote.screens.registration.RegistrationFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_registration" >
+        tools:layout="@layout/fragment_registration">
         <action
             android:id="@+id/action_RegistrationFragment_to_groupChooseFragment"
-            app:destination="@id/groupChooseFragment"
-            />
+            app:destination="@id/groupChooseFragment" />
         <action
             android:id="@+id/action_RegistrationFragment_to_emailLoginFragment"
             app:destination="@id/emailLoginFragment"
@@ -61,7 +60,7 @@
         android:id="@+id/newPaymentFragment"
         android:name="com.mudryakov.collectivenote.screens.addNewPayment.NewPaymentFragment"
         android:label="fragment_new_payment"
-        tools:layout="@layout/fragment_new_payment" >
+        tools:layout="@layout/fragment_new_payment">
         <action
             android:id="@+id/action_newPaymentFragment_to_mainFragment"
             app:destination="@id/mainFragment"
@@ -85,23 +84,23 @@
         android:id="@+id/helpFragment"
         android:name="com.mudryakov.collectivenote.screens.help.HelpFragment"
         android:label="fragment_help"
-        tools:layout="@layout/fragment_help" >
+        tools:layout="@layout/fragment_help">
         <action
             android:id="@+id/action_helpFragment_to_mainFragment"
             app:destination="@id/mainFragment"
             app:launchSingleTop="true"
-            app:popUpTo="@id/nav_graph"/>
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/singleUserPayments"
         android:name="com.mudryakov.collectivenote.screens.singleUserPayments.SingleUserPaymentsFragment"
         android:label="fragment_single_user_payments"
-        tools:layout="@layout/single_payment_fragment" >
+        tools:layout="@layout/single_payment_fragment">
         <action
             android:id="@+id/action_singleUserPayments_to_mainFragment"
             app:destination="@id/mainFragment"
             app:launchSingleTop="true"
-            app:popUpTo="@id/nav_graph"/>
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/GroupInfoFragment"
@@ -118,12 +117,12 @@
         android:id="@+id/settingsFragment"
         android:name="com.mudryakov.collectivenote.screens.settings.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" >
+        tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_settingsFragment_to_mainFragment"
             app:destination="@id/mainFragment"
             app:launchSingleTop="true"
-            app:popUpTo="@id/nav_graph"/>
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/emailLoginFragment"

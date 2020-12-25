@@ -32,8 +32,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-
-
     <style name="fab_style">
         <item name="android:backgroundTint">@color/main_color</item>
         <item name="android:layout_width">wrap_content</item>
@@ -68,7 +66,5 @@
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">@dimen/normal_text</item>
     </style>
-
-
 
 </resources>

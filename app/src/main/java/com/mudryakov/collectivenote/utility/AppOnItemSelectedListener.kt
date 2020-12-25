@@ -11,7 +11,6 @@ class AppOnItemSelectedListener(val funOnSelected:(position:Int)->Unit):AdapterV
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
-
     }
 
 }

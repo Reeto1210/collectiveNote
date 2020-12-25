@@ -12,4 +12,5 @@
         android:layout_height="@dimen/progress_bar_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

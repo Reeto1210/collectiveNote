@@ -130,10 +130,9 @@ fun calculateSum(firstString: String, secondString: String): String {
 
         val result = (n1 + n2).toString()
         if (result == "0") return "0.00"
-        val i = result.dropLast(2) + "." + result.substring(
+        return result.dropLast(2) + "." + result.substring(
             result.lastIndex - 1
         )
-        return i
 
     }
 
@@ -144,11 +143,9 @@ fun calculateMinus(firstString: String, secondString: String): String {
     val n2 = secondString.replace(".", "").toInt()
     return if (ROOM_CURRENCY == APP_ACTIVITY.getString(R.string.RUB)) (n1 - n2).toString()
     else {
-
         val result = (n1 - n2).toString()
         if (result == "0") return "0.00"
         return result.dropLast(2) + "." + result.substring(result.lastIndex - 1)
-
     }
 
 }
@@ -211,7 +208,6 @@ fun calculateRect(viewHolder: RecyclerView.ViewHolder, dX: Float): RectF {
 
 fun transformModelToHash(payment: PaymentModel): HashMap<String, Any> {
     val paymentHash = hashMapOf<String, Any>()
-
     paymentHash[CHILD_FIREBASE_ID] = payment.firebaseId
     paymentHash[CHILD_SUM] = payment.summ
     paymentHash[CHILD_DESCRIPTION] = payment.description

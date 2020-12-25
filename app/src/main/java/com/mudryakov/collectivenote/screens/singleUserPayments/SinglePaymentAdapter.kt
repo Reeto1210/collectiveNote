@@ -23,7 +23,6 @@ class SinglePaymentAdapter : RecyclerView.Adapter<SinglePaymentAdapter.MyViewHol
         val description: TextView = view.single_payment_description
         val date: TextView = view.single_payment_date
         val image: ImageView = view.single_pay_image
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

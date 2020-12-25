@@ -15,6 +15,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
+
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += [
@@ -27,14 +28,15 @@ android {
         applicationId "com.mudryakov.collectivenote"
         minSdkVersion 22
         targetSdkVersion 30
-        versionCode 5
-        versionName "1.1.2"
+        versionCode 14
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-        release {
+           release {
+            shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

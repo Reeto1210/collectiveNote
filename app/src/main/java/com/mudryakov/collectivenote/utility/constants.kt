@@ -15,3 +15,5 @@ lateinit var APP_ACTIVITY:MainActivity
 const val EMPTY = "empty"
 const val CROP_IMAGE_SIZE = 900
 const val FAIL = "fail"
+const val BUNDLE_ID = "id"
+const val BUNDLE_NAME = "name"

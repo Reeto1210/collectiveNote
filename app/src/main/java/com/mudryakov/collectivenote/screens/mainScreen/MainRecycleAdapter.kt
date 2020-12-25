@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.models.UserModel
-import com.mudryakov.collectivenote.utility.APP_ACTIVITY
-import com.mudryakov.collectivenote.utility.AppPreference
-import com.mudryakov.collectivenote.utility.ROOM_CURRENCY
+import com.mudryakov.collectivenote.utility.*
 import kotlinx.android.synthetic.main.main_fragment_recycle_item.view.*
 
 class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>() {
@@ -54,8 +52,9 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>
             notifyItemInserted(list.indexOf(user))
         } else {
             list.forEachIndexed { i: Int, userModel: UserModel ->
-                if (userModel.firebaseId == user.firebaseId && userModel.totalPayAtCurrentGroup != user.totalPayAtCurrentGroup) {
+                if (userModel.firebaseId == user.firebaseId && (userModel.totalPayAtCurrentGroup != user.totalPayAtCurrentGroup || userModel.name != user.name)) {
                     userModel.totalPayAtCurrentGroup = user.totalPayAtCurrentGroup
+                    userModel.name = user.name
                     notifyItemChanged(i)
                 }
             }
@@ -75,8 +74,8 @@ class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>
         val curUser = list[holder.adapterPosition]
         holder.layout.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("userId", curUser.firebaseId)
-            bundle.putString("userName", curUser.name)
+            bundle.putString(BUNDLE_ID, curUser.firebaseId)
+            bundle.putString(BUNDLE_NAME, curUser.name)
             APP_ACTIVITY.navController.navigate(
                 R.id.action_mainFragment_to_singleUserPayments,
                 bundle

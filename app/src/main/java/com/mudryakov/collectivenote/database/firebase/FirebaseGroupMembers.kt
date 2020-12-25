@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 
 class FirebaseGroupMembers : LiveData<List<UserModel>>() {
 
+   val mRef = REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_GROUP_UID)
     private val mutableListOFUsers = mutableListOf<UserModel>()
     lateinit var list: List<String>
 
@@ -36,7 +37,7 @@ class FirebaseGroupMembers : LiveData<List<UserModel>>() {
                     CURRENT_GROUP_UID
                 ).addMySingleListener {
                     currentUser.totalPayAtCurrentGroup =
-                        if (it.value != null) it.value.toString() else "0"
+                        if (it.value != null) it.value.toString() else "0.00"
                     mutableListOFUsers.add(currentUser)
                     if (mutableListOFUsers.size == list.size) {
                         CoroutineScope(Dispatchers.IO).launch {
@@ -50,14 +51,12 @@ class FirebaseGroupMembers : LiveData<List<UserModel>>() {
 
 
     override fun onActive() {
-        REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_GROUP_UID)
-            .addValueEventListener(listener)
+       mRef.addValueEventListener(listener)
         super.onActive()
     }
 
     override fun onInactive() {
-        REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_GROUP_UID)
-            .removeEventListener(listener)
+       mRef.removeEventListener(listener)
         super.onInactive()
     }
 }

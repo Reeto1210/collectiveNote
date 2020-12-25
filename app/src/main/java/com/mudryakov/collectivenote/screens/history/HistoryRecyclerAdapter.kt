@@ -89,7 +89,6 @@ class HistoryRecyclerAdapter : RecyclerView.Adapter<HistoryRecyclerAdapter.MyVie
         super.onViewDetachedFromWindow(holder)
     }
 
-
 }
 
 private fun setAnimation(viewToAnimate: View) {

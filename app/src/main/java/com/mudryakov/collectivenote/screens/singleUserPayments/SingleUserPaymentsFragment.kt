@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
+import com.mudryakov.collectivenote.database.firebase.CHILD_FIREBASE_ID
+import com.mudryakov.collectivenote.database.firebase.CHILD_NAME
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.databinding.SinglePaymentFragmentBinding
 import com.mudryakov.collectivenote.models.PaymentModel
@@ -164,9 +166,8 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
 
 
     private fun initialization() {
-
-        userId = arguments?.get("userId").toString()
-        val userName = arguments?.get("userName").toString()
+        userId = arguments?.get(BUNDLE_ID).toString()
+        val userName = arguments?.get(BUNDLE_NAME).toString()
         APP_ACTIVITY.title = userName
     }
 

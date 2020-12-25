@@ -74,8 +74,7 @@ fun startNoInternetAnimation() {
                 .alpha(0.0f)
                 .setDuration(1000)
                 .withEndAction {
-                    if (
-                        !INTERNET) startNoInternetAnimation()
+                    if (!INTERNET) startNoInternetAnimation()
                 }
         }
 }

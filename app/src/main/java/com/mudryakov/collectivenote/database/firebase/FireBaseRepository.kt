@@ -23,7 +23,7 @@ class FireBaseRepository : AppDatabaseRepository {
 
         REF_DATABASE_ROOT.child(NODE_GROUP_PAYMENTS).child(CURRENT_GROUP_UID)
             .child(payment.firebaseId).removeValue()
-            .addOnFailureListener { showToast(R.string.something_going_wrong)}
+            .addOnFailureListener { showToast(R.string.something_going_wrong) }
             .addOnSuccessListener {
                 val totalSum = calculateMinus(AppPreference.getTotalSumm(), payment.summ)
 
@@ -33,8 +33,7 @@ class FireBaseRepository : AppDatabaseRepository {
                             CHILD_TOTAL_PAY_AT_CURRENT_GROUP
                         ).setValue(totalSum).addOnSuccessListener {
                             AppPreference.setTotalSumm(totalSum)
-                            REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_GROUP_UID)
-                                .setValue(payment.firebaseId)
+                            updateHelper(payment.firebaseId)
                             onSuccess()
                         }
                     }
@@ -79,12 +78,11 @@ class FireBaseRepository : AppDatabaseRepository {
     ) {
         lateinit var tryingId: String
         REF_DATABASE_ROOT.child(NODE_GROUP_NAMES).child(groupName)
-            .addListenerForSingleValueEvent(AppValueEventListener {
+            .addMySingleListener {
                 tryingId = it.value.toString()
                 REF_DATABASE_ROOT.child(NODE_GROUP_DATA).child(tryingId).child(CHILD_PASS)
-                    .addListenerForSingleValueEvent(AppValueEventListener { DataSnapshot ->
+                    .addMySingleListener { DataSnapshot ->
                         if (DataSnapshot.value == groupPass) {
-
                             REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(tryingId).setValue(
                                 tryingId
                             ).addOnSuccessListener {
@@ -101,8 +99,7 @@ class FireBaseRepository : AppDatabaseRepository {
                             showToast(R.string.check_room_acc)
                         }
                     }
-                    )
-            })
+            }
     }
 
 
@@ -113,7 +110,7 @@ class FireBaseRepository : AppDatabaseRepository {
         val key = refCurrentRoom.push().key.toString()
         payment.firebaseId = key
         payment.time = ServerValue.TIMESTAMP
- val paymentHash = transformModelToHash(payment)
+        val paymentHash = transformModelToHash(payment)
 
         refCurrentRoom.child(key).setValue(paymentHash)
             .addOnSuccessListener {
@@ -122,20 +119,18 @@ class FireBaseRepository : AppDatabaseRepository {
                 )
                     .setValue(totalSum)
                     .addOnSuccessListener {
-                       refCurrentUser.child(CHILD_TOTAL_PAY_AT_CURRENT_GROUP)
-                           .setValue(totalSum)
+                        refCurrentUser.child(CHILD_TOTAL_PAY_AT_CURRENT_GROUP)
+                            .setValue(totalSum)
                             .addOnSuccessListener {
                                 REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_GROUP_UID)
-                                    .setValue(key+ "1")
+                                    .setValue(key + "1")
                                 AppPreference.setTotalSumm(totalSum)
                                 onSuccess()
                             }
-                   }
+                    }
             }
             .addOnFailureListener { showToast(R.string.something_going_wrong) }
     }
-
-
 
 
     override fun changeName(name: String, onSuccess: () -> Unit) {

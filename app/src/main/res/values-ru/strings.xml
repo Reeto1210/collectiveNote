@@ -50,7 +50,6 @@
         <item>EUR - €</item>
     </string-array>
 
-
     <!-- addNewPayment -->
     <string name="add_new_payment_title">Добавление платежа</string>
     <string name="sum">Сумма</string>
@@ -63,7 +62,6 @@
     <string name="history">История</string>
 
     <!-- fragmentInfo -->
-
     <string name="room_name">Группа: %1$s</string>
     <string name="total_members_ar_room">Пользователей в группе: %1$d</string>
     <string name="total_value_of_payments">Всего платежей: %1$d</string>
@@ -92,7 +90,6 @@
     <string name="internet_alert_dialog_title">Отсутсвует интернет соединение</string>
     <string name="internet_alert_dialog_message">Проверьте подключение к интернету и попробуйте снова</string>
 
-
     <!-- emailLogin -->
     <string name="email_login_btn">Присоединиться</string>
     <string name="new_account_login">Войти по e-mail</string>
@@ -120,7 +117,5 @@
     <string name="payment_has_been_deleted_toast">Платёж удалён</string>
     <string name="toast_at_delete_menu">Функция разблокирована, для удаления смахните платёж вправо</string>
     <string name="delete_payment_menu">Удаление платежей</string>
-
-
 
 </resources>

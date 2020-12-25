@@ -51,7 +51,6 @@
         <item>EUR - €</item>
     </string-array>
 
-
     <!-- addNewPayment -->
     <string name="add_new_payment_title">Add new payment</string>
     <string name="sum">Sum</string>
@@ -92,7 +91,6 @@
     <!-- internetCheck -->
     <string name="internet_alert_dialog_title">No internet connection</string>
     <string name="internet_alert_dialog_message">Check your Internet connection and try again</string>
-
 
     <!-- emailLogin -->
     <string name="email_login_btn">Login</string>

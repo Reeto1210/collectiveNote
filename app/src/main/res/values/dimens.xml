@@ -2,7 +2,7 @@
 <resources>
     <dimen name="app_margin">16dp</dimen>
     <dimen name="fab_margin">18dp</dimen>
-     <dimen name="Large_text">@dimen/_18ssp</dimen>
+    <dimen name="Large_text">@dimen/_18ssp</dimen>
     <dimen name="small_text">@dimen/_12ssp</dimen>
     <dimen name="verySmallMargin">4dp</dimen>
     <dimen name="small_padding">4dp</dimen>

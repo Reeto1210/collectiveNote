@@ -16,6 +16,7 @@ import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
 import com.mudryakov.collectivenote.database.RoomDatabase.AppRoomRepository
 import com.mudryakov.collectivenote.models.PaymentModel
+import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utility.*
 
 
@@ -50,7 +51,6 @@ lateinit var REF_DATABASE_ROOT: DatabaseReference
 lateinit var REF_DATABASE_STORAGE: StorageReference
 lateinit var REPOSITORY: AppDatabaseRepository
 lateinit var ROOM_REPOSITORY: AppRoomRepository
-
 lateinit var AUTH: FirebaseAuth
 lateinit var CURRENT_UID: String
 private lateinit var ON_REGISTRATION_COMPLETE: () -> Unit
@@ -106,7 +106,6 @@ fun logInGoogle() {
 fun handleSignInResult(task: Task<GoogleSignInAccount>) {
     try {
         val account: GoogleSignInAccount = task.getResult(ApiException::class.java)!!
-
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         AUTH.signInWithCredential(credential)
             .addOnSuccessListener {
@@ -128,15 +127,11 @@ fun handleSignInResult(task: Task<GoogleSignInAccount>) {
 
 
 fun pushUserToFirebase() {
-    val userHashMap = hashMapOf<String, String>()
-    userHashMap[CHILD_FIREBASE_ID] = CURRENT_UID
-    userHashMap[CHILD_NAME] = USERNAME
     CURRENT_UID = AppPreference.getUserId()
-
-
+    USER = UserModel(CURRENT_UID, USERNAME)
     REF_DATABASE_ROOT.child(NODE_USERS).addMySingleListener {
         if (!it.hasChild(CURRENT_UID)) {
-            REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).setValue(userHashMap)
+            REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).setValue(USER)
                 .addOnFailureListener {
                     showToast(R.string.something_going_wrong)
                     ON_REGISTRATION_FAIL()
@@ -168,7 +163,6 @@ fun pushGroupToFirebase(
     REF_DATABASE_ROOT.updateChildren(mainHashMap)
         .addOnSuccessListener {
             function(groupKey)
-            REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(groupKey).setValue("Created")
         }
         .addOnFailureListener {
             onFail()
@@ -177,7 +171,6 @@ fun pushGroupToFirebase(
 }
 
 fun updateUserGroupId(groupKey: String, onFail: () -> Unit, onSuccess: () -> Unit) {
-
     REF_DATABASE_ROOT.child(NODE_USERS).child(AppPreference.getUserId()).child(
         CHILD_GROUP_ID
     ).setValue(groupKey)
@@ -208,7 +201,10 @@ fun updatePreferenceCurrentPay(function: () -> Unit) {
             REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
                 .child(CHILD_TOTAL_PAY_AT_CURRENT_GROUP)
                 .setValue(totalPay)
-                .addOnSuccessListener { function() }
+                .addOnSuccessListener {
+                    updateHelper(CURRENT_UID + "2")
+                    function()
+                }
                 .addOnFailureListener {
                     showToast(R.string.something_going_wrong)
                     ON_REGISTRATION_FAIL()
@@ -217,12 +213,20 @@ fun updatePreferenceCurrentPay(function: () -> Unit) {
 
 }
 
+fun updateHelper(value: String) {
+    REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_GROUP_UID)
+        .setValue(value)
+}
+
 fun updateAllUserPayments() {
     findAllUsersRooms { listOfId ->
         findAllUsersPayments(listOfId) { groupId, paymentId ->
             changePaymentFromName(groupId, paymentId)
         }
     }
+    try {
+        updateHelper(CURRENT_UID + "3")
+    } catch (e: Exception) { }
 }
 
 fun changePaymentFromName(roomId: String, paymentId: String) {

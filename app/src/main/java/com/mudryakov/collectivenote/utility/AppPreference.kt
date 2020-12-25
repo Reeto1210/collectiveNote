@@ -15,7 +15,6 @@ object AppPreference {
     private const val ROOM_NAME = "roomName"
     private const val ROOM_CURRENCY = "roomCurrency"
     private const val LOCALE = "locale"
-
     private lateinit var mPreference: SharedPreferences
 
 
@@ -121,7 +120,6 @@ object AppPreference {
         return mPreference.getString(ROOM_NAME, FAIL).toString()
 
     }
-
 
 }
 

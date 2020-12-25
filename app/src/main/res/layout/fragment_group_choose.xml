@@ -12,7 +12,6 @@
     android:animateLayoutChanges="true"
     tools:context=".screens.groupChoose.GroupChooseFragment">
 
-
     <ProgressBar
         android:visibility="gone"
         android:id="@+id/room_choose_progress_bar"
@@ -53,7 +52,6 @@
         app:layout_constraintTop_toBottomOf="@+id/group_choose_name" />
 
     <EditText
-
         android:id="@+id/group_choose_password"
         style="@style/input_text_style"
         android:hint="@string/password"
@@ -64,7 +62,6 @@
         tools:ignore="Autofill,TextFields" />
 
     <TextView
-
         android:id="@+id/group_choose_continue"
         style="@style/btn_style"
         android:text="@string/continue_it"
