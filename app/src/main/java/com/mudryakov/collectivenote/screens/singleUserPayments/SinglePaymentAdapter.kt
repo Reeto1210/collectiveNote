@@ -67,5 +67,4 @@ class SinglePaymentAdapter : RecyclerView.Adapter<SinglePaymentAdapter.MyViewHol
         viewToAnimate.startAnimation(animation)
     }
 
-
 }

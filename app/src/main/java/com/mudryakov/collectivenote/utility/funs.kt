@@ -16,13 +16,14 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.mudryakov.collectivenote.MainActivity
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.*
 import com.mudryakov.collectivenote.models.PaymentModel
-import com.squareup.picasso.Picasso
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -57,18 +58,21 @@ fun String.transformToDate(): String {
 }
 
 fun ImageView.setImage(url: String) {
+
     val fileName = Uri.parse(url).lastPathSegment?.substringAfter("/").toString()
     val file = File(APP_ACTIVITY.filesDir, fileName)
     if (file.exists() && file.length() != 0L) {
         val uri = file.absolutePath.toUri()
         this.setImageURI(uri)
     } else {
-        Picasso.get()
+
+       Glide.with(APP_ACTIVITY)
             .load(url)
+            .placeholder(R.drawable.download_anim)
             .error(R.drawable.sorry)
-            .placeholder(R.drawable.loading_picasso)
-            .fit()
-            .into(this)
+           .diskCacheStrategy(DiskCacheStrategy.NONE)
+           .skipMemoryCache(true)
+           .into(this)
         file.delete()
         REF_DATABASE_STORAGE.child(NODE_PAYMENT_IMAGES).child(fileName).getFile(file)
     }

@@ -86,7 +86,7 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
 
 
     private fun initDeleteFunction() {
-        setHasOptionsMenu(true)
+       if (INTERNET) setHasOptionsMenu(true)
         val icon: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.delete)
         val p = Paint()
         val mItemTouchHelper = object :

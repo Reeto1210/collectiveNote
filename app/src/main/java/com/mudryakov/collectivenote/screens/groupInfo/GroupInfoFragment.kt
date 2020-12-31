@@ -44,6 +44,7 @@ class GroupInfoFragment : BaseFragmentBack() {
         mObserverMembers = Observer {
             mViewModel.allPayments.removeObserver { mObserverPayments }
           totalSum = "0.00"
+          totalMembers = 0
             it.forEach { member ->
                 totalSum = calculateSum(totalSum, member.totalPayAtCurrentGroup)
                 totalMembers++

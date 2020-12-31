@@ -1,0 +1,20 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/white" />
+            <corners android:radius="@dimen/btn_corners" />
+        </shape>
+    </item>
+    <item>
+        <animated-rotate
+            android:drawable="@drawable/loading"
+            android:pivotX="50%"
+            android:pivotY="50%" />
+    </item>
+</layer-list>
+
+
+
+
+
+

@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 
 class FirebaseGroupMembers : LiveData<List<UserModel>>() {
 
-   val mRef = REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_GROUP_UID)
     private val mutableListOFUsers = mutableListOf<UserModel>()
     lateinit var list: List<String>
 
@@ -51,12 +50,12 @@ class FirebaseGroupMembers : LiveData<List<UserModel>>() {
 
 
     override fun onActive() {
-       mRef.addValueEventListener(listener)
+        REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_GROUP_UID).addValueEventListener(listener)
         super.onActive()
     }
 
     override fun onInactive() {
-       mRef.removeEventListener(listener)
+        REF_DATABASE_ROOT.child(NODE_UPDATE_HELPER).child(CURRENT_GROUP_UID).removeEventListener(listener)
         super.onInactive()
     }
 }

@@ -8,7 +8,6 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class AllPaymentsFirebase : LiveData<List<PaymentModel>>() {
- val mRef = REF_DATABASE_ROOT.child(NODE_GROUP_PAYMENTS).child(CURRENT_GROUP_UID)
 
     private val listener = AppValueEventListener { DataSnapshot ->
         val allPayments =
@@ -21,12 +20,12 @@ class AllPaymentsFirebase : LiveData<List<PaymentModel>>() {
 
     override fun onActive() {
         super.onActive()
-       mRef.addValueEventListener(listener)
+        REF_DATABASE_ROOT.child(NODE_GROUP_PAYMENTS).child(CURRENT_GROUP_UID).addValueEventListener(listener)
     }
 
     override fun onInactive() {
         super.onInactive()
-        mRef.removeEventListener(listener)
+        REF_DATABASE_ROOT.child(NODE_GROUP_PAYMENTS).child(CURRENT_GROUP_UID).removeEventListener(listener)
     }
 
 
