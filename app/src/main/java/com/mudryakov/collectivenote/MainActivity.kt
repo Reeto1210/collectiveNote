@@ -7,10 +7,12 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.customview.widget.ViewDragHelper
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.navigation.NavigationView
+import com.mudryakov.collectivenote.database.firebase.FireBaseRepository
 import com.mudryakov.collectivenote.database.firebase.handleSignInResult
 import com.mudryakov.collectivenote.databinding.ActivityMainBinding
 import com.mudryakov.collectivenote.utility.*
@@ -19,6 +21,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -30,15 +33,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var mNavView: NavigationView
     var doubleClick = false
     var back = false
+    var internet = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MyApplication.appComponent.inject(this)
         _Binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         setSupportActionBar(mBinding.mainToolbar)
         APP_ACTIVITY = this
-        INTERNET = false
+
         navController = Navigation.findNavController(APP_ACTIVITY, R.id.container)
         actionBar = supportActionBar
         mDrawer = mBinding.myDrawer
@@ -95,7 +100,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.drawer_history -> fastNavigate(R.id.action_mainFragment_to_historyFragment)
             R.id.drawer_info -> fastNavigate(R.id.action_mainFragment_to_roomInfoFragment)
             R.id.drawer_settings -> {
-                if (INTERNET) fastNavigate(R.id.action_mainFragment_to_settingsFragment)
+                if (APP_ACTIVITY.internet) fastNavigate(R.id.action_mainFragment_to_settingsFragment)
                 else showNoInternetToast()
             }
             R.id.drawer_help -> fastNavigate(R.id.action_mainFragment_to_helpFragment)

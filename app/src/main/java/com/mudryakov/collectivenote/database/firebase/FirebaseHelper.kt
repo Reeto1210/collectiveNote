@@ -10,10 +10,9 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.storage.StorageReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.mudryakov.collectivenote.R
-import com.mudryakov.collectivenote.database.AppDatabaseRepository
 import com.mudryakov.collectivenote.database.RoomDatabase.AppRoomRepository
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
@@ -47,31 +46,34 @@ const val CHILD_GROUP_CURRENCY = "groupCurrency"
 const val CHILD_NAME = "name"
 const val CHILD_GROUP_ID = "groupId"
 lateinit var CURRENT_GROUP_UID: String
-lateinit var REF_DATABASE_ROOT: DatabaseReference
-lateinit var REF_DATABASE_STORAGE: StorageReference
-lateinit var REPOSITORY: AppDatabaseRepository
+val REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference
+val REF_DATABASE_STORAGE = FirebaseStorage.getInstance().reference
 lateinit var ROOM_REPOSITORY: AppRoomRepository
-lateinit var AUTH: FirebaseAuth
-lateinit var CURRENT_UID: String
+lateinit var currentAuth:FirebaseAuth
+var  CURRENT_UID = AppPreference.getUserId()
+
+
 private lateinit var ON_REGISTRATION_COMPLETE: () -> Unit
 private lateinit var ON_REGISTRATION_FAIL: () -> Unit
 
 
-fun logIn(type: String, onFail: () -> Unit, onComplete: () -> Unit) {
+fun logIn(type: String, onFail: () -> Unit, firebaseAuth: FirebaseAuth, onComplete: () -> Unit, ) {
     ON_REGISTRATION_COMPLETE = onComplete
     ON_REGISTRATION_FAIL = onFail
 
     when (type) {
-        TYPE_GOOGLE_ACCOUNT -> logInGoogle()
-        TYPE_EMAIL -> logInEmail()
+        TYPE_GOOGLE_ACCOUNT -> {
+            currentAuth = firebaseAuth
+            logInGoogle()}
+        TYPE_EMAIL -> logInEmail(firebaseAuth)
     }
 }
 
 
-fun logInEmail() {
-    AUTH.signInWithEmailAndPassword(EMAIL, PASSWORD)
+fun logInEmail(firebaseAuth: FirebaseAuth) {
+    firebaseAuth.signInWithEmailAndPassword(EMAIL, PASSWORD)
         .addOnSuccessListener {
-            AppPreference.setUserId(AUTH.currentUser?.uid.toString())
+            AppPreference.setUserId(firebaseAuth.currentUser?.uid.toString())
             ON_REGISTRATION_COMPLETE()
         }.addOnFailureListener { ex ->
             ON_REGISTRATION_FAIL()
@@ -79,11 +81,11 @@ fun logInEmail() {
         }
 }
 
-fun createNewEmailUser(onFail: () -> Unit, onSuccess: () -> Unit) {
+fun createNewEmailUser(firebaseAuth: FirebaseAuth,onFail: () -> Unit, onSuccess: () -> Unit) {
     ON_REGISTRATION_COMPLETE = onSuccess
     ON_REGISTRATION_FAIL = onFail
-    AUTH.createUserWithEmailAndPassword(EMAIL, PASSWORD).addOnSuccessListener {
-        AppPreference.setUserId(AUTH.currentUser?.uid.toString())
+    firebaseAuth.createUserWithEmailAndPassword(EMAIL, PASSWORD).addOnSuccessListener {
+        AppPreference.setUserId(firebaseAuth.currentUser?.uid.toString())
         pushUserToFirebase()
     }
         .addOnFailureListener { ex ->
@@ -107,10 +109,10 @@ fun handleSignInResult(task: Task<GoogleSignInAccount>) {
     try {
         val account: GoogleSignInAccount = task.getResult(ApiException::class.java)!!
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-        AUTH.signInWithCredential(credential)
+        currentAuth.signInWithCredential(credential)
             .addOnSuccessListener {
                 USERNAME = account.displayName.toString()
-                AppPreference.setUserId(AUTH.currentUser?.uid!!)
+                AppPreference.setUserId(currentAuth.currentUser?.uid!!)
                 pushUserToFirebase()
             }
             .addOnFailureListener {
@@ -204,7 +206,7 @@ fun updatePreferenceCurrentPay(function: () -> Unit) {
                 .addOnSuccessListener {
                     updateHelper(CURRENT_UID + "2")
                     function()
-                }
+                                }
                 .addOnFailureListener {
                     showToast(R.string.something_going_wrong)
                     ON_REGISTRATION_FAIL()

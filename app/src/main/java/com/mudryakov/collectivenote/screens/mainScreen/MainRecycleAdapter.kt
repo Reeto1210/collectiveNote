@@ -14,8 +14,10 @@ import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utility.*
 import kotlinx.android.synthetic.main.main_fragment_recycle_item.view.*
+import javax.inject.Inject
 
-class MainRecycleAdapter : RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>() {
+class MainRecycleAdapter @Inject constructor() :
+    RecyclerView.Adapter<MainRecycleAdapter.MyViewHolder>() {
     var list = mutableListOf<UserModel>()
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {

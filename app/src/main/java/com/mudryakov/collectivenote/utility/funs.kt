@@ -65,7 +65,6 @@ fun ImageView.setImage(url: String) {
         val uri = file.absolutePath.toUri()
         this.setImageURI(uri)
     } else {
-
        Glide.with(APP_ACTIVITY)
             .load(url)
             .placeholder(R.drawable.download_anim)
@@ -73,6 +72,7 @@ fun ImageView.setImage(url: String) {
            .diskCacheStrategy(DiskCacheStrategy.NONE)
            .skipMemoryCache(true)
            .into(this)
+
         file.delete()
         REF_DATABASE_STORAGE.child(NODE_PAYMENT_IMAGES).child(fileName).getFile(file)
     }
@@ -83,8 +83,7 @@ fun restartActivity() {
     APP_ACTIVITY.back = false
     APP_ACTIVITY.finish()
     APP_ACTIVITY.startActivity(intent)
-    REPOSITORY = FireBaseRepository()
-    INTERNET = false
+    APP_ACTIVITY.internet = false
 }
 
 fun fastNavigate(id: Int) {
@@ -176,6 +175,7 @@ fun buildGroupChooseDialog(click: (String) -> Unit) {
 }
 
 fun convertSum(sum: String): String {
+
     sum.toDouble()
     if (sum[0] == '0' && sum[1] != '.') throw Exception("")
     if (sum[0] == '-' || sum[0] == '.') throw Exception("")
@@ -221,5 +221,7 @@ fun transformModelToHash(payment: PaymentModel): HashMap<String, Any> {
     paymentHash[CHILD_FROM_NAME] = payment.fromName
     return paymentHash
 }
-
+fun setTitle(stringId: Int) {
+    APP_ACTIVITY.title = APP_ACTIVITY.getString(stringId)
+}
 

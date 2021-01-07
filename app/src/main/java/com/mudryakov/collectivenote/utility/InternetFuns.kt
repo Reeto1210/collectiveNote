@@ -51,7 +51,7 @@ fun checkInternetConnection(onFail: () -> Unit, onSuccess: () -> Unit) {
 }
 
 fun restartIfInternetChanged() {
-    if (INTERNET) checkInternetConnection({ restartActivity() }) {}
+    if (APP_ACTIVITY.internet) checkInternetConnection({ restartActivity() }) {}
 }
 
 fun initNoInternetBtn() {
@@ -74,7 +74,7 @@ fun startNoInternetAnimation() {
                 .alpha(0.0f)
                 .setDuration(1000)
                 .withEndAction {
-                    if (!INTERNET) startNoInternetAnimation()
+                    if (!APP_ACTIVITY.internet) startNoInternetAnimation()
                 }
         }
 }

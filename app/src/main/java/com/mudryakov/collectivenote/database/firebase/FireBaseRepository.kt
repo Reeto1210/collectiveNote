@@ -1,26 +1,28 @@
 package com.mudryakov.collectivenote.database.firebase
 
 import android.net.Uri
-import androidx.lifecycle.LiveData
 import com.google.firebase.database.ServerValue
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.AppDatabaseRepository
 import com.mudryakov.collectivenote.models.PaymentModel
-import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utility.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class FireBaseRepository : AppDatabaseRepository {
+@Singleton
+class FireBaseRepository @Inject constructor(
+    allFirebasePayments: AllPaymentsFirebase,
+    groupFirebasePayments: FirebaseGroupMembers
+) : AppDatabaseRepository {
 
-
-    override var allPayments: LiveData<List<PaymentModel>> = AllPaymentsFirebase()
-    override val groupMembers: LiveData<List<UserModel>> = FirebaseGroupMembers()
+    override var allPayments = allFirebasePayments
+    override val groupMembers = groupFirebasePayments
 
     override fun deletePayment(payment: PaymentModel, onSuccess: () -> Unit) {
         val refCurrentUser = REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
-
         REF_DATABASE_ROOT.child(NODE_GROUP_PAYMENTS).child(CURRENT_GROUP_UID)
             .child(payment.firebaseId).removeValue()
             .addOnFailureListener { showToast(R.string.something_going_wrong) }
@@ -40,14 +42,18 @@ class FireBaseRepository : AppDatabaseRepository {
             }
     }
 
-
-    override fun login(type: String, onFail: () -> Unit, onSuccess: () -> Unit) {
-        logIn(type, onFail) { onSuccess() }
+    override fun changeName(name:String, onSuccess: () -> Unit) {
+        CURRENT_UID = AppPreference.getUserId()
+        REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_NAME).setValue(name)
+            .addOnSuccessListener {
+                AppPreference.setDoneRegistration(true)
+                AppPreference.setName(name)
+                CoroutineScope(Dispatchers.IO).launch { updateAllUserPayments() }
+                onSuccess()
+            }
+            .addOnFailureListener { showToast(R.string.something_going_wrong) }
     }
 
-    override fun emailRegistration(onFail: () -> Unit, onSuccess: () -> Unit) {
-        createNewEmailUser(onFail, onSuccess)
-    }
 
     override fun createNewGroup(
         groupName: String,
@@ -63,6 +69,9 @@ class FireBaseRepository : AppDatabaseRepository {
             } else {
                 pushGroupToFirebase(groupName, groupPass, currencySign, onFail) {
                     updateUserGroupId(it, onFail) {
+                        AppPreference.setGroupName(groupName)
+                        AppPreference.setCurrency(currencySign)
+                        AppPreference.setSignInRoom(true)
                         onSuccess()
                     }
                 }
@@ -87,6 +96,8 @@ class FireBaseRepository : AppDatabaseRepository {
                                 tryingId
                             ).addOnSuccessListener {
                                 updateUserGroupId(tryingId, onFail) {
+                                    AppPreference.setGroupName(groupName)
+                                    AppPreference.setSignInRoom(true)
                                     onSuccess()
                                 }
                             }
@@ -133,19 +144,6 @@ class FireBaseRepository : AppDatabaseRepository {
     }
 
 
-    override fun changeName(name: String, onSuccess: () -> Unit) {
-        CURRENT_UID = AppPreference.getUserId()
-        REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_NAME).setValue(name)
-            .addOnSuccessListener {
-                AppPreference.setSignIn(true)
-                AppPreference.setName(name)
-                CoroutineScope(IO).launch { updateAllUserPayments() }
-                onSuccess()
-            }
-            .addOnFailureListener { showToast(R.string.something_going_wrong) }
-    }
-
-
     override fun pushFileToBase(imageUri: Uri, onSuccess: (String) -> Unit) {
         val key = REF_DATABASE_ROOT.push().key.toString()
         val path = REF_DATABASE_STORAGE.child(NODE_PAYMENT_IMAGES).child(key)
@@ -158,9 +156,6 @@ class FireBaseRepository : AppDatabaseRepository {
             }
     }
 
-    override fun signOut() {
-        AUTH.signOut()
-    }
 
     override fun remindPassword(onSuccess: (String) -> Unit) {
         REF_DATABASE_ROOT.child(NODE_GROUP_DATA).child(CURRENT_GROUP_UID).child(CHILD_PASS)
@@ -168,4 +163,18 @@ class FireBaseRepository : AppDatabaseRepository {
                 onSuccess(it.value.toString())
             }
     }
+
+    override fun getGroupCurrencyFromDB() {
+
+        REF_DATABASE_ROOT.child(NODE_GROUP_DATA).child(CURRENT_GROUP_UID).child(
+            CHILD_GROUP_CURRENCY
+        ).addMySingleListener {
+            val currentCurrency = it.value.toString()
+            AppPreference.setCurrency(currentCurrency)
+            ROOM_CURRENCY = currentCurrency
+        }
+
+
+    }
+
 }

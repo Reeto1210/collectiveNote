@@ -1,23 +1,29 @@
 package com.mudryakov.collectivenote.screens.groupInfo
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.mudryakov.collectivenote.MyApplication
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.databinding.FragmentRoomInfoBinding
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
 import com.mudryakov.collectivenote.utility.*
+import javax.inject.Inject
 
 
 class GroupInfoFragment : BaseFragmentBack() {
     private var _Binding: FragmentRoomInfoBinding? = null
     private val mBinding get() = _Binding!!
-    private lateinit var mViewModel: GroupInfoViewModel
+
+    @Inject
+     lateinit var mViewModel: GroupInfoViewModel
+
     private lateinit var mObserverPayments: Observer<List<PaymentModel>>
     private lateinit var mObserverMembers: Observer<List<UserModel>>
     private var totalSum = ""
@@ -42,9 +48,8 @@ class GroupInfoFragment : BaseFragmentBack() {
 
     private fun initObservers() {
         mObserverMembers = Observer {
-            mViewModel.allPayments.removeObserver { mObserverPayments }
-          totalSum = "0.00"
-          totalMembers = 0
+            totalSum = "0.00"
+            totalMembers = 0
             it.forEach { member ->
                 totalSum = calculateSum(totalSum, member.totalPayAtCurrentGroup)
                 totalMembers++
@@ -66,9 +71,8 @@ class GroupInfoFragment : BaseFragmentBack() {
     }
 
     private fun initialization() {
-        APP_ACTIVITY.title = getString(R.string.room_info)
-        mViewModel = ViewModelProvider(this).get(GroupInfoViewModel::class.java)
-        mBinding.infoIconPass.setOnClickListener {
+         setTitle(R.string.room_info)
+          mBinding.infoIconPass.setOnClickListener {
             checkInternetConnection({ showNoInternetToast() }) {
                 mBinding.infoIconPass.setImageResource(R.drawable.loading_pass)
                 mViewModel.remindRoomPassword {
@@ -103,5 +107,10 @@ class GroupInfoFragment : BaseFragmentBack() {
         mViewModel.allPayments.removeObserver { mObserverPayments }
         mViewModel.allMembers.removeObserver { mObserverMembers }
         super.onDestroyView()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        MyApplication.appComponent.inject(this)
     }
 }

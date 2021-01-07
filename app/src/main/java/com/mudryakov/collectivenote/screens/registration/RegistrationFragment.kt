@@ -1,6 +1,7 @@
 package com.mudryakov.collectivenote.screens.registration
 
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,23 +9,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import com.mudryakov.collectivenote.MyApplication
 import com.mudryakov.collectivenote.R
-import com.mudryakov.collectivenote.database.firebase.AUTH
-import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.database.firebase.USERNAME
 import com.mudryakov.collectivenote.databinding.FragmentRegistrationBinding
-
 import com.mudryakov.collectivenote.utility.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
+import javax.inject.Inject
 
 
 class RegistrationFragment : Fragment() {
     var _Binding: FragmentRegistrationBinding? = null
     val mBinding get() = _Binding!!
-    private lateinit var mViewModel: RegistrationViewModel
+
+    @Inject
+    lateinit var mViewModel: RegistrationViewModel
     var isLoading = false
 
     override fun onCreateView(
@@ -32,6 +33,7 @@ class RegistrationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _Binding = FragmentRegistrationBinding.inflate(layoutInflater)
+
         return mBinding.root
     }
 
@@ -42,40 +44,39 @@ class RegistrationFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        APP_ACTIVITY.title = getString(R.string.registration_toolbar_title)
-        initialization()
-        initHomeUpFalse()
-        animateButtons()
-        checkSignIn()
         hideKeyboard(APP_ACTIVITY)
-   initPoliceClick()
+        checkAuth()
+        setTitle(R.string.registration_toolbar_title)
+        initHomeUpFalse()
+        initClickListeners()
+        animateButtons()
     }
+
+    private fun checkAuth() {
+       when (mViewModel.checkUserForRegistration()){
+           true -> fastNavigate(R.id.action_RegistrationFragment_to_groupChooseFragment)
+           false -> showChangeNameLayout()
+         }
+             }
+
 
     private fun initPoliceClick() {
-       mBinding.privacyPoliceAddress.setOnClickListener {
-           val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.private_police_url)))
-           startActivity(browserIntent)
-       }
-           }
-
-    private fun checkSignIn() {
-        if (AppPreference.getSignIn()) {
-            CURRENT_UID = AppPreference.getUserId()
-            fastNavigate(R.id.action_RegistrationFragment_to_groupChooseFragment)
-        }
-        if (AUTH.currentUser != null) {
-            showChangeNameLayout()
+        mBinding.privacyPoliceAddress.setOnClickListener {
+            val browserIntent =
+                Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.private_police_url)))
+            startActivity(browserIntent)
         }
     }
 
+
     private fun showChangeNameLayout() {
-       hideKeyboard(APP_ACTIVITY)
+        hideKeyboard(APP_ACTIVITY)
         mBinding.firstRegistration.makeGone()
         changeName { fastNavigate(R.id.action_RegistrationFragment_to_groupChooseFragment) }
     }
 
     private fun animateButtons() {
-        if (AUTH.currentUser == null) {
+        if (mViewModel.checkUserForRegistration() == null) {
             mBinding.registrationEmailBtn.startRegisterAnimation(false)
             mBinding.registrationChangeName.startRegisterAnimation(false)
             val keyBoardListener =
@@ -106,12 +107,11 @@ class RegistrationFragment : Fragment() {
         }
     }
 
-    private fun initialization() {
-        mViewModel = ViewModelProvider(this).get(RegistrationViewModel::class.java)
-        mViewModel.initCommons()
+    private fun initClickListeners() {
         mBinding.registrationNoAccount.setOnClickListener { fastNavigate(R.id.action_RegistrationFragment_to_emailLoginFragment) }
         emailBtnClick()
         googleSignInBtnClick()
+        initPoliceClick()
     }
 
     private fun emailBtnClick() {
@@ -188,4 +188,10 @@ class RegistrationFragment : Fragment() {
         isLoading = true
         mBinding.fragmentRegistrationProgressBar.makeVisible()
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        MyApplication.appComponent.inject(this)
+    }
+
 }

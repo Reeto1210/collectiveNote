@@ -1,15 +1,17 @@
 package com.mudryakov.collectivenote.database.firebase
 
 import androidx.lifecycle.LiveData
+import com.mudryakov.collectivenote.database.RoomDatabase.AppRoomRepository
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utility.AppValueEventListener
 import com.mudryakov.collectivenote.utility.addMySingleListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class FirebaseGroupMembers : LiveData<List<UserModel>>() {
+class FirebaseGroupMembers @Inject constructor(private val roomRepository: AppRoomRepository): LiveData<List<UserModel>>() {
 
     private val mutableListOFUsers = mutableListOf<UserModel>()
     lateinit var list: List<String>
@@ -40,7 +42,7 @@ class FirebaseGroupMembers : LiveData<List<UserModel>>() {
                     mutableListOFUsers.add(currentUser)
                     if (mutableListOFUsers.size == list.size) {
                         CoroutineScope(Dispatchers.IO).launch {
-                            ROOM_REPOSITORY.updateAllUsersRoomDatabase(mutableListOFUsers)
+                            roomRepository.updateAllUsersRoomDatabase(mutableListOFUsers)
                         }
                         value = mutableListOFUsers
                     }

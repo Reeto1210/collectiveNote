@@ -85,7 +85,7 @@
     <!-- help -->
     <string name="my_email">Contact e-mail: mudryakov21@mail.ru</string>
     <string name="help_main_text">Thank you for choosing my application, I hope it will be comfortable and useful for You. If you have any suggestions, comments, or any other questions, please contact me</string>
-    <string name="donate_btn_text">make a donation</string>
+    <string name="donate_btn_text">Make a donation</string>
     <string name="thx_for_support">Thanks you for the supporting this app!</string>
 
     <!-- internetCheck -->

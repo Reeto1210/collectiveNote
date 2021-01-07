@@ -2,6 +2,7 @@ package com.mudryakov.collectivenote.screens.singleUserPayments
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -14,11 +15,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mudryakov.collectivenote.MyApplication
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.database.firebase.CHILD_FIREBASE_ID
 import com.mudryakov.collectivenote.database.firebase.CHILD_NAME
 import com.mudryakov.collectivenote.database.firebase.CURRENT_UID
 import com.mudryakov.collectivenote.databinding.SinglePaymentFragmentBinding
+import com.mudryakov.collectivenote.di.SinglePaymentSubComponent
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.screens.BaseFragmentBack
 import com.mudryakov.collectivenote.utility.*
@@ -26,13 +29,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class SingleUserPaymentsFragment : BaseFragmentBack() {
     private var _Binding: SinglePaymentFragmentBinding? = null
     private val mBinding get() = _Binding!!
-    var mAdapter: SinglePaymentAdapter? = null
+
+    @Inject
+    lateinit var mAdapter: SinglePaymentAdapter
+    @Inject
     lateinit var mViewModel: SingleUserPaymentViewModel
+    lateinit var singlePaymentComponent:SinglePaymentSubComponent
     lateinit var mRecycle: RecyclerView
     lateinit var mPaymentObserver: Observer<List<PaymentModel>>
     var userId = ""
@@ -55,12 +63,11 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
     }
 
     private fun initObserver() {
-        mViewModel = ViewModelProvider(this).get(SingleUserPaymentViewModel::class.java)
-        mPaymentObserver = Observer {
+          mPaymentObserver = Observer {
             var isEmpty = true
             it.forEach { payment ->
                 if (payment.fromId == userId) {
-                    mAdapter?.addItem(payment)
+                    mAdapter.addItem(payment)
                     isEmpty = false
 
                 }
@@ -75,7 +82,6 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initRecycle() {
-        mAdapter = SinglePaymentAdapter()
         mRecycle = mBinding.singlePaymentsRecycle
         mRecycle.layoutManager = LinearLayoutManager(APP_ACTIVITY)
         mRecycle.adapter = mAdapter
@@ -86,7 +92,7 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
 
 
     private fun initDeleteFunction() {
-       if (INTERNET) setHasOptionsMenu(true)
+       if (APP_ACTIVITY.internet) setHasOptionsMenu(true)
         val icon: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.delete)
         val p = Paint()
         val mItemTouchHelper = object :
@@ -136,32 +142,31 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val currentPayment =
-                    mAdapter?.listOfpayments?.get(position)
+                    mAdapter.listOfpayments[position]
                 val dialogBuilder = AlertDialog.Builder(APP_ACTIVITY)
                 dialogBuilder
                     .setTitle(getString(R.string.confirm_delete))
                     .setMessage(
                         getString(
                             R.string.alert_dialog_message_delete,
-                            currentPayment?.time?.toString()?.transformToDate()
+                            currentPayment.time.toString().transformToDate()
                         )
                     )
                     .setPositiveButton(getString(R.string.yes)) { _: DialogInterface, _: Int ->
-                        mAdapter?.deleteItem(position)
-                        if (currentPayment != null) {
-                            deletePaymentFromFirebase(currentPayment)
-                        }
+                        mAdapter.deleteItem(position)
+                              deletePaymentFromFirebase(currentPayment)
+
                     }
                     .setNegativeButton(getString(R.string.no)) { _: DialogInterface, _: Int ->
-                        mAdapter?.notifyItemChanged(position)
+                        mAdapter.notifyItemChanged(position)
                     }
                     .setIcon(R.drawable.ic_baseline_delete_24)
-                    .setOnCancelListener { mAdapter?.notifyItemChanged(position) }
+                    .setOnCancelListener { mAdapter.notifyItemChanged(position) }
                     .show()
             }
         }
         val itemTouchHelper = ItemTouchHelper(mItemTouchHelper)
-        if (INTERNET) itemTouchHelper.attachToRecyclerView(mRecycle)
+        if (APP_ACTIVITY.internet) itemTouchHelper.attachToRecyclerView(mRecycle)
     }
 
 
@@ -173,7 +178,7 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
 
     override fun onDestroyView() {
         _Binding = null
-        mAdapter = null
+
         mViewModel.singleUserPayments.removeObserver { mPaymentObserver }
         super.onDestroyView()
     }
@@ -211,5 +216,11 @@ class SingleUserPaymentsFragment : BaseFragmentBack() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+singlePaymentComponent = MyApplication.appComponent.getSinglePaymentSub().create()
+  singlePaymentComponent.inject(this)
+
+    }
 
 }

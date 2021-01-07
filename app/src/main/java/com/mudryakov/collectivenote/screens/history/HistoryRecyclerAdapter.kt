@@ -8,15 +8,14 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.mudryakov.collectivenote.R
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.utility.*
 import kotlinx.android.synthetic.main.history_recycle_item.view.*
-
-class HistoryRecyclerAdapter : RecyclerView.Adapter<HistoryRecyclerAdapter.MyViewHolder>() {
+import javax.inject.Inject
+import javax.inject.Singleton
+class HistoryRecyclerAdapter @Inject constructor(): RecyclerView.Adapter<HistoryRecyclerAdapter.MyViewHolder>() {
     var arOfOpened = arrayListOf<Int>()
     var listOfPayments = mutableListOf<PaymentModel>()
 

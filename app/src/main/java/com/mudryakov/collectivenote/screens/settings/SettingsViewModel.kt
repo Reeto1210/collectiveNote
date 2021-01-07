@@ -2,15 +2,18 @@ package com.mudryakov.collectivenote.screens.settings
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.mudryakov.collectivenote.database.firebase.REPOSITORY
+import com.mudryakov.collectivenote.MyApplication
+import com.mudryakov.collectivenote.UserManager.AppUserManager
+import com.mudryakov.collectivenote.database.firebase.FireBaseRepository
+import javax.inject.Inject
 
-class SettingsViewModel(application: Application) : AndroidViewModel(application) {
+class SettingsViewModel @Inject constructor(application: Application, val userManager: AppUserManager):AndroidViewModel(application) {
     fun signOut() {
-        REPOSITORY.signOut()
+        userManager.signOut()
     }
 
     fun changeName(name: String, onSuccess: () -> Unit) {
-        REPOSITORY.changeName(name, onSuccess)
+        userManager.changeName(name, onSuccess)
 
     }
 

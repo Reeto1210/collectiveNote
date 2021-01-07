@@ -11,8 +11,7 @@ interface AppDatabaseRepository {
     val groupMembers: LiveData<List<UserModel>>
 
     fun deletePayment(payment: PaymentModel, onSuccess: () -> Unit)
-    fun login(type: String, onFail: () -> Unit, onSuccess: () -> Unit)
-    fun emailRegistration(onFail: () -> Unit, onSuccess: () -> Unit)
+fun changeName(name:String,onSuccess: () -> Unit)
 
     fun createNewGroup(
         groupName: String,
@@ -24,11 +23,9 @@ interface AppDatabaseRepository {
 
     fun joinGroup(groupName: String, groupPass: String, onFail: () -> Unit, onSuccess: () -> Unit)
     fun addNewPayment(payment: PaymentModel, onSuccess: () -> Unit)
-    fun changeName(name: String, onSuccess: () -> Unit)
+
     fun pushFileToBase(imageUri: Uri, onSuccess: (String) -> Unit)
-    fun signOut()
     fun remindPassword(onSuccess: (String) -> Unit)
-
-
-}
+    fun getGroupCurrencyFromDB()
+   }
 

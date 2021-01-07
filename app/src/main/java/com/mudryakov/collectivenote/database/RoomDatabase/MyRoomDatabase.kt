@@ -9,10 +9,13 @@ import androidx.room.TypeConverters
 
 import com.mudryakov.collectivenote.models.PaymentModel
 import com.mudryakov.collectivenote.models.UserModel
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Database(entities = [PaymentModel::class, UserModel::class], version = 1)
-
+@Singleton
 abstract class MyRoomDatabase : RoomDatabase() {
+
     abstract fun getDao(): myDao
 
     companion object {

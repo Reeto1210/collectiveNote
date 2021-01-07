@@ -1,32 +1,38 @@
 package com.mudryakov.collectivenote.screens.mainScreen
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mudryakov.collectivenote.MyApplication
 import com.mudryakov.collectivenote.R
-import com.mudryakov.collectivenote.database.RoomDatabase.AppRoomRepository
-import com.mudryakov.collectivenote.database.firebase.*
 import com.mudryakov.collectivenote.databinding.FragmentMainBinding
 import com.mudryakov.collectivenote.models.UserModel
 import com.mudryakov.collectivenote.utility.*
+import javax.inject.Inject
 
 
 @Suppress("DEPRECATION")
 class MainFragment : Fragment() {
     var _Binding: FragmentMainBinding? = null
     val mBinding get() = _Binding!!
-    private lateinit var mViewModel: MainFragmentViewModel
+
+    @Inject
+    lateinit var mViewModel: MainFragmentViewModel
+    @Inject
+    lateinit var mAdapter: MainRecycleAdapter
+    lateinit var allGroupMembers: LiveData<List<UserModel>>
     private lateinit var mObserver: Observer<List<UserModel>>
     private lateinit var mRecycle: RecyclerView
     private lateinit var mLayoutManager: LinearLayoutManager
-    var mAdapter: MainRecycleAdapter? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +44,8 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if (!INTERNET) {
+
+        if (!APP_ACTIVITY.internet) {
             noInternetAction()
         } else {
             initialization()
@@ -48,33 +55,20 @@ class MainFragment : Fragment() {
 
     private fun noInternetAction() {
         checkInternetConnection({ noInternetMode() }) {
-            if (REPOSITORY is AppRoomRepository)
-                restartActivity()
-            else {
-                INTERNET = true
+               APP_ACTIVITY.internet = true
                 initialization()
-            }
-        }
+             }
     }
 
     private fun noInternetMode() {
-        INTERNET = false
-        REPOSITORY = ROOM_REPOSITORY
+        APP_ACTIVITY.internet = false
         initialization()
         initNoInternetBtn()
     }
 
 
     private fun initCurrency() {
-        if (AppPreference.getCurrency() == FAIL) {
-            REF_DATABASE_ROOT.child(NODE_GROUP_DATA).child(CURRENT_GROUP_UID).child(
-                CHILD_GROUP_CURRENCY
-            ).addMySingleListener {
-                val currentCurrency = it.value.toString()
-                AppPreference.setCurrency(currentCurrency)
-                ROOM_CURRENCY = currentCurrency
-            }
-        } else ROOM_CURRENCY = AppPreference.getCurrency()
+        mViewModel.getUpdateCurrency()
     }
 
     private fun initDrawer() {
@@ -88,22 +82,22 @@ class MainFragment : Fragment() {
             var totalSum = "0.00"
             list.forEach {
                 totalSum = calculateSum(totalSum, it.totalPayAtCurrentGroup)
-                mAdapter?.addItem(it)
+                mAdapter.addItem(it)
             }
             mBinding.loadingLayout.visibility = View.GONE
             mBinding.mainFragmentTotalPaymentRoom.text =
-                getString(R.string.total_sum_payed, totalSum, ROOM_CURRENCY)
+                getString(R.string.total_sum_payed, totalSum, mViewModel.getCurrency())
             APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             DRAWER_ENABLED = true
         }
-        mViewModel.allMembers.observe(this, mObserver)
+        allGroupMembers = mViewModel.allMembers()
+        allGroupMembers.observe(this, mObserver)
     }
 
     private fun initialization() {
         APP_ACTIVITY.back = false
-        APP_ACTIVITY.title = APP_ACTIVITY.getString(R.string.app_name)
-        CURRENT_GROUP_UID = AppPreference.getRoomId()
-        mViewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
+        setTitle(R.string.app_name)
+        mViewModel.updateGroupId()
         initDrawer()
         initFabNewPayment()
         initRecycle()
@@ -112,7 +106,7 @@ class MainFragment : Fragment() {
     }
 
     private fun initFabNewPayment() {
-        if (INTERNET) {
+        if (APP_ACTIVITY.internet) {
             mBinding.mainAddNewPayment.makeVisible()
             mBinding.mainAddNewPayment.setOnClickListener {
                 fastNavigate(R.id.action_mainFragment_to_newPaymentFragment)
@@ -128,11 +122,14 @@ class MainFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        mAdapter = null
         _Binding = null
-        mViewModel.allMembers.removeObserver(mObserver)
+        allGroupMembers.removeObserver(mObserver)
         APP_ACTIVITY.mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         super.onDestroyView()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        MyApplication.appComponent.inject(this)
+    }
 }
